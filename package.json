@@ -54,7 +54,10 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "highlight.js": "^9.13.1",
+    "marked": "^0.5.2",
     "modern-normalize": "^0.5.0",
+    "primer": "^10.10.0",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
     "vue-router": "^3.0.1"

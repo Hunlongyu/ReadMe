@@ -18,6 +18,7 @@ export default {
 .left{
   background-color: #242b2e;
   width: 50px;
+  min-width: 50px;
   height: 100%;
   display: flex;
   align-items: center;
