@@ -1,17 +1,22 @@
 <template>
   <div class="left">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
+    <span v-for="(item, index) in list" :key="index" @click="iconClick(index)"></span>
   </div>
 </template>
 <script>
 export default {
-  name: 'left'
+  name: 'left',
+  data () {
+    return {
+      list: 7
+    }
+  },
+  methods: {
+    iconClick (e) {
+      console.log(e)
+      this.$emit('iconClick', e)
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

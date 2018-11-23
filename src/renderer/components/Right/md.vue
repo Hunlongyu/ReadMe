@@ -1,6 +1,9 @@
 <template>
   <div class="client-right">
     <div class="rightContent markdown-body" v-html="markdwon" v-highlight></div>
+    <div class="model" v-show="modelShow">
+      <div class="content">加载中……</div>
+    </div>
   </div>
 </template>
 <script>
@@ -10,28 +13,22 @@ export default {
   data () {
     return {
       markdwon: null,
-      url: ''
+      url: '',
+      modelShow: true
     }
   },
   methods: {
     open (e) {
-      console.log('right', e)
       this.url = e
       this.getMd()
     },
     getMd () {
-      // this.url = 'https://raw.githubusercontent.com/gaoyoubo/hexo-client/master/README.md'
-      // this.url = 'https://raw.githubusercontent.com/chjj/marked/master/README.md'
-      // this.url = 'https://raw.githubusercontent.com/highlightjs/highlight.js/master/README.md'
-      this.$http.get(this.url)
-        .then((res) => {
-          let md = marked(res.data)
-          this.markdwon = md
-        })
+      this.$http.get(this.url).then((res) => {
+        let md = marked(res.data)
+        this.markdwon = md
+        this.modelShow = false
+      })
     }
-  },
-  created () {
-    // this.getMd()
   }
 }
 </script>
@@ -44,10 +41,11 @@ export default {
   .rightContent >>> img{
     max-width: 80%;
   }
-  // .rightContent{
-  //   img{
-  //     max-width: 80%;
-  //   }
-  // }
+  .model{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 </style>

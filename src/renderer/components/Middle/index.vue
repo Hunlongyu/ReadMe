@@ -29,13 +29,14 @@ export default {
   methods: {
     getUrl (e) {
       this.$emit('listClick', e)
-      console.log('middle', e)
     }
   },
   created () {
     // db.set('Link', this.Link)
     db.get('Link').then(res => {
       this.list = res.ReadMeLink
+      console.log(this.list[0].link)
+      this.$emit('listClick', this.list[0].link)
     })
   }
 }
