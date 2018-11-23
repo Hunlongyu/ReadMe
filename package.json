@@ -1,6 +1,6 @@
 {
   "name": "readme",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "author": "Hunlongyu <hunlongyu@gmail.com>",
   "description": "An electron-vue project",
   "license": "MIT",
@@ -54,13 +54,16 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "electron-json-storage": "^4.1.4",
     "highlight.js": "^9.13.1",
     "marked": "^0.5.2",
     "modern-normalize": "^0.5.0",
+    "nedb": "^1.8.0",
     "primer": "^10.10.0",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "when": "^3.7.8"
   },
   "devDependencies": {
     "ajv": "^6.5.0",

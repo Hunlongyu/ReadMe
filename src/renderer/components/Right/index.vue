@@ -1,6 +1,6 @@
 <template>
-  <div class="right">
-    <div class="markdown-body" v-html="markdwon" v-highlight></div>
+  <div class="client-right">
+    <div class="rightContent markdown-body" v-html="markdwon" v-highlight></div>
   </div>
 </template>
 <script>
@@ -13,14 +13,16 @@ export default {
       url: ''
     }
   },
-  props: [
-    // 'url'
-  ],
   methods: {
+    open (e) {
+      console.log('right', e)
+      this.url = e
+      this.getMd()
+    },
     getMd () {
       // this.url = 'https://raw.githubusercontent.com/gaoyoubo/hexo-client/master/README.md'
       // this.url = 'https://raw.githubusercontent.com/chjj/marked/master/README.md'
-      this.url = 'https://raw.githubusercontent.com/highlightjs/highlight.js/master/README.md'
+      // this.url = 'https://raw.githubusercontent.com/highlightjs/highlight.js/master/README.md'
       this.$http.get(this.url)
         .then((res) => {
           let md = marked(res.data)
@@ -29,21 +31,23 @@ export default {
     }
   },
   created () {
-    this.getMd()
+    // this.getMd()
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 @import 'primer/index.scss';
-.right{
+.client-right{
   flex: 1;
   padding: 0px 30px 30px 30px;
   overflow: scroll;
-  .markdown-body{
-    img{
-      max-width: 60% !important;
-      width: 60% !important;
-    }
+  .rightContent >>> img{
+    max-width: 80%;
   }
+  // .rightContent{
+  //   img{
+  //     max-width: 80%;
+  //   }
+  // }
 }
 </style>

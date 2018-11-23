@@ -3,8 +3,8 @@
     <frame />
     <div class="body">
       <left />
-      <middle />
-      <right />
+      <middle @listClick="homeEvents" />
+      <right ref="right"/>
     </div>
   </div>
 </template>
@@ -20,6 +20,12 @@ export default {
     left,
     middle,
     right
+  },
+  methods: {
+    homeEvents (e) {
+      console.log('home', e)
+      this.$refs.right.open(e)
+    }
   }
 }
 </script>
