@@ -41,6 +41,9 @@ export default {
   .rightContent >>> img{
     max-width: 80%;
   }
+  .rightContent a{
+    pointer-events: none;
+  }
   .model{
     height: 100%;
     display: flex;

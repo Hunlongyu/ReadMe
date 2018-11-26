@@ -24,7 +24,7 @@ export default {
   name: 'readme',
   data () {
     return {
-      num: 7,
+      num: 0,
       body: ['add', 'search', 'sync', 'cat', 'tag', 'imex', 'setting', 'md']
     }
   },
