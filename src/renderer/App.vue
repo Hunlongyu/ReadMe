@@ -12,9 +12,18 @@ export default {
 }
 </script>
 <style lang="scss">
-html,body,#app{
+html,
+#app,
+body {
   height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+body {
   overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 </style>
 

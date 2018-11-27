@@ -6,7 +6,6 @@
   </div>
 </template>
 <script>
-import db from '@/service/DB'
 export default {
   name: 'middle',
   data () {
@@ -31,14 +30,7 @@ export default {
       this.$emit('listClick', e)
     }
   },
-  created () {
-    // db.set('Link', this.Link)
-    db.get('Link').then(res => {
-      this.list = res.ReadMeLink
-      console.log(this.list[0].link)
-      this.$emit('listClick', this.list[0].link)
-    })
-  }
+  created () {}
 }
 </script>
 <style lang="scss" scoped>

@@ -3981,6 +3981,13 @@ fs-extra@^7.0.0:
     jsonfile "^4.0.0"
     universalify "^0.1.0"
 
+fs-jetpack@^2.2.0:
+  version "2.2.0"
+  resolved "http://registry.npm.taobao.org/fs-jetpack/download/fs-jetpack-2.2.0.tgz#4385b42b728a3400f00f4afe6ecabc72543cc72d"
+  integrity sha1-Q4W0K3KKNADwD0r+bsq8clQ8xy0=
+  dependencies:
+    minimatch "^3.0.2"
+
 fs-minipass@^1.2.5:
   version "1.2.5"
   resolved "http://registry.npm.taobao.org/fs-minipass/download/fs-minipass-1.2.5.tgz#06c277218454ec288df77ada54a03b8702aacb9d"

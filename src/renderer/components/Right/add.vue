@@ -11,11 +11,11 @@
         <li>3. 搜索结果最多显示前30个，建议精确搜索</li>
       </ul>
     </div>
-    <div class="body" v-show="bodyShow">
+    <div class="body external-link" v-show="bodyShow">
       <ul>
         <li v-for="(item, index) in repositories" :key="index">
           <div class="title">
-            <span class="left"><span @click="openLink(item.html_url)">作者/库：{{item.full_name}} </span><input type="button" @click="add(item)" value="添加"></span>
+            <span class="left">作者/库：<a :href="item.html_url">{{item.full_name}} </a><input type="button" @click="add(item)" value="添加"></span>
             <span class="right">Star: {{item.stargazers_count}} Watch: {{item.watchers_count}}</span>
           </div>
           <div class="desc">描述：{{item.description}}</div>
@@ -25,7 +25,6 @@
   </div>
 </template>
 <script>
-import {shell} from 'electron'
 export default {
   name: 'add',
   data () {
@@ -53,9 +52,6 @@ export default {
     add (res) {
       let link = 'https://raw.githubusercontent.com/' + res.full_name + '/' + res.default_branch + '/README.md'
       console.log(link)
-    },
-    openLink (res) {
-      shell.openExternal(res)
     }
   },
   created () {}

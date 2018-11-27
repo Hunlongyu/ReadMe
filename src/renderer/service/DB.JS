@@ -1,35 +1,36 @@
-import when from 'when'
+import DB from '../db'
 
-const storage = require('electron-json-storage')
-const os = require('os')
+const db = new DB()
+const connect = db.init()
+const MDLink = connect.MDLink
 
-storage.setDataPath(os.homedir() + '/.ReadMe-client')
-
-class DB {
-  set (key, options) {
-    var deferred = when.defer()
-    storage.set(key, options, err => {
-      if (err) {
-        console.log(err)
-        deferred.reject(err)
-      } else {
-        deferred.resolve()
-      }
+export default {
+  ensureIndex (db, field) {
+    db.ensureIndex({ fieldName: field, unique: true }, (err) => {
+      if (err) {}
     })
-    return deferred.promise
-  }
-
-  get (key) {
-    var deferred = when.defer()
-    storage.get(key, (err, data) => {
-      if (err) {
-        deferred.reject(err)
-      } else {
-        deferred.resolve(data)
-      }
+  },
+  fetchMDLinks (cb) {
+    return MDLink.find({}, (err, docs) => {
+      if (err) {}
+      return cb(docs)
     })
-    return deferred.promise
+  },
+  addMDLink (data, cb) {
+    this.ensureIndex(MDLink, 'url')
+    return MDLink.insert(data, (err, docs) => {
+      if (err) {}
+      return cb(docs)
+    })
+  },
+  deleteMDLink (id) {
+    MDLink.remove({ id: id }, {}, (err, numRemoved) => {
+      if (err) {}
+    })
+  },
+  markMDLinkCat (id, type) {
+    MDLink.update({ _id: id }, { $set: { cat: type } }, (err, num) => {
+      if (err) {}
+    })
   }
 }
-
-export default new DB()
