@@ -4,33 +4,39 @@ const db = new DB()
 const connect = db.init()
 const MDLink = connect.MDLink
 
+// 示例
+// let link = {
+//   repository: 'gkajs/gka',
+//   tag: 'js',
+//   link: 'https://raw.githubusercontent.com/gkajs/gka/master/readme.md'
+// }
+// db.find('', (doc) => { console.log(doc) })
+// db.add(link, function (doc) { console.log(doc) })
+// db.remove('kRq36TTM15zRGesH')
+// db.update('VOBPZFdV6Cm2Rve6', {link: 'https://raw.githubusercontent.com/hunlongyu/ReadMe-client/README.md'})
+
 export default {
-  ensureIndex (db, field) {
-    db.ensureIndex({ fieldName: field, unique: true }, (err) => {
-      if (err) {}
-    })
-  },
-  fetchMDLinks (cb) {
-    return MDLink.find({}, (err, docs) => {
-      if (err) {}
-      return cb(docs)
-    })
-  },
-  addMDLink (data, cb) {
-    this.ensureIndex(MDLink, 'url')
+  log () {},
+  add (data, cb) {
     return MDLink.insert(data, (err, docs) => {
-      if (err) {}
+      if (err) { console.log(err) }
       return cb(docs)
     })
   },
-  deleteMDLink (id) {
-    MDLink.remove({ id: id }, {}, (err, numRemoved) => {
+  find (data, cb) {
+    return MDLink.find(data, (err, docs) => {
+      if (err) { console.log(err) }
+      return cb(docs)
+    })
+  },
+  remove (id) {
+    MDLink.remove({ _id: id }, {}, (err, numRemoved) => {
       if (err) {}
     })
   },
-  markMDLinkCat (id, type) {
-    MDLink.update({ _id: id }, { $set: { cat: type } }, (err, num) => {
-      if (err) {}
+  update (id, data) {
+    MDLink.update({ _id: id }, { $set: data }, (err, num) => {
+      if (err) { console.log(err) }
     })
   }
 }

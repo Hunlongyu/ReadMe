@@ -10,7 +10,7 @@ export default class {
   }
 
   createOrReadDB (db) {
-    const dirName = process.env.NODE_ENV === 'developmen' ? '.ReadMe-client-dev' : '.ReadMe-client'
+    const dirName = process.env.NODE_ENV === 'development' ? '.ReadMe-client-dev' : '.ReadMe-client'
     const existsDir = jetpack.exists(this.dataDir.path(dirName))
     if (!existsDir) {
       fs.mkdir(this.dataDir.path(`${dirName}`), (err) => {
@@ -19,8 +19,9 @@ export default class {
     }
     const existsMDLink = fs.existsSync(this.dataDir.path(`${dirName}/${db.MDLink}`))
     let database = {}
+
     if (!existsMDLink) {
-      this.dataDir.write(this.dataDir.path(`${dirName}/${db.MDLink}`))
+      this.dataDir.write(this.dataDir.path(`${dirName}/${db.MDLink}`), '')
     }
 
     database.MDLink = new Nedb({

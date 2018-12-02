@@ -9,7 +9,6 @@
   </div>
 </template>
 <script>
-import db from '../service/db.js'
 export default {
   name: 'main-page',
   data () {
@@ -29,12 +28,7 @@ export default {
       })
     }
   },
-  created () {
-    let url = 'https://www.baidu.com'
-    db.addMDLink(url, docs => {
-      console.log(docs)
-    })
-  }
+  created () {}
 }
 </script>
 <style lang="scss" scoped>

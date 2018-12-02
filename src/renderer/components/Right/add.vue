@@ -22,16 +22,32 @@
         </li>
       </ul>
     </div>
+    <div class="tag" v-show="tagShow">
+      <div class="box">
+        <span>请选择标签：</span>
+        <select v-model="tag">
+          <option v-for="(i, j) in tagsList" :key="j" :value="i">{{i}}</option>
+        </select>
+        <input type="button" value="确认" @click="confirm">
+        <div class="tip" v-show="tipShow">请选择标签</div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
+import db from '../../service/db.js'
 export default {
   name: 'add',
   data () {
     return {
       repositories: null,
       searchText: '',
-      bodyShow: false
+      clickLi: null,
+      bodyShow: false,
+      tagShow: false,
+      tag: null,
+      tagsList: [],
+      tipShow: false
     }
   },
   methods: {
@@ -51,10 +67,68 @@ export default {
     },
     add (res) {
       let link = 'https://raw.githubusercontent.com/' + res.full_name + '/' + res.default_branch + '/README.md'
-      console.log(link)
+      db.find({repository: res.full_name}, (doc) => {
+        console.log(doc, doc.length)
+        if (doc.length > 0) {
+          console.log('已存在，请不要重复添加！')
+          return false
+        } else {
+          this.$http.get(link).then(res => {
+            this.tagShow = true
+            this.clickLi = res
+          }).catch(err => {
+            if (err) { console.log('README.md地址错误，或者文件名不对！') }
+          })
+        }
+      })
+    },
+    confirm (res) {
+      console.log(this.clickLi)
+      let dec = {
+        repository: res.full_name,
+        tag: '',
+        link: 'https://raw.githubusercontent.com/' + res.full_name + '/' + res.default_branch + '/README.md'
+      }
+      if (this.tag === '') {
+        return (this.tipShow = true)
+      } else {
+        dec.tag = this.tag
+        db.add(dec, (doc) => {
+          console.log(doc)
+        })
+      }
+    },
+    getDBTag () {
+      db.find({}, (doc) => {
+        let tags = []
+        for (let i = 0; i < doc.length; i++) {
+          let tag = doc[i].tag
+          tags.push(tag)
+        }
+        this.tagsList = this.uniq(tags)
+      })
+    },
+    uniq (arr) {
+      var temp = []
+      var index = []
+      var l = arr.length
+      for (var i = 0; i < l; i++) {
+        for (var j = i + 1; j < l; j++) {
+          if (arr[i] === arr[j]) {
+            i++
+            j = i
+          }
+        }
+        temp.push(arr[i])
+        index.push(i)
+      }
+      return temp
     }
   },
-  created () {}
+  created () {
+    this.getDBTag()
+    db.remove('3juIiM1GVdlJSSYH')
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -63,6 +137,7 @@ export default {
   width: 100%;
   overflow: scroll;
   font-size: 20px;
+  position: relative;
   .search{
     margin: 10px auto;
     text-align: center;
@@ -122,6 +197,26 @@ export default {
           text-overflow: ellipsis;
         }
       }
+    }
+  }
+  .tag{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .box{
+      background-color: #fff;
+      width: 400px;
+      height: 200px;
+      border: 1px solid #808080;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 2px;
     }
   }
 }

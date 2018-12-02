@@ -1,28 +1,17 @@
 <template>
   <div class="middle">
     <ul>
-      <li v-for="(item, index) in list" :key="index" @click="getUrl(item.link)">{{item.name}}</li>
+      <li v-for="(item, index) in list" :key="index" @click="getUrl(item.link)">{{item.repository}}</li>
     </ul>
   </div>
 </template>
 <script>
+import db from '../../service/db.js'
 export default {
   name: 'middle',
   data () {
     return {
-      Author: {
-        name: 'hunlongyu',
-        sex: 'male',
-        email: 'hunlongyu@gmail.com'
-      },
-      Link: {
-        ReadMeLink: [
-          {name: 'Highlight.js', author: 'highlight', cat: 'highlight', link: 'https://raw.githubusercontent.com/highlightjs/highlight.js/master/README.md'},
-          {name: 'hexo-client', author: 'gaoyoubo', cat: 'highlight', link: 'https://raw.githubusercontent.com/gaoyoubo/hexo-client/master/README.md'},
-          {name: 'marked', author: 'chjj', cat: 'highlight', link: 'https://raw.githubusercontent.com/chjj/marked/master/README.md'}
-        ]
-      },
-      list: ''
+      list: []
     }
   },
   methods: {
@@ -30,7 +19,11 @@ export default {
       this.$emit('listClick', e)
     }
   },
-  created () {}
+  created () {
+    db.find({}, (doc) => {
+      this.list = doc
+    })
+  }
 }
 </script>
 <style lang="scss" scoped>
