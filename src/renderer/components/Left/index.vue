@@ -1,6 +1,6 @@
 <template>
   <div class="left">
-    <span v-for="(item, index) in list" :key="index" @click="iconClick(index)"></span>
+    <span v-for="(i, j) in li" :key="j" @click="icon(i)" :title="name[j]"></span>
   </div>
 </template>
 <script>
@@ -8,12 +8,12 @@ export default {
   name: 'left',
   data () {
     return {
-      list: 7
+      li: ['Tag', 'Add', 'Setting'],
+      name: ['标签', '添加', '设置']
     }
   },
   methods: {
-    iconClick (e) {
-      console.log(e)
+    icon (e) {
       this.$emit('iconClick', e)
     }
   }
@@ -28,35 +28,26 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding-top: 20px;
   span{
     display: inline-block;
-    width: 20px;
-    height: 20px;
-    margin-bottom: 20px;
-    background-repeat: no-repeat;
-    background-size: 100%;
+    width: 50px;
+    height: 60px;
+    margin-bottom: 0px;
     cursor: pointer;
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    &:hover{
+      background-color: #32383a;
+    }
   }
   span:nth-child(1){
-    background-image: url(./add.png);
-  }
-  span:nth-child(2){
-    background-image: url(./search.png);
-  }
-  span:nth-child(3){
-    background-image: url(./sync.png);
-  }
-  span:nth-child(4){
-    background-image: url(./cat.png);
-  }
-  span:nth-child(5){
     background-image: url(./label.png);
   }
-  span:nth-child(6){
-    background-image: url(./imex.png);
+  span:nth-child(2){
+    background-image: url(./add.png);
   }
-  span:nth-child(7){
+  span:nth-child(3){
     background-image: url(./setting.png);
   }
 }

@@ -29,6 +29,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   color: #ababab;
+  font-weight: bold;
   -webkit-user-select: none;
   -webkit-app-region: drag;
   border-bottom: 1px solid #2e3538;
@@ -43,14 +44,19 @@ export default {
   .right{
     span{
       display: inline-block;
-      width: 16px;
-      height: 16px;
+      width: 30px;
+      height: 30px;
       background-size: 100% 100%;
       background-repeat: no-repeat;
-      margin: 0 8px;
       -webkit-app-region: no-drag;
       cursor: pointer;
       vertical-align: middle;
+      background-size: 15px 15px;
+      background-repeat: no-repeat;
+      background-position: center center;
+      &:hover{
+        background-color: #32383a;
+      }
     }
     .min{
       background-image: url(./min.png);

@@ -8999,6 +8999,11 @@ vue-loader@^15.2.4:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-notification@^1.3.13:
+  version "1.3.13"
+  resolved "http://registry.npm.taobao.org/vue-notification/download/vue-notification-1.3.13.tgz#e9a6d61888c8a4c91a4d3595f8e272462484016f"
+  integrity sha1-6abWGIjIpMkaTTWV+OJyRiSEAW8=
+
 vue-router@^3.0.1:
   version "3.0.1"
   resolved "http://registry.npm.taobao.org/vue-router/download/vue-router-3.0.1.tgz#d9b05ad9c7420ba0f626d6500d693e60092cc1e9"

@@ -4,7 +4,7 @@
     <div class="body">
       <Left  @iconClick="leftEvents"/>
       <Middle @listClick="middleEvents" ref="middle"/>
-      <Right :is="body[num]" ref="right" @updata="rightEvents"/>
+      <Right :is="right" ref="right" @updata="rightEvents"/>
     </div>
   </div>
 </template>
@@ -13,16 +13,15 @@ export default {
   name: 'main-page',
   data () {
     return {
-      num: 0,
-      body: ['Add', 'Search', 'Sync', 'Cat', 'Tag', 'Imex', 'Setting', 'Md']
+      right: 'Md'
     }
   },
   methods: {
     leftEvents (e) {
-      this.num = e
+      this.right = e
     },
     middleEvents (e) {
-      this.num = 7
+      this.right = 'Md'
       this.$nextTick(() => {
         this.$refs.right.open(e)
       })

@@ -8,6 +8,9 @@ import 'highlight.js/styles/github.css'
 import hljs from 'highlight.js'
 import './helper/extenal_link.js'
 
+import Notifications from 'vue-notification'
+Vue.use(Notifications)
+
 Register.registerComponents()
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
