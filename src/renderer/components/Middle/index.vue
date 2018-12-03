@@ -17,12 +17,16 @@ export default {
   methods: {
     getUrl (e) {
       this.$emit('listClick', e)
+    },
+    updataList (e) {
+      console.log(e)
+      db.find({}, (doc) => {
+        this.list = doc
+      })
     }
   },
   created () {
-    db.find({}, (doc) => {
-      this.list = doc
-    })
+    this.updataList()
   }
 }
 </script>

@@ -43,6 +43,7 @@ export default {
       repositories: null,
       searchText: '',
       clickLi: null,
+      clickLink: null,
       bodyShow: false,
       tagShow: false,
       tag: null,
@@ -66,35 +67,45 @@ export default {
       }
     },
     add (res) {
+      let data = res
       let link = 'https://raw.githubusercontent.com/' + res.full_name + '/' + res.default_branch + '/README.md'
+      let link2 = 'https://raw.githubusercontent.com/' + res.full_name + '/' + res.default_branch + '/readme.md'
       db.find({repository: res.full_name}, (doc) => {
-        console.log(doc, doc.length)
         if (doc.length > 0) {
           console.log('已存在，请不要重复添加！')
           return false
         } else {
           this.$http.get(link).then(res => {
             this.tagShow = true
-            this.clickLi = res
+            this.clickLi = data
+            this.clickLink = link
           }).catch(err => {
             if (err) { console.log('README.md地址错误，或者文件名不对！') }
+            this.$http.get(link2).then(res => {
+              this.tagShow = true
+              this.clickLi = data
+              this.clickLink = link2
+            }).catch(err => {
+              if (err) { console.log('README.md地址错误，或者文件名不对！') }
+            })
           })
         }
       })
     },
-    confirm (res) {
-      console.log(this.clickLi)
+    confirm () {
+      let res = this.clickLi
       let dec = {
         repository: res.full_name,
         tag: '',
-        link: 'https://raw.githubusercontent.com/' + res.full_name + '/' + res.default_branch + '/README.md'
+        link: this.clickLink
       }
       if (this.tag === '') {
         return (this.tipShow = true)
       } else {
         dec.tag = this.tag
         db.add(dec, (doc) => {
-          console.log(doc)
+          this.tagShow = false
+          this.$emit('updata', doc)
         })
       }
     },
@@ -127,7 +138,7 @@ export default {
   },
   created () {
     this.getDBTag()
-    db.remove('3juIiM1GVdlJSSYH')
+    db.remove('MyO9MZFELebRr48z')
   }
 }
 </script>

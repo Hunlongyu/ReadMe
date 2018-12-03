@@ -3,8 +3,8 @@
     <Frame />
     <div class="body">
       <Left  @iconClick="leftEvents"/>
-      <Middle @listClick="middleEvents" />
-      <Right :is="body[num]" ref="right" />
+      <Middle @listClick="middleEvents" ref="middle"/>
+      <Right :is="body[num]" ref="right" @updata="rightEvents"/>
     </div>
   </div>
 </template>
@@ -26,6 +26,9 @@ export default {
       this.$nextTick(() => {
         this.$refs.right.open(e)
       })
+    },
+    rightEvents (e) {
+      this.$refs.middle.updataList(e)
     }
   },
   created () {}
