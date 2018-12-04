@@ -4,7 +4,7 @@
     <div class="body">
       <Left  @iconClick="leftEvents"/>
       <Middle @listClick="middleEvents" ref="middle"/>
-      <Right :is="right" ref="right" @updata="rightEvents"/>
+      <Right :is="right" ref="right" @updata="rightEvents" @listClick="openMd"/>
     </div>
   </div>
 </template>
@@ -21,6 +21,7 @@ export default {
       this.right = e
     },
     middleEvents (e) {
+      console.log('main', e)
       this.right = 'Md'
       this.$nextTick(() => {
         this.$refs.right.open(e)
@@ -28,6 +29,12 @@ export default {
     },
     rightEvents (e) {
       this.$refs.middle.updataList(e)
+    },
+    openMd (e) {
+      this.right = 'Md'
+      this.$nextTick(() => {
+        this.$refs.right.open(e)
+      })
     }
   },
   created () {}

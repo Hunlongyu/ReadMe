@@ -5,19 +5,20 @@
     </div>
     <div class="list">
       <ul>
-        <li v-for="(item, index) in list" :key="index" @click="getUrl(item.mdUrl)" @click.right="rightClick($event, item._id)">{{item.repository}}</li>
+        <li v-for="(item, index) in list" :key="index" @click="getUrl(item.mdUrl)" @click.right="rightClick($event, item.htmlUrl, item._id)">{{item.repository}}</li>
       </ul>
     </div>
-    <div class="context" ref="context" v-show="ctxShow">
+    <div class="context" ref="context" v-show="ctx.show">
       <ul>
-        <li>官网</li>
-        <li>修改</li>
-        <li>删除</li>
+        <li @click="home">官网</li>
+        <li @click="modi">修改</li>
+        <li @click="dele">删除</li>
       </ul>
     </div>
   </div>
 </template>
 <script>
+import { shell } from 'electron'
 import db from '../../service/db.js'
 export default {
   name: 'middle',
@@ -25,7 +26,11 @@ export default {
     return {
       txt: '',
       list: [],
-      ctxShow: false
+      ctx: {
+        show: false,
+        home: '',
+        _id: ''
+      }
     }
   },
   methods: {
@@ -41,11 +46,23 @@ export default {
         })
       }
     },
-    rightClick (e, d) {
+    rightClick (e, h, d) {
       let context = this.$refs.context.style
       context.left = e.clientX + 'px'
       context.top = e.clientY + 'px'
-      this.ctxShow = true
+      this.ctx.show = true
+      this.ctx.home = h
+      this.ctx._id = d
+    },
+    home () {
+      let url = this.ctx.home
+      shell.openExternal(url)
+    },
+    modi () {},
+    dele () {
+      db.remove(this.ctx._id)
+      this.$notify({title: '删除成功~'})
+      this.updataList()
     },
     getUrl (e) {
       this.$emit('listClick', e)
@@ -56,8 +73,8 @@ export default {
       })
     },
     hideCtx () {
-      document.body.click = () => {
-        this.ctxShow = false
+      document.body.onclick = () => {
+        this.ctx.show = false
       }
     }
   },
@@ -89,7 +106,7 @@ export default {
     }
   }
   .list{
-    height: 100%;
+    height: calc(100% - 74px);
     ul{
       margin: 0;
       overflow-y: scroll;
@@ -120,7 +137,14 @@ export default {
     width: 100px;
     li{
       cursor: pointer;
+      list-style: none;
+      padding: 4px;
+      text-align: center;
       border-bottom: 1px solid #bebebe;
+      &:hover{
+        background-color: #bebebe;
+        color: #333;
+      }
     }
   }
 }

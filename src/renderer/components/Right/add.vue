@@ -110,7 +110,6 @@ export default {
       this.createShow = false
     },
     tagConfirm () {
-      console.log(this.createShow, this.saveShow)
       let d = this.item
       let data = {
         repository: d.full_name,
