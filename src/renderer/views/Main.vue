@@ -13,7 +13,7 @@ export default {
   name: 'main-page',
   data () {
     return {
-      right: 'Md'
+      right: 'Add'
     }
   },
   methods: {

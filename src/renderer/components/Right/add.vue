@@ -1,7 +1,7 @@
 <template>
   <div class="add">
     <div class="search">
-      <input type="text" placeholder="搜索……" v-model.trim="txt">
+      <input type="text" placeholder="搜索……" v-model.trim="txt" @keyup.enter="search">
       <input type="button" value="搜索" @click="search">
     </div>
     <div class="tips">
@@ -58,8 +58,8 @@ export default {
       tagShow: false,
       tag: '',
       tagsList: [],
-      saveShow: true,
-      createShow: true,
+      saveShow: false,
+      createShow: false,
       newTag: ''
     }
   },
@@ -99,6 +99,7 @@ export default {
           })
         }
       })
+      this.getDBTag()
     },
     create () {
       this.saveShow = false
@@ -109,6 +110,7 @@ export default {
       this.createShow = false
     },
     tagConfirm () {
+      console.log(this.createShow, this.saveShow)
       let d = this.item
       let data = {
         repository: d.full_name,
@@ -123,8 +125,6 @@ export default {
           this.tagShow = false
           this.$emit('updata', doc)
         })
-      } else {
-        this.$notify({title: '请选择一个分类~'})
       }
 
       if (this.newTag !== '' && this.createShow === true) {
@@ -132,9 +132,8 @@ export default {
         db.add(data, (doc) => {
           this.tagShow = false
           this.$emit('updata', doc)
+          this.newTag = ''
         })
-      } else {
-        this.$notify({title: '请填写要新建的一个分类~'})
       }
     },
     tagCancel () {
@@ -178,8 +177,8 @@ export default {
     }
   },
   created () {
-    this.getDBTag()
-    // db.remove({}, { multi: true })
+    // this.getDBTag()
+    // db.removeAll()
   }
 }
 </script>
@@ -190,6 +189,20 @@ export default {
   overflow: scroll;
   font-size: 20px;
   position: relative;
+  &::-webkit-scrollbar{
+    width: 4px;
+    height: 4px;
+  }
+  &::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+      border-radius: 2px;
+      box-shadow: inset 0 0 2px rgba(0,0,0,0.2);
+      background: rgba(0,0,0,0.6);
+  }
+  &::-webkit-scrollbar-track {/*滚动条里面轨道*/
+      box-shadow: inset 0 0 2px rgba(0,0,0,0.2);
+      border-radius: 0;
+      background: rgba(0,0,0,0.4);
+  }
   .search{
     margin: 10px auto;
     text-align: center;
@@ -255,10 +268,10 @@ export default {
     }
   }
   .tag{
-    position: absolute;
+    position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
+    left: 320px;
+    width: calc(100% - 320px);
     height: 100%;
     display: flex;
     justify-content: center;
@@ -274,12 +287,12 @@ export default {
         text-align: center;
         height: 40px;
         line-height: 40px;
-        background-color: #808080;
-        color: #fff;
+        background-color: #1d2325;
+        color: #bebebe;
         font-size: 18px;
       }
       .save{
-        margin-top: 20px;
+        margin-top: 40px;
         font-size: 16px;
         text-align: center;
         select{

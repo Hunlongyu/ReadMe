@@ -11,7 +11,6 @@
   </div>
 </template>
 <script>
-// import { ipcMain } from 'electron'
 import db from '../../service/db.js'
 export default {
   name: 'middle',
@@ -23,8 +22,9 @@ export default {
   },
   methods: {
     search (e) {
+      let reg = new RegExp(e)
       if (e !== '') {
-        db.find({repository: 'vuejs/vue'}, (doc) => {
+        db.find({repository: reg}, (doc) => {
           this.list = doc
         })
       } else {
@@ -37,7 +37,6 @@ export default {
       this.$emit('listClick', e)
     },
     updataList (e) {
-      console.log(e)
       db.find({}, (doc) => {
         this.list = doc
       })
@@ -78,6 +77,10 @@ export default {
       height: 100%;
       list-style: none;
       color: #bebebe;
+      &::-webkit-scrollbar{
+        width: 1px;
+        height: 0;
+      }
       li{
         padding: 10px 20px;
         font-size: 16px;

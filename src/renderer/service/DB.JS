@@ -14,6 +14,7 @@ const MDLink = connect.MDLink
 // db.add(link, function (doc) { console.log(doc) })
 // db.remove('kRq36TTM15zRGesH')
 // db.update('VOBPZFdV6Cm2Rve6', {link: 'https://raw.githubusercontent.com/hunlongyu/ReadMe-client/README.md'})
+// MDLink.remove({}, { multi: true })
 export default {
   removeAll () {
     MDLink.remove({}, { multi: true })

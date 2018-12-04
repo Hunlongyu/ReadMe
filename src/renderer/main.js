@@ -7,8 +7,6 @@ import router from './router'
 import 'highlight.js/styles/github.css'
 import hljs from 'highlight.js'
 import './helper/extenal_link.js'
-import Notifications from 'vue-notification'
-Vue.use(Notifications)
 
 import Notifications from 'vue-notification'
 Vue.use(Notifications)
