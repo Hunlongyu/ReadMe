@@ -5,7 +5,14 @@
     </div>
     <div class="list">
       <ul>
-        <li v-for="(item, index) in list" :key="index" @click="getUrl(item.mdUrl)">{{item.repository}}</li>
+        <li v-for="(item, index) in list" :key="index" @click="getUrl(item.mdUrl)" @click.right="rightClick($event, item._id)">{{item.repository}}</li>
+      </ul>
+    </div>
+    <div class="context" ref="context" v-show="ctxShow">
+      <ul>
+        <li>官网</li>
+        <li>修改</li>
+        <li>删除</li>
       </ul>
     </div>
   </div>
@@ -17,7 +24,8 @@ export default {
   data () {
     return {
       txt: '',
-      list: []
+      list: [],
+      ctxShow: false
     }
   },
   methods: {
@@ -33,6 +41,12 @@ export default {
         })
       }
     },
+    rightClick (e, d) {
+      let context = this.$refs.context.style
+      context.left = e.clientX + 'px'
+      context.top = e.clientY + 'px'
+      this.ctxShow = true
+    },
     getUrl (e) {
       this.$emit('listClick', e)
     },
@@ -40,9 +54,15 @@ export default {
       db.find({}, (doc) => {
         this.list = doc
       })
+    },
+    hideCtx () {
+      document.body.click = () => {
+        this.ctxShow = false
+      }
     }
   },
   created () {
+    this.hideCtx()
     this.updataList()
   }
 }
@@ -90,6 +110,17 @@ export default {
           color: #1d2325;
         }
       }
+    }
+  }
+  .context{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    width: 100px;
+    li{
+      cursor: pointer;
+      border-bottom: 1px solid #bebebe;
     }
   }
 }
