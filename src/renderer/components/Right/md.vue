@@ -1,6 +1,6 @@
 <template>
   <div class="client-right">
-    <div class="rightContent markdown-body" v-html="markdwon" v-highlight></div>
+    <div class="rightContent markdown-body external-link" v-html="markdwon" v-highlight></div>
     <div class="model" v-show="modelShow">
       <div class="content">加载中……</div>
     </div>
@@ -35,9 +35,11 @@ export default {
 <style lang="scss">
 @import 'primer/index.scss';
 .client-right{
-  flex: 1;
-  padding: 20px 30px 30px 30px;
+  padding: 10px;
+  width: 100%;
+  height: calc(100% - 26px);
   overflow: scroll;
+  position: relative;
   &::-webkit-scrollbar{
     width: 4px;
     height: 4px;
@@ -54,9 +56,6 @@ export default {
   }
   .rightContent >>> img{
     max-width: 80%;
-  }
-  .rightContent a{
-    pointer-events: none;
   }
   .model{
     height: 100%;

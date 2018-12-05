@@ -152,6 +152,7 @@ export default {
 .tag{
   padding: 10px;
   width: 100%;
+  height: calc(100% - 26px);
   overflow: scroll;
   position: relative;
   &::-webkit-scrollbar{

@@ -140,6 +140,8 @@ export default {
     left: 0;
     background-color: #fff;
     width: 100px;
+    z-index: 999;
+    border: 1px solid #1d2325;
     li{
       cursor: pointer;
       list-style: none;
@@ -150,6 +152,9 @@ export default {
       &:hover{
         background-color: #bebebe;
         color: #333;
+      }
+      &:last-child{
+        border-bottom: none;
       }
     }
   }

@@ -1,9 +1,6 @@
 # ReadMe client
 
-<img src="https://img.shields.io/github/issues/Hunlongyu/ReadMe-client.svg">
-<img src="https://img.shields.io/github/forks/Hunlongyu/ReadMe-client.svg">
-<img src="https://img.shields.io/github/stars/Hunlongyu/ReadMe-client.svg">
-<img src="https://img.shields.io/github/license/Hunlongyu/ReadMe-client.svg">
+<img src="https://img.shields.io/github/issues/Hunlongyu/ReadMe-client.svg"><img src="https://img.shields.io/github/forks/Hunlongyu/ReadMe-client.svg"><img src="https://img.shields.io/github/stars/Hunlongyu/ReadMe-client.svg"><img src="https://img.shields.io/github/license/Hunlongyu/ReadMe-client.svg">
 
 > Github 上有很多好的开源项目，点击 start 关注后，却由于无法分类而杂乱不堪。一些 Javascript 库，一般会在 README.md 里介绍使用方法。该软件则可以实现收集、整理、查看。
 
@@ -54,13 +51,13 @@ electron + vue + nedb
 yarn
 
 # serve with hot reload at localhost:9080
-yarn run dev
+yarn dev
 
 # build electron application for production
-yarn run build
+yarn build
 
 
 # lint all JS/Vue component files in `src/`
-yarn run lint
+yarn lint
 
 ```

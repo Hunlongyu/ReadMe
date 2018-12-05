@@ -6,9 +6,9 @@
     </div>
     <div class="tips">
       <ul>
-        <li>1. 模糊搜索：库的名字，如：ReadMe-client。 (注意：中间的空格用 '-' 代替)</li>
+        <li>1. 搜索结果最多显示前30个，建议精确搜索</li>
         <li>2. 精准搜索：作者名字/库的名字，如：Hunlongyu/ReadMe-client</li>
-        <li>3. 搜索结果最多显示前30个，建议精确搜索</li>
+        <li>3. 模糊搜索：库的名字，如：ReadMe-client。 (注意：中间的空格用 '-' 代替)</li>
       </ul>
     </div>
     <div class="body external-link">
@@ -185,8 +185,8 @@ export default {
 .add{
   padding: 10px;
   width: 100%;
+  height: calc(100% - 26px);
   overflow: scroll;
-  font-size: 20px;
   position: relative;
   &::-webkit-scrollbar{
     width: 4px;
@@ -212,6 +212,7 @@ export default {
       height: 32px;
       padding: 4px 0;
       text-indent: 8px;
+      vertical-align: bottom;
     }
     input[type="button"]{
       width: 10%;
