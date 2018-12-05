@@ -2,7 +2,7 @@
   <div class="setting">
     <div class="info external-link">
       <p class="title">关于</p>
-      <p><span>版本：</span><span>v0.1.3</span></p>
+      <p><span>版本：</span><span>v0.1.4</span></p>
       <p><span>作者：</span><span>Hunlongyu</span></p>
       <p><span>邮箱：</span><span>hunlongyu@gmail.com</span></p>
       <p><span>项目地址：</span><span><a href="https://github.com/Hunlongyu/ReadMe-client">https://github.com/Hunlongyu/ReadMe-client</a></span></p>
