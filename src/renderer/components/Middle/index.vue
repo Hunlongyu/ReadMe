@@ -5,13 +5,13 @@
     </div>
     <div class="list">
       <ul>
-        <li v-for="(item, index) in list" :key="index" @click="getUrl(item.mdUrl)" @click.right="rightClick($event, item.htmlUrl, item._id)">{{item.repository}}</li>
+        <li v-for="(item, index) in list" :key="index" @click="getUrl(item.mdUrl)" @click.right="rightClick($event, item.htmlUrl, item._id, item.mdUrl)">{{item.repository}}</li>
       </ul>
     </div>
     <div class="context" ref="context" v-show="ctx.show">
       <ul>
+        <li @click="open">打开</li>
         <li @click="home">官网</li>
-        <li @click="modi">修改</li>
         <li @click="dele">删除</li>
       </ul>
     </div>
@@ -29,7 +29,8 @@ export default {
       ctx: {
         show: false,
         home: '',
-        _id: ''
+        _id: '',
+        mdUrl: ''
       }
     }
   },
@@ -46,19 +47,23 @@ export default {
         })
       }
     },
-    rightClick (e, h, d) {
+    rightClick (e, h, d, m) {
       let context = this.$refs.context.style
       context.left = e.clientX + 'px'
       context.top = e.clientY + 'px'
       this.ctx.show = true
       this.ctx.home = h
       this.ctx._id = d
+      this.ctx.mdUrl = m
     },
     home () {
       let url = this.ctx.home
       shell.openExternal(url)
     },
-    modi () {},
+    open () {
+      let url = this.ctx.mdUrl
+      this.$emit('listClick', url)
+    },
     dele () {
       db.remove(this.ctx._id)
       this.$notify({title: '删除成功~'})

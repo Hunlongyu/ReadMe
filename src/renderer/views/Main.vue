@@ -21,7 +21,6 @@ export default {
       this.right = e
     },
     middleEvents (e) {
-      console.log('main', e)
       this.right = 'Md'
       this.$nextTick(() => {
         this.$refs.right.open(e)
@@ -47,7 +46,6 @@ export default {
   .body{
     height: 100%;
     display: flex;
-
   }
 }
 </style>
