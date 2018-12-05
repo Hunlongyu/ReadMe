@@ -10,6 +10,8 @@
 https://github.com/Hunlongyu/ReadMe-client/releases
 
 ## 截图
+![](https://raw.githubusercontent.com/Hunlongyu/ReadMe-client/master/screenshot/01.png)
+
 ![](https://raw.githubusercontent.com/Hunlongyu/ReadMe-client/master/screenshot/02.png)
 
 ![](https://raw.githubusercontent.com/Hunlongyu/ReadMe-client/master/screenshot/03.png)
