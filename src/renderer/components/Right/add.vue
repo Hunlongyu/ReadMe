@@ -303,7 +303,7 @@ export default {
         }
       }
       .create{
-        margin-top: 10px;
+        margin-top: 40px;
         font-size: 16px;
         text-align: center;
         input{

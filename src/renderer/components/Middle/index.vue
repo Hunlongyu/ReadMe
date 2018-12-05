@@ -146,6 +146,7 @@ export default {
       padding: 4px;
       text-align: center;
       border-bottom: 1px solid #bebebe;
+      background-color: #fff;
       &:hover{
         background-color: #bebebe;
         color: #333;
