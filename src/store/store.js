@@ -3,14 +3,36 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const moduleA = {
   state: {
-
+    view: 'md'
   },
-  mutations: {
+  mutations: {},
+  actions: {},
+  getters: {}
+}
 
-  },
-  actions: {
+const moduleB = {
+  state: {},
+  mutations: {},
+  actions: {},
+  getters: {}
+}
 
+const store = new Vuex.Store({
+  modules: {
+    r: moduleA,
+    c: moduleB
   }
 })
+// export default new Vuex.Store({
+//   state: {
+
+//   },
+//   mutations: {
+
+//   },
+//   actions: {
+
+//   }
+// })

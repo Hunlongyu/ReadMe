@@ -1,5 +1,5 @@
 <template>
-  <div class="column has-background-black-ter has-text-grey-light h_top">
+  <div class="has-background-black-ter has-text-grey-light h_top">
     <div class="level">
       <div class="level-left">
         <span class="icon">
@@ -9,13 +9,13 @@
       </div>
       <div class="level-right has-text-centered">
         <span @click="onFrame('min')">
-          <font-awesome-icon icon="window-minimize" />
+          <!-- <font-awesome-icon icon="window-minimize" /> -->
         </span>
         <span @click="onFrame('max')">
-          <font-awesome-icon icon="window-restore" />
+          <!-- <font-awesome-icon icon="window-restore" /> -->
         </span>
         <span @click="onFrame('close')">
-          <font-awesome-icon icon="window-close" />
+          <!-- <font-awesome-icon icon="window-close" /> -->
         </span>
       </div>
     </div>
