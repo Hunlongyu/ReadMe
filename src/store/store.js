@@ -25,6 +25,7 @@ const store = new Vuex.Store({
     c: moduleB
   }
 })
+export default store
 // export default new Vuex.Store({
 //   state: {
 

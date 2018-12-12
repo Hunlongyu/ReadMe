@@ -1,12 +1,18 @@
 <template>
-  <div class="h_home">
-    <Top/>
-    <div class="level h_body">
-      <Left/>
-      <Middle/>
-      <Right :is="right"/>
-    </div>
-  </div>
+  <v-container fluid pa-0 ma-0>
+    <v-layout row fill-height>
+      <div class="h_left">
+        <Left/>
+      </div>
+      <div class="h_middle">
+        <Middle/>
+      </div>
+      <div class="h_right">
+        <Top/>
+        <Right :is="right"/>
+      </div>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -19,14 +25,14 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-.h_home{
-  position: relative;
-  height: 100%;
-  .h_body{
-    height: calc(100% - 30px);
-    width: 100%;
-    display: flex;
-  }
+<style lang="scss">
+.h_left{
+  width: 60px;
+}
+.h_middle{
+  width: 280px;
+}
+.h_right{
+  flex: 1;
 }
 </style>

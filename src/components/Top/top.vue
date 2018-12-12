@@ -1,25 +1,9 @@
 <template>
-  <div class="has-background-black-ter has-text-grey-light h_top">
-    <div class="level">
-      <div class="level-left">
-        <span class="icon">
-          <font-awesome-icon icon="atlas" />
-        </span>
-        <span>&nbsp;ReadMe client</span>
-      </div>
-      <div class="level-right has-text-centered">
-        <span @click="onFrame('min')">
-          <!-- <font-awesome-icon icon="window-minimize" /> -->
-        </span>
-        <span @click="onFrame('max')">
-          <!-- <font-awesome-icon icon="window-restore" /> -->
-        </span>
-        <span @click="onFrame('close')">
-          <!-- <font-awesome-icon icon="window-close" /> -->
-        </span>
-      </div>
-    </div>
-  </div>
+  <v-layout row wrap justify-end align-center grey lighten-3 class="h_top">
+    <span @click="onFrame('min')">min</span>
+    <span @click="onFrame('max')">max</span>
+    <span @click="onFrame('close')">close</span>
+  </v-layout>
 </template>
 <script>
 export default {
@@ -36,27 +20,9 @@ export default {
 .h_top{
   -webkit-app-region: drag;
   -webkit-user-select: none;
-  .level{
-    height: 30px;
-    .level-left{
-      margin-left: 5px;
-    }
-    .level-right{
-      span{
-        -webkit-app-region: no-drag;
-        height: 30px;
-        width: 34px;
-        cursor: pointer;
-        &:hover{
-          background-color: hsl(0, 0%, 48%);
-          color: hsl(0, 0%, 14%);
-        }
-        svg{
-          height: 14px;
-          width: 14px;
-        }
-      }
-    }
+  height: 50px;
+  span{
+    -webkit-app-region: no-drag;
   }
 }
 </style>

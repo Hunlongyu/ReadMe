@@ -1,11 +1,11 @@
 <template>
-  <div id="app">
+  <v-app>
     <router-view/>
-  </div>
+  </v-app>
 </template>
 
 <style lang="scss">
-html,body,#app{
-  height: 100%;
+html{
+  overflow-y: auto;
 }
 </style>

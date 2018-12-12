@@ -1,15 +1,10 @@
 <template>
-  <div class="has-background-black-ter has-text-grey-light h_left">
-    <span>
-      <!-- <font-awesome-icon icon="window-minimize" /> -->
-    </span>
-    <span>
-      <!-- <font-awesome-icon icon="window-minimize" /> -->
-    </span>
-    <span>
-      <!-- <font-awesome-icon icon="window-minimize" /> -->
-    </span>
-  </div>
+  <v-layout max-width="50" align-start column fill-height blue-grey darken-4 class="h_left">
+    <span>logo icon</span>
+    <span>add icon</span>
+    <span>tag icon</span>
+    <span>set icon</span>
+  </v-layout>
 </template>
 <script>
 export default {
@@ -18,19 +13,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .h_left{
-  width: 50px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  -webkit-app-region: drag;
+  -webkit-user-select: none;
   span{
-    display: inline-block;
-    width: 50px;
-    height: 60px;
-    cursor: pointer;
-    &:hover{
-      background-color: #32383a;
-    }
+    -webkit-app-region: no-drag;
   }
 }
 </style>

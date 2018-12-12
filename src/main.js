@@ -3,12 +3,15 @@ import App from './App.vue'
 import router from './router/router'
 import store from './store/store'
 import Register from './components/register'
-// import '../node_modules/bulma/bulma.sass'
-// import { library } from '@fortawesome/fontawesome-svg-core'
-// import { faAtlas, faWindowMinimize, faWindowRestore, faWindowClose } from '@fortawesome/free-solid-svg-icons'
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// library.add(faAtlas, faWindowMinimize, faWindowRestore, faWindowClose)
-// Vue.component('font-awesome-icon', FontAwesomeIcon)
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
+Vue.use(Vuetify, {
+  iconfont: 'mdi',
+  icons: {
+    'logo': 'class'
+  }
+})
 Register.registerComponents()
 Vue.config.productionTip = false
 
