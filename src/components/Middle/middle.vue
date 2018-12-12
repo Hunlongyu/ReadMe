@@ -1,8 +1,8 @@
 <template>
   <v-layout row wrap justify-center fill-height class="h_middle">
-    <v-form>
-      <v-text-field solo></v-text-field>
-    </v-form>
+    <!-- <v-form> -->
+    <!-- </v-form> -->
+    <!-- <v-text-field solo></v-text-field> -->
   </v-layout>
 </template>
 <script>
