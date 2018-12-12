@@ -4,7 +4,7 @@ import Left from './Left/left'
 import Middle from './Middle/middle'
 import Add from './Right/add'
 import Md from './Right/md'
-import Setting from './Right/setting'
+import Set from './Right/set'
 import Tag from './Right/tag'
 
 export default {
@@ -14,7 +14,7 @@ export default {
     Vue.component('Middle', Middle)
     Vue.component('Add', Add)
     Vue.component('Md', Md)
-    Vue.component('Setting', Setting)
+    Vue.component('Set', Set)
     Vue.component('Tag', Tag)
   }
 }

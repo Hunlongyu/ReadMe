@@ -1,9 +1,9 @@
 <template>
-  <div class="setting">setting</div>
+  <div class="set">set</div>
 </template>
 <script>
 export default {
-  name: 'setting'
+  name: 'set'
 }
 </script>
 <style lang="scss" scoped>

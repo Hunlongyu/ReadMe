@@ -18,9 +18,9 @@
 <script>
 export default {
   name: 'home',
-  data () {
-    return {
-      right: 'Add'
+  computed: {
+    right () {
+      return this.$store.state.view
     }
   }
 }

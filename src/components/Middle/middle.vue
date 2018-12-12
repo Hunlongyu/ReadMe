@@ -1,5 +1,5 @@
 <template>
-  <v-layout row wrap justify-center blue-grey darken-3 fill-height>
+  <v-layout row wrap justify-center fill-height class="h_middle">
     <v-form>
       <v-text-field solo></v-text-field>
     </v-form>
@@ -32,19 +32,21 @@ export default {
     }
   },
   created () {
-    this.one()
-      .then(data => {
-        console.log(data)
-        this.two()
-      }, data => {
-        console.log(data)
-      })
-      .then(() => {
-        this.three()
-      })
+    // this.one()
+    //   .then(data => {
+    //     console.log(data)
+    //     this.two()
+    //   }, data => {
+    //     console.log(data)
+    //   })
+    //   .then(() => {
+    //     this.three()
+    //   })
   }
 }
 </script>
 <style lang="scss" scoped>
-
+.h_middle{
+  background-color: rgb(29,35,37);
+}
 </style>
