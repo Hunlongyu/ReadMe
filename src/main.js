@@ -6,7 +6,8 @@ import i18n from './locales/index'
 import Register from './components/register'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
-
+import axios from 'axios'
+Vue.prototype.$axios = axios
 Vue.use(Vuetify)
 Register.registerComponents()
 Vue.config.productionTip = false

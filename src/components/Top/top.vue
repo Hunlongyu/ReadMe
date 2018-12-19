@@ -21,6 +21,7 @@ export default {
   -webkit-app-region: drag;
   -webkit-user-select: none;
   height: 40px;
+  border-bottom: 1px solid #bebebe;
   span{
     -webkit-app-region: no-drag;
     display: inline-block;

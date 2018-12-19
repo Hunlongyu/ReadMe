@@ -34,5 +34,7 @@ export default {
 }
 .h_right{
   flex: 1;
+  overflow-y: hidden;
+  border: 1px solid #bebebe;
 }
 </style>
