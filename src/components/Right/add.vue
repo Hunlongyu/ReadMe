@@ -76,7 +76,6 @@ export default {
   .list{
     overflow-y: scroll;
     .liTwo{
-      // overflow: hidden;
       text-overflow: ellipsis;
     }
   }
