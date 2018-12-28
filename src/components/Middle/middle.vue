@@ -1,9 +1,7 @@
 <template>
-  <v-layout row wrap justify-center fill-height class="h_middle">
-    <!-- <v-form> -->
-    <!-- </v-form> -->
-    <!-- <v-text-field solo></v-text-field> -->
-  </v-layout>
+  <el-row type="flex" class="h_middle">
+
+  </el-row>
 </template>
 <script>
 export default {
@@ -47,6 +45,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .h_middle{
+  height: 100%;
   background-color: rgb(29,35,37);
 }
 </style>

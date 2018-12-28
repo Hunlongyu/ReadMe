@@ -1,9 +1,9 @@
 <template>
-  <v-layout row wrap justify-end align-center grey lighten-3 class="h_top">
+  <el-row type="flex" justify="end" align="middle" class="h_top">
     <span class="min" @click="onFrame('min')"></span>
     <span class="max" @click="onFrame('max')"></span>
     <span class="close" @click="onFrame('close')"></span>
-  </v-layout>
+  </el-row>
 </template>
 <script>
 export default {
@@ -27,6 +27,7 @@ export default {
     display: inline-block;
     height: 40px;
     width: 50px;
+    box-sizing: border-box;
     background-size: 20px auto;
     background-position: center center;
     background-repeat: no-repeat;

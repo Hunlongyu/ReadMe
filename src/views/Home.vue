@@ -1,20 +1,21 @@
 <template>
-  <v-container fluid pa-0 ma-0>
-    <v-layout row fill-height>
-      <div class="h_left">
-        <Left/>
-      </div>
-      <div class="h_middle">
-        <Middle/>
-      </div>
-      <div class="h_right">
-        <Top/>
+  <el-container class="main">
+    <el-aside width="60px">
+      <Left />
+    </el-aside>
+    <el-aside width="270px">
+      <Middle />
+    </el-aside>
+    <el-container>
+      <el-header height="40px">
+        <Top />
+      </el-header>
+      <el-main>
         <Right :is="right"/>
-      </div>
-    </v-layout>
-  </v-container>
+      </el-main>
+    </el-container>
+  </el-container>
 </template>
-
 <script>
 export default {
   name: 'home',
@@ -26,15 +27,10 @@ export default {
 }
 </script>
 <style lang="scss">
-.h_left{
-  width: 60px;
-}
-.h_middle{
-  width: 280px;
-}
-.h_right{
-  flex: 1;
-  // overflow-y: hidden;
-  border: 1px solid #bebebe;
+.main{
+  height: 100%;
+  .el-header{
+    padding: 0;
+  }
 }
 </style>

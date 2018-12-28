@@ -1,19 +1,10 @@
 <template>
-  <v-layout align-start column fill-height class="h_left">
-    <span slot="activator" class="logo"></span>
-    <v-tooltip right>
-      <span slot="activator" class="add" @click="icon('add')"></span>
-      <span>{{$t('add')}}</span>
-    </v-tooltip>
-    <v-tooltip right>
-      <span slot="activator" class="tag" @click="icon('tag')"></span>
-      <span>{{$t('tag')}}</span>
-    </v-tooltip>
-    <v-tooltip right>
-      <span slot="activator" class="set" @click="icon('set')"></span>
-      <span>{{$t('set')}}</span>
-    </v-tooltip>
-  </v-layout>
+  <el-col class="h_left">
+    <span class="logo"></span>
+    <el-tooltip content="add" placement="left" effect="dark" class="add"><span @click="icon('add')"></span></el-tooltip>
+    <el-tooltip content="tag" placement="left" effect="dark" class="tag"><span @click="icon('tag')"></span></el-tooltip>
+    <el-tooltip content="set" placement="left" effect="dark" class="set"><span @click="icon('set')"></span></el-tooltip>
+  </el-col>
 </template>
 <script>
 export default {
@@ -30,6 +21,7 @@ export default {
   -webkit-app-region: drag;
   -webkit-user-select: none;
   background-color: rgb(36,43,46);
+  height: 100%;
   span{
     display: inline-block;
     width: 60px;

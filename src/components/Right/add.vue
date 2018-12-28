@@ -1,46 +1,36 @@
 <template>
-  <v-container grid-list-xs class="add">
-    <v-layout row wrap>
-      <v-text-field solo :placeholder="$t('search_placeholder')" v-model.trim="value" @keyup.enter="search"></v-text-field>
-      <v-btn color="info" class="btn_search" @click="search">{{$t('search')}}</v-btn>
-    </v-layout>
-    <v-layout row wrap ref="list" class="list">
-      <v-data-table
-        :headers="headers"
-        :items="lists"
-        class="theader"
-        v-if="lists.length > 0"
-        hide-actions
-      >
-        <template slot="items" slot-scope="props">
-          <td>{{ props.item.full_name }}</td>
-          <td overflow-hidden>{{ props.item.description }}</td>
-          <td>{{ props.item.stargazers_count }} / {{ props.item.watchers_count }}</td>
-          <td><v-btn color="success">添加</v-btn></td>
+  <el-col class="h_add">
+    <el-input v-model.trim="value" placeholder="search" @keyup.enter="search">
+      <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
+    </el-input>
+    <el-table class="h_table" :data="lists" border style="width: 100%" :default-sort = "{prop: 'date', order: 'descending'}" v-show="tableShow">
+      <el-table-column prop="full_name" label="作者/库名" width="200"></el-table-column>
+      <el-table-column prop="description" label="描述"></el-table-column>
+      <el-table-column prop="stargazers_count" label="star" sortable width="80"></el-table-column>
+      <el-table-column label="编辑" width="145">
+        <template slot-scope="scope">
+          <el-button size="mini" @click="hmtlUrl(scope.row.html_url)">网站</el-button>
+          <el-button size="mini" @click="handleEdit(scope.row)">添加</el-button>
         </template>
-      </v-data-table>
-    </v-layout>
-  </v-container>
+      </el-table-column>
+    </el-table>
+  </el-col>
 </template>
 <script>
+import { shell } from 'electron'
 export default {
   name: 'add',
   data () {
     return {
       value: '',
-      tableShow: true,
-      lists: [],
-      clientHeight: 0,
-      headers: [
+      tableShow: false,
+      lists: [
         {
-          text: 'zuozhe/ku',
-          align: 'left',
-          sortable: false,
-          value: 'name'
-        },
-        { text: 'description', sortable: false, value: 'desc' },
-        { text: 'star / watch', sortable: false, value: 'star' },
-        { text: 'caozuo', align: 'center', sortable: false, value: 'caozuo' }
+          html_url: '',
+          full_name: '',
+          description: '',
+          stargazers_count: 0
+        }
       ]
     }
   },
@@ -51,33 +41,22 @@ export default {
         this.tableShow = true
       })
     },
-    onResize () {
-      this.clientHeight = window.innerHeight
-      this.$refs.list.style.height = this.clientHeight - 180 + 'px'
-      window.onresize = () => {
-        this.clientHeight = `${document.documentElement.clientHeight}`
-        this.$refs.list.style.height = this.clientHeight - 180 + 'px'
-      }
+    hmtlUrl (url) {
+      shell.openExternal(url)
+    },
+    handleEdit (li) {
+      console.log(li)
     }
   },
   mounted () {
-    this.onResize()
-    this.search()
+    // this.search()
   }
 }
 </script>
 <style lang="scss" scoped>
-.add{
-  height: calc(100% - 40px);
-  .btn_search{
-    height: 48px;
-    margin: 0;
-  }
-  .list{
-    overflow-y: scroll;
-    .liTwo{
-      text-overflow: ellipsis;
-    }
+.h_add{
+  .h_table{
+    margin-top: 20px;
   }
 }
 </style>
