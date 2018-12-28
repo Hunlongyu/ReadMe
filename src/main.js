@@ -7,6 +7,7 @@ import Register from './components/register'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import axios from 'axios'
+import './plugins/element.js'
 Vue.prototype.$axios = axios
 Vue.use(Vuetify)
 Register.registerComponents()
