@@ -10,7 +10,7 @@
       <el-header height="40px">
         <Top />
       </el-header>
-      <el-main>
+      <el-main class="h_right">
         <Right :is="right"/>
       </el-main>
     </el-container>
@@ -30,6 +30,10 @@ export default {
 .main{
   height: 100%;
   .el-header{
+    padding: 0;
+  }
+  .h_right{
+    margin: 0;
     padding: 0;
   }
 }

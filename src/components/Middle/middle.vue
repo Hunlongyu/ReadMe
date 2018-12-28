@@ -4,6 +4,7 @@
   </el-row>
 </template>
 <script>
+// import db from '../../plugins/db.js'
 export default {
   name: 'middle',
   methods: {
@@ -30,6 +31,7 @@ export default {
     }
   },
   created () {
+    // db.log()
     // this.one()
     //   .then(data => {
     //     console.log(data)
