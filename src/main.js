@@ -2,18 +2,18 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/router'
 import store from './store/store'
-import i18n from './locales/index'
 import Register from './components/register'
 import axios from 'axios'
-import './plugins/element.js'
+import Element from 'element-ui'
+import './plugins/element-variables.scss'
 import './helper/extenal_link.js'
 Vue.prototype.$axios = axios
+Vue.use(Element)
 Register.registerComponents()
 Vue.config.productionTip = false
 
 new Vue({
   router,
   store,
-  i18n,
   render: h => h(App)
 }).$mount('#app')

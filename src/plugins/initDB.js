@@ -10,30 +10,28 @@ export default class {
   }
 
   initDB (db) {
-    const dirName = process.env.NODE_ENV === 'development' ? '.ReadMe-dev-v2' : '.ReadMe-v2'
+    const dirName = process.env.NODE_ENV === 'development' ? '.readMe-dev-v2' : '.readMe-v2'
     const existsDir = jetpack.exists(this.dataDir.path(dirName))
     if (!existsDir) {
       fs.mkdir(this.dataDir.path(`${dirName}`), (err) => {
         if (err) {}
       })
     }
-    const existsLink = fs.existsSync(this.dataDir.path(`${dirName}/${db.Link}`))
-    const existsConfig = fs.existsSync(this.dataDir.path(`${dirName}/${db.Config}`))
+    const existsLink = fs.existsSync(this.dataDir.path(`${dirName}/${db.link}`))
+    const existsSet = fs.existsSync(this.dataDir.path(`${dirName}/${db.set}`))
     let database = {}
 
-    if (!existsLink) {
-      this.dataDir.write(this.dataDir.path(`${dirName}/${db.Link}`), '')
-    }
-    if (!existsConfig) {
-      this.dataDir.write(this.dataDir.path(`${dirName}/${db.Config}`), '')
+    if (!existsLink && !existsSet) {
+      this.dataDir.write(this.dataDir.path(`${dirName}/${db.link}`), '')
+      this.dataDir.write(this.dataDir.path(`${dirName}/${db.set}`), '')
     }
 
-    database.Link = new Nedb({
-      filename: this.dataDir.path(`${dirName}/${db.Link}`),
+    database.link = new Nedb({
+      filename: this.dataDir.path(`${dirName}/${db.link}`),
       autoload: true
     })
-    database.Config = new Nedb({
-      filename: this.dataDir.path(`${dirName}/${db.Config}`),
+    database.set = new Nedb({
+      filename: this.dataDir.path(`${dirName}/${db.set}`),
       autoload: true
     })
     return database
@@ -45,8 +43,8 @@ export default class {
     }
 
     this.db = this.initDB({
-      Link: 'Link.db',
-      Config: 'Config.db'
+      link: 'link.db',
+      set: 'set.db'
     })
 
     return this.db

@@ -42,7 +42,6 @@
 <script>
 import { shell } from 'electron'
 import db from '../../plugins/db.js'
-import { resolve } from 'url';
 export default {
   name: 'add',
   data () {
@@ -91,7 +90,7 @@ export default {
     addTag (res) {
       let urlOne = 'https://raw.githubusercontent.com/' + res.full_name + '/' + res.default_branch + '/README.md'
       let urtTwo = 'https://raw.githubusercontent.com/' + res.full_name + '/' + res.default_branch + '/readme.md'
-      db.find({full_name: res.full_name}, doc => {
+      db.find({ full_name: res.full_name }, doc => {
         if (doc.length > 0) {
           this.$notify.error({
             title: '添加失败！',
@@ -112,7 +111,7 @@ export default {
               this.link.htmlUrl = res.html_url
               this.link.mdUrl = urtTwo
             }).catch(() => {
-              this.$notify.error({title: '添加失败！', text: 'readme.md 或 REAMD.md 文件不存在~'})
+              this.$notify.error({ title: '添加失败！', text: 'readme.md 或 REAMD.md 文件不存在~' })
             })
           })
         }
@@ -140,7 +139,7 @@ export default {
   mounted () {
     db.log()
     // db.find({_id: 'iEd7kocEST9UMwwG'}, (doc) => { console.log(doc) })
-    // db.test()
+    db.test()
   }
 }
 </script>
