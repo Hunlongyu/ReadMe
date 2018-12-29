@@ -18,11 +18,10 @@ function createWindow () {
   win = new BrowserWindow({
     width: 1600,
     height: 1000,
-    useContentSize: true,
     frame: false
   })
 
-  if (isDevelopment || process.env.IS_TEST) {
+  if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
     if (!process.env.IS_TEST) win.webContents.openDevTools()
@@ -36,16 +35,6 @@ function createWindow () {
     win = null
   })
 }
-
-ipcMain.on('min', e => win.minimize())
-ipcMain.on('max', e => {
-  if (win.isMaximized()) {
-    win.unmaximize()
-  } else {
-    win.maximize()
-  }
-})
-ipcMain.on('close', e => win.close())
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -74,6 +63,16 @@ app.on('ready', async () => {
   }
   createWindow()
 })
+
+ipcMain.on('min', e => win.minimize())
+ipcMain.on('max', e => {
+  if (win.isMaximized()) {
+    win.unmaximize()
+  } else {
+    win.maximize()
+  }
+})
+ipcMain.on('close', e => win.close())
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {

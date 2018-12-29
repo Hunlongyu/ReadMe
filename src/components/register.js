@@ -1,11 +1,11 @@
 import Vue from 'vue'
-import Top from './Top/top'
-import Left from './Left/left'
-import Middle from './Middle/middle'
-import Add from './Right/add'
-import Md from './Right/md'
-import Set from './Right/set'
-import Tag from './Right/tag'
+import Top from './top'
+import Left from './left'
+import Middle from './middle'
+import Add from './add'
+import Md from './md'
+import Set from './set'
+import Tag from './tag'
 
 export default {
   registerComponents () {

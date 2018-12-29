@@ -34,24 +34,24 @@ export default {
     cursor: pointer;
   }
   .min{
-    background-image: url(../../assets/image/min.svg);
+    background-image: url(../assets/image/min.svg);
     &:hover{
       background-color: #d4d4d4;
-      background-image: url(../../assets/image/min_h.svg);
+      background-image: url(../assets/image/min_h.svg);
     }
   }
   .max{
-    background-image: url(../../assets/image/max.svg);
+    background-image: url(../assets/image/max.svg);
     &:hover{
       background-color: #d4d4d4;
-      background-image: url(../../assets/image/max_h.svg);
+      background-image: url(../assets/image/max_h.svg);
     }
   }
   .close{
-    background-image: url(../../assets/image/close.svg);
+    background-image: url(../assets/image/close.svg);
     &:hover{
       background-color: #d4d4d4;
-      background-image: url(../../assets/image/close_h.svg);
+      background-image: url(../assets/image/close_h.svg);
     }
   }
 }

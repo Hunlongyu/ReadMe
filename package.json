@@ -1,23 +1,21 @@
 {
-  "name": "readme",
-  "version": "0.2.6",
-  "description": "readme client",
+  "name": "readme-client",
+  "version": "0.3.0",
   "author": "Hunlongyu <hunlongyu@gmail.com>",
+  "description": "An electron-vue project",
+  "license": "MIT",
+  "main": "background.js",
   "scripts": {
     "lint": "vue-cli-service lint",
     "dev": "vue-cli-service electron:serve",
     "build": "vue-cli-service electron:build",
-    "serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "element-ui": "^2.4.5",
-    "fs-jetpack": "^2.2.0",
+    "element-ui": "^2.4.11",
     "nedb": "^1.8.0",
     "vue": "^2.5.17",
-    "vue-i18n": "^8.4.0",
-    "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
@@ -29,13 +27,9 @@
     "electron": "^4.0.0",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0-0",
-    "material-design-icons-iconfont": "^4.0.3",
-    "node-sass": "^4.9.2",
-    "sass-loader": "^7.0.3",
-    "vue-cli-plugin-electron-builder": "^1.0.0-rc.9",
-    "vue-cli-plugin-element": "^1.0.0",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.1",
+    "vue-cli-plugin-electron-builder": "^1.0.0-rc.10",
     "vue-template-compiler": "^2.5.17"
-  },
-  "license": "MIT",
-  "main": "background.js"
+  }
 }

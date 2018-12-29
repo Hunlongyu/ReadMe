@@ -41,7 +41,7 @@
 </template>
 <script>
 import { shell } from 'electron'
-import db from '../../plugins/db.js'
+// import db from '../../plugins/db.js'
 export default {
   name: 'add',
   data () {
@@ -88,34 +88,34 @@ export default {
       shell.openExternal(url)
     },
     addTag (res) {
-      let urlOne = 'https://raw.githubusercontent.com/' + res.full_name + '/' + res.default_branch + '/README.md'
-      let urtTwo = 'https://raw.githubusercontent.com/' + res.full_name + '/' + res.default_branch + '/readme.md'
-      db.find({ full_name: res.full_name }, doc => {
-        if (doc.length > 0) {
-          this.$notify.error({
-            title: '添加失败！',
-            message: '该库已经存在，请勿重复添加！'
-          })
-        } else {
-          this.$axios.get(urlOne).then(e => {
-            this.tagShow = true
-            this.link.full_name = res.full_name
-            this.link.description = res.description
-            this.link.htmlUrl = res.html_url
-            this.link.mdUrl = urlOne
-          }).catch(() => {
-            this.$axios.get(urtTwo).then(e => {
-              this.tagShow = true
-              this.link.full_name = res.full_name
-              this.link.description = res.description
-              this.link.htmlUrl = res.html_url
-              this.link.mdUrl = urtTwo
-            }).catch(() => {
-              this.$notify.error({ title: '添加失败！', text: 'readme.md 或 REAMD.md 文件不存在~' })
-            })
-          })
-        }
-      })
+      // let urlOne = 'https://raw.githubusercontent.com/' + res.full_name + '/' + res.default_branch + '/README.md'
+      // let urtTwo = 'https://raw.githubusercontent.com/' + res.full_name + '/' + res.default_branch + '/readme.md'
+      // db.find({ full_name: res.full_name }, doc => {
+      //   if (doc.length > 0) {
+      //     this.$notify.error({
+      //       title: '添加失败！',
+      //       message: '该库已经存在，请勿重复添加！'
+      //     })
+      //   } else {
+      //     this.$axios.get(urlOne).then(e => {
+      //       this.tagShow = true
+      //       this.link.full_name = res.full_name
+      //       this.link.description = res.description
+      //       this.link.htmlUrl = res.html_url
+      //       this.link.mdUrl = urlOne
+      //     }).catch(() => {
+      //       this.$axios.get(urtTwo).then(e => {
+      //         this.tagShow = true
+      //         this.link.full_name = res.full_name
+      //         this.link.description = res.description
+      //         this.link.htmlUrl = res.html_url
+      //         this.link.mdUrl = urtTwo
+      //       }).catch(() => {
+      //         this.$notify.error({ title: '添加失败！', text: 'readme.md 或 REAMD.md 文件不存在~' })
+      //       })
+      //     })
+      //   }
+      // })
     },
     cancel () {
       this.tagShow = false
@@ -123,10 +123,10 @@ export default {
     save () {
       if (this.tag !== '') {
         this.link.tag = this.tag
-        db.add(this.link, (doc) => {
-          console.log(doc)
-          this.tagShow = false
-        })
+        // db.add(this.link, (doc) => {
+        //   console.log(doc)
+        //   this.tagShow = false
+        // })
       } else {
         this.$notify.error({
           title: '添加失败！',
@@ -137,9 +137,9 @@ export default {
     }
   },
   mounted () {
-    db.log()
+    // db.log()
     // db.find({_id: 'iEd7kocEST9UMwwG'}, (doc) => { console.log(doc) })
-    db.test()
+    // db.test()
   }
 }
 </script>

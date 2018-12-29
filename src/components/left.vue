@@ -33,33 +33,33 @@ export default {
     background-repeat: no-repeat;
   }
   .logo{
-    background-image: url(../../assets/image/logo.svg);
+    background-image: url(../assets/image/logo.svg);
   }
   .add{
     -webkit-app-region: no-drag;
-    background-image: url(../../assets/image/add_d.svg);
+    background-image: url(../assets/image/add_d.svg);
     cursor: pointer;
     &:hover{
       background-color: #30373a;
-      background-image: url(../../assets/image/add_h.svg);
+      background-image: url(../assets/image/add_h.svg);
     }
   }
   .tag{
     -webkit-app-region: no-drag;
-    background-image: url(../../assets/image/tag_d.svg);
+    background-image: url(../assets/image/tag_d.svg);
     cursor: pointer;
     &:hover{
       background-color: #30373a;
-      background-image: url(../../assets/image/tag_h.svg);
+      background-image: url(../assets/image/tag_h.svg);
     }
   }
   .set{
     -webkit-app-region: no-drag;
-    background-image: url(../../assets/image/set_d.svg);
+    background-image: url(../assets/image/set_d.svg);
     cursor: pointer;
     &:hover{
       background-color: #30373a;
-      background-image: url(../../assets/image/set_h.svg);
+      background-image: url(../assets/image/set_h.svg);
     }
   }
 }
