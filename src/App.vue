@@ -18,14 +18,14 @@
 </template>
 
 <script>
-
 export default {
   name: 'app',
   computed: {
     right () {
       return this.$store.state.view
     }
-  }
+  },
+  created () {}
 }
 </script>
 
