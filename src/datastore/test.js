@@ -3,9 +3,7 @@ import DataStore from 'electron-json-storage'
 
 const dirName = process.env.NODE_ENV === 'development' ? '\\.readme-dev' : '\\readme'
 DataStore.setDataPath(os.homedir() + dirName)
-console.log(DataStore.getDataPath())
 
-// DataStore.set('list', { _id: '1' })
 class DB {
   log () {
     console.log('this is db log')
