@@ -1,23 +1,19 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <div>
-      <a-button type="primary">Primary</a-button>
-      <a-button>Default</a-button>
-      <a-button type="dashed">Dashed</a-button>
-      <a-button type="danger">Danger</a-button>
-    </div>
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Left />
+    <Mid />
+    <!-- <Right :is="right" /> -->
+    <span>{{log}}</span>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'app',
-  components: {
-    HelloWorld
+  computed: {
+    log () {
+      return this.$store.state.oneLog
+    }
   }
 }
 </script>
