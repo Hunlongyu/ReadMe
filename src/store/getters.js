@@ -9,3 +9,7 @@ export const getVersion = state => {
 export const getRight = state => {
   return state.right
 }
+
+export const getMdUrl = state => {
+  return state.mdUrl
+}

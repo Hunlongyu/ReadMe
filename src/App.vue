@@ -3,7 +3,6 @@
     <Left />
     <Mid />
     <Right :is="getRight" />
-    <a-button @click="changeRight">change right</a-button>
   </div>
 </template>
 

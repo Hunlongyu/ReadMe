@@ -36,7 +36,7 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: rgb(36,43,46);
+  background-color: #242b2e;
   span{
     display: inline-block;
     width: 60px;

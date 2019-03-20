@@ -1,5 +1,5 @@
-export const actOne = ({ commit }, payload) => {
-  commit('CHANGE_ONE_LOG', payload)
+export const openMd = ({ commit }, payload) => {
+  commit('CHANGE_MDURL', payload)
 }
 
 export const actTwo = ({ commit }, payload) => {
