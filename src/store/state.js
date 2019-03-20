@@ -1,7 +1,6 @@
-const state = {
-  oneLog: 'oneLog',
-  twoLog: 'twoLog',
-  threeLog: 'threeLog'
+export default {
+  name: 'readme',
+  version: '0.4.1',
+  db: null,
+  right: 'add'
 }
-
-export default state

@@ -1,11 +1,11 @@
-export const getOneLog = state => {
-  return state.oneLog
+export const getName = state => {
+  return state.name
 }
 
-export const getTwoLog = state => {
-  return state.twoLog
+export const getVersion = state => {
+  return state.version
 }
 
-export const getThreeLog = state => {
-  return state.threeLog
+export const getRight = state => {
+  return state.right
 }
