@@ -23,8 +23,8 @@ export default {
   data () {
     return {
       markdown: null,
-      // url: 'https://raw.githubusercontent.com/vueComponent/ant-design-vue/master/README-zh_CN.md',
-      url: 'https://raw.githubusercontent.com/liriliri/eruda/master/README.md'
+      url: 'https://raw.githubusercontent.com/vueComponent/ant-design-vue/master/README-zh_CN.md'
+      // url: 'https://raw.githubusercontent.com/liriliri/eruda/master/README.md'
     }
   },
   methods: {
