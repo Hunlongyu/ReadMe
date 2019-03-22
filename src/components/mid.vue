@@ -1,39 +1,56 @@
 <template>
-  <!-- <div class="mid">mid</div> -->
   <a-row id="mid">
     <a-affix :offsetTop="1">
       <a-col class="searchBox">
-        <a-input-search placeholder="input search text" @search="onSearch" class="search" />
+        <a-input-search placeholder="input search text" class="search" v-model="sTxt" @change="onChange"/>
       </a-col>
     </a-affix>
     <a-col class="list">
-      <a-list size="small">
-        <a-list-item v-for="(i, j) in db" :key="j" @click="listClick(j)">{{i}}</a-list-item>
+      <a-list size="small" v-if="sTxt === ''">
+        <a-list-item v-for="(i, j) in db" :key="j" @click="listClick(i)">{{i.repository}}</a-list-item>
+      </a-list>
+      <a-list size="small" v-if="sTxt !== ''">
+        <a-list-item v-for="(k, l) in sdb" :key="l" @click="listClick(k)">{{k.repository}}</a-list-item>
       </a-list>
     </a-col>
   </a-row>
 </template>
 <script>
+import DB from '../database/db'
 export default {
   name: 'mid',
   data () {
     return {
-      db: [
-        'ladk',
-        'adfklasdf',
-        'asdfa'
-      ]
+      sTxt: '',
+      db: [],
+      sdb: []
     }
   },
   methods: {
-    onSearch (val) {
-      console.log(val)
+    showList () {
+      DB.md.orderBy('clickNum').reverse().limit(50).toArray(e => {
+        this.db = e
+      })
+    },
+    onChange () {
+      DB.md.where('repository').startsWithIgnoreCase(this.sTxt).toArray(e => {
+        this.sdb = e
+      })
     },
     listClick (val) {
-      console.log(val)
-      let url = 'https://raw.githubusercontent.com/vueComponent/ant-design-vue/master/README-zh_CN.md'
-      this.$store.commit('CHANGE_MDURL', url)
+      let id = val.id
+      let n = val.clickNum + 1
+      let url = val.mdUrl
+      this.$store.dispatch('openMd', url)
+      DB.md.update(id, { clickNum: n }).then((updated) => {
+        if (updated) {
+          this.showList()
+        }
+      })
     }
+  },
+  created () {
+    this.showList()
   }
 }
 </script>
@@ -56,6 +73,7 @@ export default {
     }
   }
   .list{
+    user-select: none;
     .ant-list{
       color: #fff;
       text-indent: 15px;

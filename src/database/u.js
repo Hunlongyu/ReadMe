@@ -85,3 +85,5 @@ table.orderBy(':id').limit(10).each(e => {}) // 获取按id排序的前10个数�
 table.where('repository').startsWithIgnoreCase('Hun').each(md => {}) // 包含字母，忽略大小写
 table.where('repository').equalsIgnoreCase('Hun').each(md => {}) // 相同单词，忽略大小写
 table.where('repository').equalsIgnoreCase('Hun').toArray(md => {}) // 返回数组
+
+db.delete() // 清空数据库（慎用！！）

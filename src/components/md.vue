@@ -22,9 +22,23 @@ export default {
   name: 'md',
   data () {
     return {
-      markdown: null,
-      url: 'https://raw.githubusercontent.com/vueComponent/ant-design-vue/master/README-zh_CN.md'
-      // url: 'https://raw.githubusercontent.com/liriliri/eruda/master/README.md'
+      markdown: null
+    }
+  },
+  computed: {
+    url () {
+      let u = this.$store.getters.getMdUrl
+      if (u === '') {
+        u = 'https://raw.githubusercontent.com/vueComponent/ant-design-vue/master/README-zh_CN.md'
+      }
+      return u
+    }
+  },
+  watch: {
+    url (curval, oldval) {
+      if (curval !== oldval) {
+        this.getMd()
+      }
     }
   },
   methods: {
