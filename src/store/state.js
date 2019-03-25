@@ -3,5 +3,6 @@ export default {
   version: '0.4.1',
   db: null,
   right: 'add',
-  mdUrl: ''
+  mdUrl: '',
+  refresh: false
 }

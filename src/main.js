@@ -9,7 +9,7 @@ import hljs from 'highlight.js'
 import 'github-markdown-css'
 import 'highlight.js/styles/github.css'
 
-import { Button, Row, Col, Tooltip, Input, List, Affix, Table, notification, message, Modal, AutoComplete } from 'ant-design-vue'
+import { Button, Row, Col, Tooltip, Input, List, Affix, Table, notification, message, Modal, AutoComplete, Spin } from 'ant-design-vue'
 Vue.use(Button)
 Vue.use(Row)
 Vue.use(Col)
@@ -19,8 +19,8 @@ Vue.use(List)
 Vue.use(Affix)
 Vue.use(Table)
 Vue.use(Modal)
-// Vue.use(Select)
 Vue.use(AutoComplete)
+Vue.use(Spin)
 Vue.prototype.$message = message
 Vue.prototype.$notification = notification
 

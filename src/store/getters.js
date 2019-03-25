@@ -13,3 +13,7 @@ export const getRight = state => {
 export const getMdUrl = state => {
   return state.mdUrl
 }
+
+export const getRefresh = state => {
+  return state.refresh
+}

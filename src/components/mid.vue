@@ -1,10 +1,10 @@
 <template>
   <a-row id="mid">
     <a-affix :offsetTop="1">
-      <a-col class="searchBox">
-        <a-input-search placeholder="input search text" class="search" v-model="sTxt" @change="onChange"/>
-      </a-col>
     </a-affix>
+    <a-col class="searchBox">
+      <a-input-search placeholder="input search text" class="search" v-model="sTxt" @change="onChange"/>
+    </a-col>
     <a-col class="list">
       <a-list size="small" v-if="sTxt === ''">
         <a-list-item v-for="(i, j) in db" :key="j" @click="listClick(i)">{{i.repository}}</a-list-item>
@@ -24,6 +24,19 @@ export default {
       sTxt: '',
       db: [],
       sdb: []
+    }
+  },
+  computed: {
+    refresh () {
+      return this.$store.getters.getRefresh
+    }
+  },
+  watch: {
+    refresh (refresh) {
+      if (refresh) {
+        this.showList()
+        this.$store.commit('CHANGE_REFRESH', false)
+      }
     }
   },
   methods: {
@@ -56,6 +69,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 #mid{
+  position: relative;
   width: 270px;
   min-width: 270px;
   background-color: #1d2325;
@@ -65,6 +79,11 @@ export default {
     height: 0;
   }
   .searchBox{
+    position: fixed;
+    top: 0;
+    left: 60px;
+    width: 270px;
+    z-index: 999;
     text-align: center;
     background-color: #1d2325;
     .search{
@@ -73,6 +92,7 @@ export default {
     }
   }
   .list{
+    margin-top: 52px;
     user-select: none;
     .ant-list{
       color: #fff;
