@@ -82,6 +82,7 @@ export default {
       let fn = this.item.full_name
       db.md.where('repository').equals(fn).toArray(e => {
         if (e.length >= 1) {
+          this.btnLoading = 100
           this.$message.warning('已存在，不能重复添加！')
         } else {
           this.checkMd()
