@@ -4,5 +4,6 @@ export default {
   db: null,
   right: 'add',
   mdUrl: '',
+  dbID: null,
   refresh: false
 }

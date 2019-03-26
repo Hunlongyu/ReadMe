@@ -1,7 +1,5 @@
 <template>
   <a-row id="mid">
-    <a-affix :offsetTop="1">
-    </a-affix>
     <a-col class="searchBox">
       <a-input-search placeholder="input search text" class="search" v-model="sTxt" @change="onChange"/>
     </a-col>
@@ -55,6 +53,7 @@ export default {
       let n = val.clickNum + 1
       let url = val.mdUrl
       this.$store.dispatch('openMd', url)
+      this.$store.commit('CHANGE_DBID', id)
       DB.md.update(id, { clickNum: n }).then((updated) => {
         if (updated) {
           this.showList()

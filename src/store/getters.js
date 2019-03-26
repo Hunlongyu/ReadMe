@@ -14,6 +14,10 @@ export const getMdUrl = state => {
   return state.mdUrl
 }
 
+export const getDBID = state => {
+  return state.dbID
+}
+
 export const getRefresh = state => {
   return state.refresh
 }

@@ -7,6 +7,10 @@ export const CHANGE_MDURL = (state, payload) => {
   state.mdUrl = payload
 }
 
+export const CHANGE_DBID = (state, payload) => {
+  state.dbID = payload
+}
+
 export const CHANGE_REFRESH = (state, payload) => {
   state.refresh = payload
 }

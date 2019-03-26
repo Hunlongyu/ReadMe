@@ -1,13 +1,42 @@
 <template>
   <a-row id="md">
-    <a-row class="top">top</a-row>
+    <a-row class="top">
+      <a-button type="primary" @click="home">官网</a-button>
+      <a-button @click="modify">修改</a-button>
+      <a-popconfirm placement="bottomRight" okText="Yes" cancelText="No" @confirm="confirm">
+        <template slot="title">
+            <p>是否确定删除该数据</p>
+        </template>
+        <a-button type="danger">删除</a-button>
+      </a-popconfirm>
+    </a-row>
     <a-row class="markdown-body">
       <div v-html="markdown" v-highlight></div>
     </a-row>
+    <a-modal class="modify" title="修改" :visible="visible" @ok="handleOk" @cancel="handleCancel" >
+      <a-form>
+        <a-form-item label="作者/库：" :labelCol="{span: 3}" :wrapperCol="{span: 21}">
+          <a-input v-model="d.repository"></a-input>
+        </a-form-item>
+        <a-form-item label="标签：" :labelCol="{span: 3}" :wrapperCol="{span: 21}">
+          <a-input v-model="d.tag"></a-input>
+        </a-form-item>
+        <a-form-item label="官网：" :labelCol="{span: 3}" :wrapperCol="{span: 21}">
+          <a-input v-model="d.htmlUrl"></a-input>
+        </a-form-item>
+        <a-form-item label="MD地址：" :labelCol="{span: 3}" :wrapperCol="{span: 21}">
+          <a-input v-model="d.mdUrl"></a-input>
+        </a-form-item>
+        <a-form-item label="描述：" :labelCol="{span: 3}" :wrapperCol="{span: 21}">
+          <a-textarea v-model="d.description" :rows="4"/>
+        </a-form-item>
+      </a-form>
+    </a-modal>
   </a-row>
 </template>
 <script>
 import marked from 'marked'
+import DB from '../database/db'
 marked.setOptions({
   renderer: new marked.Renderer(),
   gfm: true,
@@ -22,7 +51,9 @@ export default {
   name: 'md',
   data () {
     return {
-      markdown: null
+      markdown: null,
+      visible: false,
+      d: {}
     }
   },
   computed: {
@@ -32,6 +63,9 @@ export default {
         u = 'https://raw.githubusercontent.com/vueComponent/ant-design-vue/master/README-zh_CN.md'
       }
       return u
+    },
+    id () {
+      return this.$store.getters.getDBID
     }
   },
   watch: {
@@ -63,6 +97,35 @@ export default {
       for (let i = 0; i < a.length; i++) {
         a[i].target = '_blank'
       }
+    },
+    home () {
+      DB.md.get(this.id).then(e => {
+        window.open(e.htmlUrl, '_blank')
+      })
+    },
+    modify () {
+      this.visible = true
+      DB.md.get(this.id).then(e => {
+        this.d = e
+      })
+    },
+    handleOk () {
+      DB.md.put(this.d).then(() => {
+        this.$message.success('修改成功')
+      }).catch(() => {
+        this.$message.warning('修改失败，请重试')
+      })
+      this.visible = false
+    },
+    handleCancel () {
+      this.visible = false
+      this.$message.info('未修改')
+    },
+    confirm () {
+      DB.md.delete(this.id)
+      this.$message.success('删除成功')
+      this.$store.commit('CHANGE_REFRESH', true)
+      this.$store.commit('CHANGE_RIGHT', 'add')
     }
   },
   mounted () {
@@ -79,12 +142,38 @@ export default {
     width: 1px;
     height: 0;
   }
+  .top{
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    button{
+      margin: 10px 20px 10px 0;
+    }
+  }
+  .modify{
+    .min{
+      margin-top: 10px;
+    }
+  }
   .markdown-body{
     padding: 20px;
     height: 100%;
     img{
       max-width: 80%;
     }
+  }
+  #components-back-top-demo-custom .ant-back-top {
+    bottom: 100px;
+  }
+  #components-back-top-demo-custom .ant-back-top-inner {
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    border-radius: 4px;
+    background-color: #1088e9;
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
   }
 }
 </style>
