@@ -10,7 +10,10 @@
         <a-button type="danger">删除</a-button>
       </a-popconfirm>
     </a-row>
-    <a-row class="markdown-body">
+    <a-col class="spin" v-show="spinShow">
+      <a-spin tip="Loading"></a-spin>
+    </a-col>
+    <a-row class="markdown-body" v-show="!spinShow">
       <div v-html="markdown" v-highlight></div>
     </a-row>
     <a-modal class="modify" title="修改" :visible="visible" @ok="handleOk" @cancel="handleCancel" >
@@ -53,6 +56,7 @@ export default {
     return {
       markdown: null,
       visible: false,
+      spinShow: true,
       d: {}
     }
   },
@@ -60,7 +64,7 @@ export default {
     url () {
       let u = this.$store.getters.getMdUrl
       if (u === '') {
-        u = 'https://raw.githubusercontent.com/vueComponent/ant-design-vue/master/README-zh_CN.md'
+        u = 'https://raw.githubusercontent.com/Hunlongyu/ReadMe-client/dev/README.md'
       }
       return u
     },
@@ -77,12 +81,14 @@ export default {
   },
   methods: {
     getMd () {
+      this.spinShow = true
       this.$http.get(this.url).then((res) => {
         let md = marked(res.data)
         this.markdown = md
         this.$nextTick(() => {
           this.changePicSize()
           this.changeALink()
+          this.spinShow = false
         })
       })
     },
@@ -174,6 +180,10 @@ export default {
     color: #fff;
     text-align: center;
     font-size: 20px;
+  }
+  .spin{
+    margin-top: 20px;
+    text-align: center;
   }
 }
 </style>
