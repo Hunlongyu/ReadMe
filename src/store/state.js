@@ -1,8 +1,8 @@
 export default {
-  name: 'readme',
+  name: 'ReadMe',
   version: '0.4.1',
   db: null,
-  right: 'tag',
+  right: 'set',
   mdUrl: '',
   dbID: null,
   refresh: false
