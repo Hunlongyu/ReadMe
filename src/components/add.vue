@@ -15,7 +15,7 @@
       <table>
         <thead class="ant-table-thead">
           <tr>
-            <th>作者/库：</th>
+            <th>作者/库</th>
             <th>Star</th>
             <th>Watch</th>
             <th>描述</th>
