@@ -1,6 +1,6 @@
 {
-  "name": "readme-client",
-  "version": "0.1.0",
+  "name": "readme-pwa",
+  "version": "0.4.8",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
