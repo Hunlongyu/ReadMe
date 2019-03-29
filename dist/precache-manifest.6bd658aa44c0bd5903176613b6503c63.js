@@ -24,20 +24,20 @@ self.__precacheManifest = [
     "url": "img/add_d.3e414d18.svg"
   },
   {
-    "revision": "aa4f815eab6f8183a19a418fd215353e",
-    "url": "img/add_h.aa4f815e.svg"
-  },
-  {
     "revision": "8e8098bde5113cf78994f0aca4074a51",
     "url": "img/tag_d.8e8098bd.svg"
   },
   {
-    "revision": "de5a6e463f54f131c438bc2ce65cd6cf",
-    "url": "img/tag_h.de5a6e46.svg"
-  },
-  {
     "revision": "416c5ece4c44255319687ea2d554d7e4",
     "url": "img/set_d.416c5ece.svg"
+  },
+  {
+    "revision": "aa4f815eab6f8183a19a418fd215353e",
+    "url": "img/add_h.aa4f815e.svg"
+  },
+  {
+    "revision": "de5a6e463f54f131c438bc2ce65cd6cf",
+    "url": "img/tag_h.de5a6e46.svg"
   },
   {
     "revision": "2a03601853beb6da47888ed70361b85e",
