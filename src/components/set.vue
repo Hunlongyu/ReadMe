@@ -3,8 +3,6 @@
     <a-row class="settings">
       <h1>设置</h1>
       <a-list :split="false">
-        <a-list-item><a-button @click="addToDeskTop">添加桌面</a-button></a-list-item>
-        <a-list-item><a-button :loading="upgradeLoading" @click="upgrade">{{upgradeLoading ? '检  查' : '检查更新'}}</a-button></a-list-item>
         <a-list-item>
           <a-popconfirm placement="bottomLeft" okText="Yes" cancelText="No" @confirm="confirm">
             <template slot="title">
@@ -32,11 +30,6 @@
 import db from '../database/db'
 export default {
   name: 'set',
-  data () {
-    return {
-      upgradeLoading: false
-    }
-  },
   computed: {
     name () {
       return this.$store.getters.getName
@@ -46,15 +39,10 @@ export default {
     }
   },
   methods: {
-    addToDeskTop () {
-      console.log('添加到桌面')
-    },
-    upgrade () {
-      this.upgradeLoading = true
-    },
     confirm () {
-      db.md.clear()
+      db.delete()
       this.$message.success('清除成功！')
+      window.location.reload()
     }
   }
 }
