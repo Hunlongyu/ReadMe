@@ -1,6 +1,6 @@
 export default {
   name: 'ReadMe',
-  version: '0.4.8',
+  version: '0.4.9',
   db: null,
   right: 'add',
   mdUrl: '',

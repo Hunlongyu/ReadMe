@@ -1,6 +1,6 @@
 {
-  "name": "readme-client",
-  "short_name": "readme-client",
+  "name": "ReadMe",
+  "short_name": "ReadMe PWA",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
