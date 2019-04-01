@@ -9,7 +9,7 @@
 <img src="https://img.shields.io/github/license/Hunlongyu/ReadMe.svg">
 </p>
 
-[官网](https://ReadMe.hunlongyu.fun)
+[官网](https://hunlongyu.github.io/ReadMe/)
 
 一些 Javascript 库，一般会在 README.md 里介绍使用方法。该项目则可以收集、整理 、查看 Github 上 README 文件。
 
