@@ -39,7 +39,7 @@
 </template>
 <script>
 import marked from 'marked'
-import DB from '../database/db'
+import db from '../database/nedb'
 marked.setOptions({
   renderer: new marked.Renderer(),
   gfm: true,
@@ -105,21 +105,23 @@ export default {
       }
     },
     home () {
-      DB.md.get(this.id).then(e => {
-        window.open(e.htmlUrl, '_blank')
+      db.find({ _id: this.id }, (e, d) => {
+        window.open(d[0].htmlUrl, '_blank')
       })
     },
     modify () {
-      this.visible = true
-      DB.md.get(this.id).then(e => {
-        this.d = e
+      db.find({ _id: this.id }, (e, d) => {
+        this.d = d[0]
+        this.visible = true
       })
     },
     handleOk () {
-      DB.md.put(this.d).then(() => {
-        this.$message.success('修改成功')
-      }).catch(() => {
-        this.$message.warning('修改失败，请重试')
+      db.insert(this.d, (e, c) => {
+        if (e !== null) {
+          this.$message.success('修改成功')
+        } else {
+          this.$message.warning('修改失败，请重试')
+        }
       })
       this.visible = false
     },
@@ -128,10 +130,15 @@ export default {
       this.$message.info('未修改')
     },
     confirm () {
-      DB.md.delete(this.id)
-      this.$message.success('删除成功')
-      this.$store.commit('CHANGE_REFRESH', true)
-      this.$store.commit('CHANGE_RIGHT', 'add')
+      db.remove({ _id: this.id }, {}, (e, d) => {
+        if (e === null) {
+          this.$message.success('删除成功')
+          this.$store.commit('CHANGE_REFRESH', true)
+          this.$store.commit('CHANGE_RIGHT', 'add')
+        } else {
+          this.$message.warning('删除失败，请重试')
+        }
+      })
     }
   },
   mounted () {

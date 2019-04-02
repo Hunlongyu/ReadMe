@@ -27,7 +27,7 @@
   </a-row>
 </template>
 <script>
-import db from '../database/db'
+import db from '../database/nedb'
 export default {
   name: 'set',
   computed: {
@@ -40,9 +40,14 @@ export default {
   },
   methods: {
     confirm () {
-      db.delete()
-      this.$message.success('清除成功！')
-      window.location.reload()
+      db.remove({}, { multi: true }, (e, n) => {
+        if (e === null) {
+          this.$message.success('清除成功！')
+          // window.location.reload()
+        } else {
+          this.$message.warning('清除失败，请重试！')
+        }
+      })
     }
   }
 }

@@ -50,7 +50,7 @@
   </a-row>
 </template>
 <script>
-import db from '../database/db'
+import db from '../database/nedb'
 export default {
   name: 'tag',
   data () {
@@ -66,13 +66,16 @@ export default {
   },
   methods: {
     getTags () {
-      let a = []
-      db.md.each(md => {
-        let n = a.indexOf(md.tag)
-        if (n === -1) {
-          a.push(md.tag)
+      let tags = []
+      db.find({}, (e, d) => {
+        for (let i = 0; i < d.length; i++) {
+          let m = d[i].tag
+          let n = tags.indexOf(m)
+          if (n === -1) {
+            tags.push(m)
+          }
         }
-        this.tags = a
+        this.tags = tags
       })
     },
     getDBNum () {
@@ -86,8 +89,8 @@ export default {
     },
     showTagDB (e) {
       let key = this.tags[this.activeNum]
-      db.md.where('tag').equals(key).toArray(e => {
-        this.data = e
+      db.find({ 'tag': key }, (e, d) => {
+        this.data = d
         this.tableShow = true
       })
     },
@@ -96,10 +99,13 @@ export default {
       this.$store.dispatch('openMd', url)
     },
     handleOk () {
-      db.md.put(this.d).then(() => {
-        this.$message.success('修改成功')
-      }).catch(() => {
-        this.$message.warning('修改失败，请重试')
+      db.insert(this.d, (e, c) => {
+        if (e !== null) {
+          this.$message.success('修改成功')
+          this.$store.commit('CHANGE_REFRESH', true)
+        } else {
+          this.$message.warning('修改失败，请重试')
+        }
       })
       this.visible = false
     },
@@ -119,7 +125,7 @@ export default {
   },
   created () {
     this.getTags()
-    this.getDBNum()
+    // this.getDBNum()
   }
 }
 </script>

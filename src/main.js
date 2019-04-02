@@ -5,6 +5,7 @@ import './registerServiceWorker'
 import Register from './components/register'
 import axios from 'axios'
 import hljs from 'highlight.js'
+// import './database/nedb'
 
 import 'github-markdown-css'
 import 'highlight.js/styles/github.css'
