@@ -14,7 +14,6 @@
   </a-row>
 </template>
 <script>
-// import DB from '../database/db'
 import db from '../database/nedb'
 export default {
   name: 'mid',
@@ -51,14 +50,10 @@ export default {
       })
     },
     listClick (val) {
-      let id = val._id
-      let n = val.clickNum + 1
-      let url = val.mdUrl
-      console.log(id, n, url)
-      this.$store.dispatch('openMd', url)
-      this.$store.commit('CHANGE_DBID', id)
-      db.update(id, { clickNum: n }, (e, d) => {
-        console.log(e, d)
+      val.clickNum += 1
+      this.$store.dispatch('openMd', val.mdUrl)
+      this.$store.commit('CHANGE_DBID', val._id)
+      db.update({ _id: val._id }, { $set: val }, (e, d) => {
         this.showList()
       })
     }
