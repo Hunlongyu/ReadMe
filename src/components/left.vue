@@ -1,9 +1,6 @@
 <template>
   <a-row id="left">
     <a-row>
-      <span class="logo"></span>
-    </a-row>
-    <a-row>
      <a-tooltip v-for="(i, j) in li" :key="j" placement="right" @click="iconClick(i)" :class="i">
        <template slot="title">
          <span>{{title[j]}}</span>
@@ -46,9 +43,6 @@ export default {
     background-size: 30px auto;
     background-position: center center;
     background-repeat: no-repeat;
-  }
-  .logo{
-    background-image: url(../assets/img/logo.svg);
   }
   .add{
     background-image: url(../assets/img/add_d.svg);

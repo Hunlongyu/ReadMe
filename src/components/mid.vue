@@ -14,7 +14,8 @@
   </a-row>
 </template>
 <script>
-import DB from '../database/db'
+// import DB from '../database/db'
+import db from '../database/nedb'
 export default {
   name: 'mid',
   data () {
@@ -39,25 +40,26 @@ export default {
   },
   methods: {
     showList () {
-      DB.md.orderBy('clickNum').reverse().limit(50).toArray(e => {
-        this.db = e
+      db.find({}).sort({ clickNum: -1 }).limit(50).exec((e, d) => {
+        this.db = d
       })
     },
     onChange () {
-      DB.md.where('repository').startsWithIgnoreCase(this.sTxt).toArray(e => {
-        this.sdb = e
+      let reg = new RegExp(this.sTxt)
+      db.find({ repository: reg }, (e, d) => {
+        this.sdb = d
       })
     },
     listClick (val) {
-      let id = val.id
+      let id = val._id
       let n = val.clickNum + 1
       let url = val.mdUrl
+      console.log(id, n, url)
       this.$store.dispatch('openMd', url)
       this.$store.commit('CHANGE_DBID', id)
-      DB.md.update(id, { clickNum: n }).then((updated) => {
-        if (updated) {
-          this.showList()
-        }
+      db.update(id, { clickNum: n }, (e, d) => {
+        console.log(e, d)
+        this.showList()
       })
     }
   },

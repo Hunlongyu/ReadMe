@@ -24,7 +24,7 @@
         </thead>
         <tbody class="ant-table-tbody">
           <tr v-for="(i, j) in data" :key="j">
-            <td><a target="_blank" :href="i.html_url">{{i.full_name}}</a></td>
+            <td class="htmlUrl"><a target="_blank" :href="i.html_url">{{i.full_name}}</a></td>
             <td>{{i.stargazers_count}}</td>
             <td>{{i.watchers_count}}</td>
             <td>{{i.description}}</td>
@@ -41,7 +41,7 @@
   </a-row>
 </template>
 <script>
-import db from '../database/db'
+import db from '../database/nedb'
 export default {
   name: 'add',
   data () {
@@ -62,6 +62,7 @@ export default {
       if (val === '') {
         this.$message.warning('请输入您要搜索的内容')
       } else {
+        this.loading = false
         let q = val.replace(/\s+/g, '')
         this.spinShow = true
         this.$http.get('https://api.github.com/search/repositories?q=' + q).then(res => {
@@ -80,8 +81,8 @@ export default {
       this.item = e
       this.btnLoading = j
       let fn = this.item.full_name
-      db.md.where('repository').equals(fn).toArray(e => {
-        if (e.length >= 1) {
+      db.find({ repository: fn }, (e, d) => {
+        if (d.length >= 1) {
           this.btnLoading = 100
           this.$message.warning('已存在，不能重复添加！')
         } else {
@@ -117,13 +118,16 @@ export default {
       }
     },
     getDBTag () {
-      let a = []
-      db.md.each(md => {
-        let n = a.indexOf(md.tag)
-        if (n === -1) {
-          a.push(md.tag)
+      let tags = []
+      db.find({}, (e, d) => {
+        for (let i = 0; i < d.length; i++) {
+          let m = d[i].tag
+          let n = tags.indexOf(m)
+          if (n === -1) {
+            tags.push(m)
+          }
         }
-        this.tag = a
+        this.tag = tags
       })
     },
     filterOption (input, option) {
@@ -150,11 +154,13 @@ export default {
         mdUrl: this.mdUrl,
         clickNum: 0
       }
-      db.md.add(d).then(() => {
-        this.$message.success('添加成功')
-        this.$store.commit('CHANGE_REFRESH', true)
-      }).catch(() => {
-        this.$message.error('添加失败，请重新尝试')
+      db.insert(d, (e, c) => {
+        if (e) {
+          this.$message.error('添加失败，请重新尝试')
+        } else {
+          this.$message.success('添加成功')
+          this.$store.commit('CHANGE_REFRESH', true)
+        }
       })
     }
   },
@@ -178,6 +184,15 @@ export default {
   .spin{
     margin-top: 20px;
     text-align: center;
+  }
+  .htmlUrl{
+    a{
+      display: inline-block;
+      max-width: 300px;
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+    }
   }
 }
 </style>
