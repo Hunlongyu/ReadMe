@@ -116,14 +116,15 @@ export default {
       })
     },
     handleOk () {
-      db.insert(this.d, (e, c) => {
-        if (e !== null) {
-          this.$message.success('修改成功')
-        } else {
+      db.update({ _id: this.d._id }, { $set: this.d }, (err, num) => {
+        if (err) {
           this.$message.warning('修改失败，请重试')
+        } else {
+          this.$message.success('修改成功')
+          this.$store.commit('CHANGE_REFRESH', true)
         }
+        this.visible = false
       })
-      this.visible = false
     },
     handleCancel () {
       this.visible = false

@@ -4,7 +4,7 @@
       <a-tag v-for="(i, j) in tags" :key="j" :color="activeNum === j ? 'blue' : ''" @click="tagClick(j)">{{i}}</a-tag>
     </a-row>
     <a-row>
-      <a-col>该标签共有：{{data.length}} 条数据，一共有：{{dbNum}} 条数据。</a-col>
+      <a-col>该标签共有：{{data.length}} 条数据，数据库中共有：{{dbNum}} 条数据。</a-col>
     </a-row>
     <a-row class="tagTable ant-table" v-show="tableShow">
       <table>
@@ -79,15 +79,15 @@ export default {
       })
     },
     getDBNum () {
-      db.md.count(e => {
-        this.dbNum = e
+      db.count({}, (e, count) => {
+        this.dbNum = count
       })
     },
     tagClick (n) {
       this.activeNum = n
       this.showTagDB()
     },
-    showTagDB (e) {
+    showTagDB () {
       let key = this.tags[this.activeNum]
       db.find({ 'tag': key }, (e, d) => {
         this.data = d
@@ -99,15 +99,15 @@ export default {
       this.$store.dispatch('openMd', url)
     },
     handleOk () {
-      db.insert(this.d, (e, c) => {
-        if (e !== null) {
+      db.update({ _id: this.d._id }, { $set: this.d }, (err, num) => {
+        if (err) {
+          this.$message.warning('修改失败，请重试')
+        } else {
           this.$message.success('修改成功')
           this.$store.commit('CHANGE_REFRESH', true)
-        } else {
-          this.$message.warning('修改失败，请重试')
         }
+        this.visible = false
       })
-      this.visible = false
     },
     handleCancel () {
       this.visible = false
@@ -118,14 +118,16 @@ export default {
       this.visible = true
     },
     deleted (e) {
-      db.md.delete(e.id)
-      this.$message.success('删除成功')
-      this.$store.commit('CHANGE_REFRESH', true)
+      db.remove({ _id: e._id }, {}, (e, n) => {
+        this.$message.success('删除成功')
+        this.$store.commit('CHANGE_REFRESH', true)
+        this.showTagDB()
+      })
     }
   },
   created () {
     this.getTags()
-    // this.getDBNum()
+    this.getDBNum()
   }
 }
 </script>

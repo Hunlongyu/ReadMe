@@ -24,7 +24,7 @@
         </thead>
         <tbody class="ant-table-tbody">
           <tr v-for="(i, j) in data" :key="j">
-            <td><a target="_blank" :href="i.html_url">{{i.full_name}}</a></td>
+            <td class="htmlUrl"><a target="_blank" :href="i.html_url">{{i.full_name}}</a></td>
             <td>{{i.stargazers_count}}</td>
             <td>{{i.watchers_count}}</td>
             <td>{{i.description}}</td>
@@ -62,6 +62,7 @@ export default {
       if (val === '') {
         this.$message.warning('请输入您要搜索的内容')
       } else {
+        this.loading = false
         let q = val.replace(/\s+/g, '')
         this.spinShow = true
         this.$http.get('https://api.github.com/search/repositories?q=' + q).then(res => {
@@ -183,6 +184,15 @@ export default {
   .spin{
     margin-top: 20px;
     text-align: center;
+  }
+  .htmlUrl{
+    a{
+      display: inline-block;
+      max-width: 300px;
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+    }
   }
 }
 </style>
