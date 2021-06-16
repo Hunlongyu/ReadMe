@@ -17,6 +17,7 @@
 
 第二版是用 Vue + nedb.js 制作的 PWA。[ReadMe PWA](https://hunlongyu.github.io/ReadMe/dist/index.html)
 
+next vue3 ts
 
 ## 截图
 
