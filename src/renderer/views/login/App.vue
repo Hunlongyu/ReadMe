@@ -1,12 +1,20 @@
 <template>
   <div class="login">
-    <a href="https://github.com/login/oauth/authorize?client_id=dce5a448c5e9cca4d566&redirect_uri=http://localhost:8080/%23/home">授权</a>
-    <a href="http://localhost:8080/#/home">home</a>
+    <frame />
+    <div class="login-wrapper">
+      <div class="left"></div>
+      <div class="right">
+        <span>Sign up width Github</span>
+      </div>
+    </div>
+    <!-- <a href="https://github.com/login/oauth/authorize?client_id=dce5a448c5e9cca4d566&redirect_uri=http://localhost:8080/#/home">授权</a>
+    <a href="http://localhost:8080/#/home">home</a> -->
   </div>
 </template>
 <script lang="ts" setup>
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import Frame from '../../components/Frame.vue'
 
 const router = useRouter()
 
@@ -29,3 +37,11 @@ onMounted(() => {
   // checkCode()
 })
 </script>
+<style lang="scss" scoped>
+.login{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+</style>

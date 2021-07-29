@@ -1,7 +1,7 @@
 <template>
   <div id="nav">
     gaga
-    <a href="http://localhost:8080/">login</a>
+    <a href="http://localhost:8080/#/login">login</a>
   </div>
 </template>
 <script lang="ts" setup>
