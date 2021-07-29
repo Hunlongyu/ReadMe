@@ -5,6 +5,9 @@ import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
+// app.commandLine.appendSwitch('disable-features', 'OutOfBlinkCors') // 允许跨域
+app.commandLine.appendSwitch('disable-site-isolation-trials')
+
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
@@ -14,7 +17,10 @@ async function createWindow () {
   // Create the browser window.
   const win = new BrowserWindow({
     width: 1680,
-    height: 820
+    height: 820,
+    webPreferences: {
+      webSecurity: false
+    }
   })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
