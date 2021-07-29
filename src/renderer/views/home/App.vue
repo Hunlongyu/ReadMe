@@ -6,8 +6,12 @@
 </template>
 <script lang="ts" setup>
 import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import axios from 'axios'
-const token = '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'
+
+const router = useRouter()
+
+const token = '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'
 const login = 'Hunlongyu'
 
 // 获取连接参数
@@ -63,10 +67,18 @@ async function getUserStar () {
   return starList
 }
 
+function checkUserToken () {
+  const token = ''
+  if (token === '') {
+    router.push({ name: 'Login' })
+  }
+}
+
 onMounted(async () => {
+  // checkUserToken()
   // getUserToken()
-  getUserInfo()
-  getUserInfoNoToken('HanFuYan')
+  // getUserInfo()
+  // getUserInfoNoToken('HanFuYan')
   // const list = await getUserStar()
   // console.log('=== list ===', list)
 })
