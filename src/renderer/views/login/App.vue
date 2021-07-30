@@ -5,9 +5,9 @@
       <div class="left"></div>
       <div class="right">
         <div class="box">
-          <span class="button">Sign up width Github</span>
+          <button class="button">Sign up width Github</button>
           <span class="line"></span>
-          <span class="button">Sign up width Github name</span>
+          <button class="button">Sign up width Github name</button>
         </div>
       </div>
     </div>
@@ -84,9 +84,17 @@ onMounted(() => {
         align-items: center;
         cursor: pointer;
         font-size: 16px;
+        transition: 0.3s;
+        border: none;
         &:hover{
           box-shadow: -6px 6px 12px #dadada, 6px -6px 12px #fefefe;
         }
+        &:active{
+          box-shadow: -3px 3px 2px #dadada, 3px -3px 2px #fefefe;
+        }
+      }
+      .line{
+        margin: 20px 0;
       }
     }
   }
