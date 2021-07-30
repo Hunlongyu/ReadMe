@@ -4,7 +4,11 @@
     <div class="login-wrapper">
       <div class="left"></div>
       <div class="right">
-        <span>Sign up width Github</span>
+        <div class="box">
+          <span class="button">Sign up width Github</span>
+          <span class="line"></span>
+          <span class="button">Sign up width Github name</span>
+        </div>
       </div>
     </div>
     <!-- <a href="https://github.com/login/oauth/authorize?client_id=dce5a448c5e9cca4d566&redirect_uri=http://localhost:8080/#/home">授权</a>
@@ -43,5 +47,48 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   flex-direction: column;
+  .login-wrapper{
+    flex: 1;
+    background-color: #f0f0f0;
+    position: relative;
+    display: flex;
+    .left{
+      width: 50%;
+      height: 100%;
+    }
+    .right{
+      width: 50%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .box{
+        width: 320px;
+        height: 480px;
+        border-radius: 6px;
+        background: #f0f0f0;
+        box-shadow: 10px 10px 12px #dadada, -10px -10px 12px #fefefe;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #001f3f;
+        flex-direction: column;
+      }
+      .button{
+        padding: 10px 25px;
+        border-radius: 6px;
+        background: #f0f0f0;
+        box-shadow: 10px 10px 12px #dadada, -10px -10px 12px #fefefe;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        font-size: 16px;
+        &:hover{
+          box-shadow: -6px 6px 12px #dadada, 6px -6px 12px #fefefe;
+        }
+      }
+    }
+  }
 }
 </style>
