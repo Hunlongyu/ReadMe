@@ -5,8 +5,8 @@
       <div class="left"></div>
       <div class="right">
         <div class="box">
-          <button class="button">Sign up width Github</button>
-          <span class="line"></span>
+          <button class="button" @click="authLogin">Sign up width Github</button>
+          <span class="line" data-title="or"></span>
           <button class="button">Sign up width Github name</button>
         </div>
       </div>
@@ -35,6 +35,10 @@ function checkCode () {
   if (link !== '') {
     router.push({ name: 'Home' })
   }
+}
+
+function authLogin () {
+  window.location.href = 'https://github.com/login/oauth/authorize?client_id=dce5a448c5e9cca4d566&redirect_uri=http://localhost:8080/#/home'
 }
 
 onMounted(() => {
@@ -73,6 +77,11 @@ onMounted(() => {
         align-items: center;
         color: #001f3f;
         flex-direction: column;
+        transition: 1s;
+        &:hover{
+          transition: 2s;
+          box-shadow: -6px 6px 12px #dadada, 6px -6px 12px #fefefe;
+        }
       }
       .button{
         padding: 10px 25px;
@@ -84,17 +93,34 @@ onMounted(() => {
         align-items: center;
         cursor: pointer;
         font-size: 16px;
-        transition: 0.3s;
         border: none;
         &:hover{
+          transition: 0.3s;
           box-shadow: -6px 6px 12px #dadada, 6px -6px 12px #fefefe;
         }
         &:active{
+          transition: 0.1s;
           box-shadow: -3px 3px 2px #dadada, 3px -3px 2px #fefefe;
         }
       }
       .line{
-        margin: 20px 0;
+        display: inline-block;
+        width: 80%;
+        margin: 40px 0;
+        height: 1px;
+        border-bottom: 1px solid #cdcdcd;
+        position: relative;
+        &::after{
+          position: absolute;
+          content: attr(data-title);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transform: translate(-50%, -50%);
+          margin-left: 50%;
+          padding: 0 4px;
+          background-color: #f0f0f0;
+        }
       }
     }
   }
