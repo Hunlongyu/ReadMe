@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="login theme-dark">
     <frame />
     <div class="login-wrapper">
       <div class="left"></div>
@@ -46,6 +46,7 @@ onMounted(() => {
 })
 </script>
 <style lang="scss" scoped>
+@import "../../assets/scss/index.scss";
 .login{
   display: flex;
   width: 100%;
@@ -85,23 +86,6 @@ onMounted(() => {
       }
       .button{
         padding: 10px 25px;
-        border-radius: 6px;
-        background: #f0f0f0;
-        box-shadow: 10px 10px 12px #dadada, -10px -10px 12px #fefefe;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        font-size: 16px;
-        border: none;
-        &:hover{
-          transition: 0.3s;
-          box-shadow: -6px 6px 12px #dadada, 6px -6px 12px #fefefe;
-        }
-        &:active{
-          transition: 0.1s;
-          box-shadow: -3px 3px 2px #dadada, 3px -3px 2px #fefefe;
-        }
       }
       .line{
         display: inline-block;
