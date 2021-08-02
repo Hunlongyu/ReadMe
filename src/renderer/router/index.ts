@@ -1,29 +1,36 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../views/home/App.vue'
-// import Home from '../App.vue'
-// import Login from '../views/login/App.vue'
+import Star from '../views/star/App.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    children: [
+      {
+        path: '',
+        component: Star
+      },
+      {
+        path: 'search',
+        component: () => import('../views/search/App.vue')
+      },
+      {
+        path: 'trending',
+        component: () => import('../views/trending/App.vue')
+      },
+      {
+        path: 'settings',
+        component: () => import('../views/settings/App.vue')
+      }
+    ]
   },
   {
     path: '/login',
     name: 'Login',
     component: () => import('../views/login/App.vue')
   }
-  // {
-  //   path: '/',
-  //   name: 'Login',
-  //   component: Login
-  // },
-  // {
-  //   path: '/home',
-  //   name: 'Home',
-  //   component: () => import('../views/home/App.vue')
-  // }
 ]
 
 const router = createRouter({

@@ -11,7 +11,7 @@
         <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="white" fill-opacity="0.01"/><path d="M21 38C30.3888 38 38 30.3888 38 21C38 11.6112 30.3888 4 21 4C11.6112 4 4 11.6112 4 21C4 30.3888 11.6112 38 21 38Z" fill="none" stroke="#333" stroke-width="3" stroke-linejoin="round"/><path d="M26.6568 14.3431C25.2091 12.8954 23.2091 12 21 12C18.7909 12 16.7909 12.8954 15.3431 14.3431" stroke="#333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M33.2218 33.2218L41.7071 41.7071" stroke="#333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </span>
       <span class="button nt-btn">
-        <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="white" fill-opacity="0.01"/><rect x="4" y="18" width="13" height="24" stroke="#333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="17" y="6" width="13" height="36" stroke="#333" stroke-width="3" stroke-linejoin="round"/><rect x="30" y="26" width="13" height="16" stroke="#333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="white" fill-opacity="0.01"/><path d="M4 44H44" stroke="#333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 26L12 28V38H4V26Z" fill="none" stroke="#333" stroke-width="3" stroke-linejoin="round"/><path d="M20 24L28 20V38H20V24Z" fill="none" stroke="#333" stroke-width="3" stroke-linejoin="round"/><path d="M36 16L44 12V38H36V16Z" fill="none" stroke="#333" stroke-width="3" stroke-linejoin="round"/><path d="M4 18L12 20L44 4H34" stroke="#333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </span>
     </div>
     <div class="setting">
@@ -35,6 +35,7 @@
   background-color: #f0f0f0;
   border-right: 1px solid #d9e3e5;
   -webkit-app-region: drag;
+  user-select: none;
   .avatar{
     width: 50px;
     height: 50px;
