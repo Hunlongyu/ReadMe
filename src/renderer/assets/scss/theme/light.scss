@@ -28,6 +28,9 @@ $white-4: #cdcdcd;
     &:active{
       box-shadow: inset -3px 3px 2px $white-3, inset 3px -3px 2px $white-1;
     }
+    &.active{
+      box-shadow: inset -3px 3px 2px $white-3, inset 3px -3px 2px $white-1;
+    }
   }
   .nt-line{
     border-bottom: 1px solid $white-4;
