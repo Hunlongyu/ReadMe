@@ -16,8 +16,17 @@ $white-4: #cdcdcd;
     &:hover{
       box-shadow: -6px 6px 12px $white-3, 6px -6px 12px $white-1;
     }
+  }
+  .nt-btn{
+    color: #001f3f;
+    background-color: $white-2;
+    box-shadow: 10px 10px 12px $white-3, -10px -10px 12px $white-1;
+    border: 1px solid $white;
+    &:hover{
+      box-shadow: -6px 6px 12px $white-3, 6px -6px 12px $white-1;
+    }
     &:active{
-      box-shadow: -3px 3px 2px $white-3, 3px -3px 2px $white-1;
+      box-shadow: inset -3px 3px 2px $white-3, inset 3px -3px 2px $white-1;
     }
   }
   .nt-line{
