@@ -1,0 +1,17 @@
+.line{
+  display: inline-block;
+  width: 100%;
+  margin: 40px 0;
+  height: 1px;
+  position: relative;
+  &::after{
+    position: absolute;
+    content: attr(data-title);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    margin-left: 50%;
+    padding: 0 4px;
+  }
+}

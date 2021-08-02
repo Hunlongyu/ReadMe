@@ -1,8 +1,8 @@
 <template>
-  <router-view />
+  <router-view class="theme-light"/>
 </template>
 <style lang="scss">
-// @import "./assets/scss/index.scss";
+@import "./assets/scss/index.scss";
 html, body, #app{
   margin: 0;
   padding: 0;

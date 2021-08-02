@@ -1,6 +1,7 @@
-// .theme-dark{
-//   $button-bgc: $dark;
-// }
-@import '../common/var.scss';
+$black: #000000;
 
-$button-bgc: $dark;
+.theme-dark{
+  .nt-bg{
+    background-color: $black;
+  }
+}

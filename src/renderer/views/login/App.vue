@@ -1,13 +1,13 @@
 <template>
-  <div class="login theme-dark">
+  <div class="login">
     <frame />
-    <div class="login-wrapper">
+    <div class="login-wrapper nt-bg">
       <div class="left"></div>
       <div class="right">
-        <div class="box">
-          <button class="button" @click="authLogin">Sign up width Github</button>
-          <span class="line" data-title="or"></span>
-          <button class="button">Sign up width Github name</button>
+        <div class="box nt-box">
+          <button class="button nt-box" @click="authLogin">Sign up width Github</button>
+          <span class="line nt-line" data-title="or"></span>
+          <button class="button nt-box">Sign up width Github name</button>
         </div>
       </div>
     </div>
@@ -46,7 +46,6 @@ onMounted(() => {
 })
 </script>
 <style lang="scss" scoped>
-@import "../../assets/scss/index.scss";
 .login{
   display: flex;
   width: 100%;
@@ -54,7 +53,6 @@ onMounted(() => {
   flex-direction: column;
   .login-wrapper{
     flex: 1;
-    background-color: #f0f0f0;
     position: relative;
     display: flex;
     .left{
@@ -70,41 +68,12 @@ onMounted(() => {
       .box{
         width: 320px;
         height: 480px;
-        border-radius: 6px;
-        background: #f0f0f0;
-        box-shadow: 10px 10px 12px #dadada, -10px -10px 12px #fefefe;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #001f3f;
-        flex-direction: column;
-        transition: 1s;
-        &:hover{
-          transition: 2s;
-          box-shadow: -6px 6px 12px #dadada, 6px -6px 12px #fefefe;
-        }
       }
       .button{
         padding: 10px 25px;
       }
       .line{
-        display: inline-block;
         width: 80%;
-        margin: 40px 0;
-        height: 1px;
-        border-bottom: 1px solid #cdcdcd;
-        position: relative;
-        &::after{
-          position: absolute;
-          content: attr(data-title);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          transform: translate(-50%, -50%);
-          margin-left: 50%;
-          padding: 0 4px;
-          background-color: #f0f0f0;
-        }
       }
     }
   }

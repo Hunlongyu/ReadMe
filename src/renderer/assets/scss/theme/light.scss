@@ -1,5 +1,29 @@
-// .theme-light{
-//   $button-bgc: $white;
-// }
-@import '../common/var.scss';
-$button-bgc: $white-1;
+// color Palette
+$white: #ffffff;
+$white-1: #fefefe;
+$white-2: #f0f0f0;
+$white-3: #dadada;
+$white-4: #cdcdcd;
+
+.theme-light{
+  .nt-bg{
+    background-color: $white-2;
+  }
+  .nt-box{
+    color: #001f3f;
+    background-color: $white-2;
+    box-shadow: 10px 10px 12px $white-3, -10px -10px 12px $white-1;
+    &:hover{
+      box-shadow: -6px 6px 12px $white-3, 6px -6px 12px $white-1;
+    }
+    &:active{
+      box-shadow: -3px 3px 2px $white-3, 3px -3px 2px $white-1;
+    }
+  }
+  .nt-line{
+    border-bottom: 1px solid $white-4;
+    &::after{
+      background-color: $white-2;
+    }
+  }
+}
