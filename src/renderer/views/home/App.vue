@@ -1,12 +1,17 @@
 <template>
-  <div id="nav">
-    gaga
-    <a href="http://localhost:8080/#/login">login</a>
+  <div class="home">
+    <frame />
+    <div class="home-wrapper">
+      <nav-menu />
+      <router-view />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import Frame from '../../components/Frame.vue'
+import NavMenu from '../../components/NavMenu.vue'
 import axios from 'axios'
 
 const router = useRouter()
@@ -83,3 +88,15 @@ onMounted(async () => {
   // console.log('=== list ===', list)
 })
 </script>
+<style lang="scss" scoped>
+.home{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  .home-wrapper{
+    height: 100%;
+    display: flex;
+  }
+}
+</style>

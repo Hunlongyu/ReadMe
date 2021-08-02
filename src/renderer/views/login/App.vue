@@ -45,7 +45,7 @@ function authLogin () {
         width: 320px;
         height: 480px;
         p{
-          font-size: 14px;
+          font-size: 12px;
         }
       }
       .button{

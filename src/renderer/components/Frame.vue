@@ -3,13 +3,13 @@
     <div class="name">ReadMe</div>
     <div class="win">
       <span @click="winEvent('mini')">
-        <i class="rm-minus"></i>
+        <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="white" fill-opacity="0.01"/><path d="M10.5 24L38.5 24" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </span>
       <span @click="winEvent('max')">
-        <i class="rm-plus"></i>
+        <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="white" fill-opacity="0.01"/><path d="M24.0607 10L24.024 38" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 24L38 24" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </span>
       <span @click="winEvent('close')" class="close">
-        <i class="rm-close"></i>
+        <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="white" fill-opacity="0.01"/><path d="M14 14L34 34" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 34L34 14" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </span>
     </div>
     <div class="mac">
@@ -35,8 +35,7 @@ function winEvent (e: string) {
   align-items: center;
   -webkit-app-region: drag;
   position: relative;
-  background-color: #ecf6f9;
-  border-bottom: 1px solid #d9e3e5;
+  background-color: #f0f0f0;
   .name{
     font-size: 14px;
   }
@@ -56,9 +55,6 @@ function winEvent (e: string) {
       align-items: center;
       transition: 0.3s;
       -webkit-app-region: no-drag;
-      i{
-        transform: scale(0.8);
-      }
       &:hover{
         color: #000000;
         background-color: #e2ecef;
@@ -75,14 +71,15 @@ function winEvent (e: string) {
     position: absolute;
     left: 0;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-around;
     align-items: center;
+    width: 80px;
+    padding: 0 10px;
     span{
       display: flex;
       width: 12px;
       height: 12px;
       border-radius: 100%;
-      margin-left: 8px;
       cursor: pointer;
       -webkit-app-region: no-drag;
     }
