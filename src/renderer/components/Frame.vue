@@ -2,30 +2,29 @@
   <div class="frame">
     <div class="name">ReadMe</div>
     <div class="win">
-      <span>
+      <span @click="winEvent('mini')">
         <i class="rm-minus"></i>
       </span>
-      <span>
+      <span @click="winEvent('max')">
         <i class="rm-plus"></i>
       </span>
-      <span class="close">
+      <span @click="winEvent('close')" class="close">
         <i class="rm-close"></i>
       </span>
     </div>
     <div class="mac">
-      <span class="close"></span>
-      <span class="min"></span>
-      <span class="max"></span>
+      <span @click="winEvent('close')" class="close"></span>
+      <span @click="winEvent('mini')" class="min"></span>
+      <span @click="winEvent('max')" class="max"></span>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'Frame'
-})
+<script lang="ts" setup>
+// 窗口事件
+function winEvent (e: string) {
+  window.api.invoke(`event.win.${e}`)
+}
 </script>
 
 <style scoped lang="scss">
