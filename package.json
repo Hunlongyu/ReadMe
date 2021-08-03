@@ -16,6 +16,7 @@
     "element-plus": "^1.0.2-beta.65",
     "modern-normalize": "^1.1.0",
     "vue": "^3.0.0",
+    "vue-i18n": "^9.1.7",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
   },

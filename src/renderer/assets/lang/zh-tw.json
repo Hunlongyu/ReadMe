@@ -1,0 +1,15 @@
+{
+  "login": {
+    "sign": "使用 Github 账号登陆",
+    "describe1": "1. 登陆后可同步用户信息和设置",
+    "describe2": "2. 登陆后可直接添加或取消收藏"
+  },
+  "search": {
+    "filter": "过滤",
+    "content": "内容"
+  },
+  "settings": {
+    "dark": "拟态·暗",
+    "light": "拟态·明"
+  }
+}

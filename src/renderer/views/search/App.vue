@@ -1,7 +1,7 @@
 <template>
   <div class="search">
-    <div class="filter">过滤</div>
-    <div class="content">内容</div>
+    <div class="filter">{{ $t('search.filter') }}</div>
+    <div class="content">{{ $t('search.content') }}</div>
   </div>
 </template>
 <script lang="ts" setup>

@@ -6,19 +6,24 @@
       <div class="version">v2.0.1</div>
     </div>
     <div class="theme">
-      <div class="dark">dark</div>
-      <div class="light">light</div>
-      <div class="system">follow system</div>
+      <div class="dark">{{ $t('settings.dark') }}</div>
+      <div class="light">{{ $t('settings.light') }}</div>
+      <div class="system">{{ $t('settings.dark') }}</div>
     </div>
     <div class="language">
-      <div>zh-cn</div>
-      <div>zh-tw</div>
-      <div>en</div>
+      <div @click="changeLanguage('zh-cn')">zh-cn</div>
+      <div @click="changeLanguage('zh-tw')">zh-tw</div>
+      <div @click="changeLanguage('en')">en</div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
+import { useI18n } from 'vue-i18n'
 
+const { locale } = useI18n()
+function changeLanguage (e: string) {
+  locale.value = e
+}
 </script>
 <style lang="scss" scoped>
 .settings{

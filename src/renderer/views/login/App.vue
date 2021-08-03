@@ -5,10 +5,10 @@
       <div class="left"></div>
       <div class="right">
         <div class="box nt-box">
-          <button class="button nt-btn" @click="authLogin">Sign up width Github</button>
+          <button class="button nt-btn" @click="authLogin">{{ $t('login.sign') }}</button>
           <span class="line nt-line" data-title=""></span>
-          <p>1. 登录后可同步用户信息和设置</p>
-          <p>2. 登录后可直接添加或取消收藏</p>
+          <p>{{ $t('login.describe1') }}</p>
+          <p>{{ $t('login.describe2') }}</p>
         </div>
       </div>
     </div>

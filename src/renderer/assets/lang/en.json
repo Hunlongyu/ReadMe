@@ -1,0 +1,15 @@
+{
+  "login": {
+    "sign": "Sign up with Github ",
+    "describe1": "sync setting",
+    "describe2": "star"
+  },
+  "search": {
+    "filter": "Filter",
+    "content": "Content"
+  },
+  "settings": {
+    "dark": "Dark",
+    "light": "Light"
+  }
+}
