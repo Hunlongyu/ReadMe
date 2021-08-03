@@ -13,8 +13,6 @@
 </template>
 <script lang="ts" setup>
 import { reactive } from '@vue/reactivity'
-import { ElTree } from 'element-plus'
-import 'element-plus/lib/theme-chalk/index.css'
 const cat = reactive({
   list: [
     {
