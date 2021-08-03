@@ -10,6 +10,10 @@ const routes: Array<RouteRecordRaw> = [
     redirect: '/star',
     children: [
       {
+        path: 'me',
+        component: () => import('../views/me/App.vue')
+      },
+      {
         path: '/star',
         component: Star
       },

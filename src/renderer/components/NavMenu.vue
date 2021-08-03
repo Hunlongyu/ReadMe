@@ -1,7 +1,7 @@
 <template>
   <div class="navMenu">
     <div class="avatar nt-box">
-      <img src="../assets/logo.png" alt="">
+      <img src="../assets/logo.png" alt="" @click="routerEvent('me')">
     </div>
     <div class="menu">
       <span :class="['button', 'nt-btn', active === 'star' ? 'active' : '']" @click="routerEvent('star')">

@@ -97,6 +97,7 @@ onMounted(async () => {
   .home-wrapper{
     height: 100%;
     display: flex;
+    background-color: #fff;
   }
 }
 </style>
