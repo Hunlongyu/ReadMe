@@ -85,7 +85,7 @@ function checkUserToken () {
 
 onMounted(async () => {
   // checkUserToken()
-  // getUserToken()
+  await getUserToken()
   // getUserInfo()
   // getUserInfoNoToken('HanFuYan')
   // const list = await getUserStar()

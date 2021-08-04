@@ -2,6 +2,8 @@
 
 git config --global http.sslBackend "openssl"
 
+star: https://docs.github.com/en/rest/reference/activity#starring
+
 ## Project setup
 ```
 yarn install

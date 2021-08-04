@@ -46,7 +46,7 @@
               <span class="title-repo">{{i.repo}}</span>
             </div>
             <div class="title-right">
-              <el-button size="mini">
+              <el-button size="mini" @click="starRepositoryEvent(i)">
                 <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="white" fill-opacity="0.01"/><path d="M23.9986 5L17.8856 17.4776L4 19.4911L14.0589 29.3251L11.6544 43L23.9986 36.4192L36.3454 43L33.9586 29.3251L44 19.4911L30.1913 17.4776L23.9986 5Z" fill="none" stroke="#333" stroke-width="2" stroke-linejoin="round"/></svg>
                 <span class="mini-name">star</span>
               </el-button>
@@ -82,7 +82,7 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from 'vue'
 import languageList from './language.json'
-import { getTrending } from '../../utils/tools'
+import { getTrending, starRepository, checkStarRepository } from '../../utils/tools'
 import { trendingRepoType } from '../../../type/index'
 
 const spokenLanguage = reactive({
@@ -114,6 +114,12 @@ async function trendingChangeEvent () {
   loading.value = true
   content.value = await getTrending(spokenLanguage.value, language.value, date.value)
   loading.value = false
+}
+
+async function starRepositoryEvent (e: trendingRepoType) {
+  const token = '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'
+  const result = await checkStarRepository(e.author, e.repo, token)
+  console.log('=== checkStarRepository result ===', result)
 }
 
 onMounted(() => {
