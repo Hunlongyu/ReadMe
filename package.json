@@ -12,6 +12,7 @@
   "main": "background.js",
   "dependencies": {
     "axios": "^0.21.1",
+    "cheerio": "^1.0.0-rc.10",
     "core-js": "^3.6.5",
     "element-plus": "^1.0.2-beta.65",
     "modern-normalize": "^1.1.0",
