@@ -1,5 +1,7 @@
 # readme
 
+git config --global http.sslBackend "openssl"
+
 ## Project setup
 ```
 yarn install
