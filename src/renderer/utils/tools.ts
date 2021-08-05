@@ -1,6 +1,6 @@
 import cheerio from 'cheerio'
 import axios from 'axios'
-import { trendingRepoType } from '../../type/index'
+import { trendingRepoType } from '../../types/index'
 
 // 组合趋势列表的接口链接
 async function getTrending (s: string, p: string, d: string) {
@@ -52,39 +52,6 @@ async function getTrendingList (url: string) {
   }
 }
 
-// 收藏仓库
-async function starRepository (owner: string, repo: string, token: string) {
-  try {
-    const res = await axios.put(`https://api.github.com/user/starred/${owner}/${repo}`, { owner, repo }, { headers: { accept: 'application/vnd.github.v3+json', Authorization: `token ${token}` } })
-    if (res) return res.status === 204
-  } catch (error) {
-    return false
-  }
-}
-
-// 取消收藏仓库
-async function unStarRepository (owner: string, repo: string, token: string) {
-  try {
-    const res = await axios.delete(`https://api.github.com/user/starred/${owner}/${repo}`, { headers: { accept: 'application/vnd.github.v3+json', Authorization: `token ${token}` } })
-    if (res) return res.status === 204
-  } catch (error) {
-    return false
-  }
-}
-
-// 检查是否已经收藏过
-async function checkStarRepository (owner: string, repo: string, token: string) {
-  try {
-    const res = await axios.get(`https://api.github.com/user/starred/${owner}/${repo}`, { headers: { accept: 'application/vnd.github.v3+json', Authorization: `token ${token}` } })
-    if (res) return res.status === 204
-  } catch (error) {
-    return false
-  }
-}
-
 export {
-  getTrending,
-  starRepository,
-  unStarRepository,
-  checkStarRepository
+  getTrending
 }
