@@ -35,7 +35,7 @@ function getQueryString (param: string) {
 async function getUserToken () {
   const code = getQueryString('code')
   console.log('=== code ===', code)
-  const res = await axios.post('https://github.com/login/oauth/access_token', { code, client_id: 'dce5a448c5e9cca4d566', client_secret: '960c95f7ced49a42d10ac6469a4320eb804fa948' }, { headers: { Accept: 'application/vnd.github.v3.star+json' } })
+  const res = await axios.post('https://github.com/login/oauth/access_token', { code, client_id: process.env.VUE_APP_clientId, client_secret: process.env.VUE_APP_clientSecret }, { headers: { Accept: 'application/vnd.github.v3.star+json' } })
   console.log('=== getUserToken res ===', res.data)
   const token = res.data.access_token
   console.log('=== token ===', token)
@@ -58,24 +58,6 @@ async function getUserInfoNoToken (name: string) {
   return res.data
 }
 
-// 获取用户所有 star
-async function getUserStar () {
-  let starIndex = 1
-  const starList: any = []
-  async function getStar (num: number) {
-    const res = await axios.get(`https://api.github.com/users/${login}/starred`, { params: { per_page: 100, page: num }, headers: { Accept: 'application/vnd.github.v3.star+json' } })
-    if (res.data.length > 0) {
-      starIndex++
-      starList.push(...res.data)
-      getStar(starIndex)
-    } else {
-      return starList
-    }
-  }
-  getStar(starIndex)
-  return starList
-}
-
 function checkUserToken () {
   const token = ''
   if (token === '') {
@@ -85,7 +67,7 @@ function checkUserToken () {
 
 onMounted(async () => {
   // checkUserToken()
-  // await getUserToken()
+  await getUserToken()
   // getUserInfo()
   // getUserInfoNoToken('HanFuYan')
   // const list = await getUserStar()

@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
+import { StarredType } from '../../types'
 
 /**
  * 列出用户收藏的仓库
@@ -16,6 +17,24 @@ async function starredRepositoryList (sort = 'created', direction = 'desc', page
   } catch (error) {
     return []
   }
+}
+
+// 获取用户所有 star
+async function getUserStar (author: string) {
+  let starIndex = 1
+  const starList: StarredType[] = []
+  async function getStar (num: number) {
+    const res = await axios.get(`https://api.github.com/users/${author}/starred`, { params: { per_page: 100, page: num }, headers: { Accept: 'application/vnd.github.v3.star+json' } })
+    if (res.data.length > 0) {
+      starIndex++
+      starList.push(...res.data)
+      getStar(starIndex)
+    } else {
+      return starList
+    }
+  }
+  getStar(starIndex)
+  return starList
 }
 
 // 收藏仓库
@@ -59,6 +78,7 @@ async function repositoryStargazersList (owner: string, repo: string, page: numb
 }
 
 export {
+  getUserStar,
   starRepository,
   unStarRepository,
   checkStarRepository,

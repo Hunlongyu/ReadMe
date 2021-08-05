@@ -83,7 +83,7 @@
 import { onMounted, reactive, ref } from 'vue'
 import languageList from './language.json'
 import { getTrending } from '../../utils/tools'
-import { starredRepositoryList } from '../../utils/star'
+import { checkStarRepository, starRepository } from '../../utils/star'
 import type { trendingRepoType } from '../../../types'
 
 const spokenLanguage = reactive({
@@ -119,10 +119,14 @@ async function trendingChangeEvent () {
 
 async function starRepositoryEvent (e: trendingRepoType) {
   const token = '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'
-  // const result = await repositoryStargazersList(e.author, e.repo, token)
-  const result = await starredRepositoryList('created', 'desc', 1, token)
-  // const result = await repositoryStargazersList(e.author, e.repo, 1)
-  console.log('=== checkStarRepository result ===', result)
+  const result = await checkStarRepository(e.author, e.repo, token)
+  if (result) return false
+  const res = await starRepository(e.author, e.repo, token)
+  if (res) {
+    console.log('success')
+  } else {
+    console.warn('warning')
+  }
 }
 
 onMounted(() => {

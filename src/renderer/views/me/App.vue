@@ -25,11 +25,28 @@
 </template>
 <script lang="ts" setup>
 import { useRouter } from 'vue-router'
+import axios from 'axios'
 
 const router = useRouter()
 
 function logoutEvent () {
-  router.push('login')
+  axios({
+    method: 'delete',
+    url: 'https://api.github.com/applications/dce5a448c5e9cca4d566/token',
+    auth: {
+      username: `${process.env.VUE_APP_clientId}`,
+      password: `${process.env.VUE_APP_clientSecret}`
+    },
+    data: {
+      access_token: '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'
+    }
+  }).then(() => {
+    router.push('login')
+    console.log('then')
+  }).catch(() => {
+    router.push('login')
+    console.log('error')
+  })
 }
 </script>
 <style lang="scss" scoped>
