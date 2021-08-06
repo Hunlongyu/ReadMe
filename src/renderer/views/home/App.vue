@@ -12,7 +12,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Frame from '../../components/Frame.vue'
 import NavMenu from '../../components/NavMenu.vue'
@@ -20,7 +20,8 @@ import axios from 'axios'
 
 const router = useRouter()
 
-const token = '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'
+// const token = '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'
+const token = ref('')
 const login = 'Hunlongyu'
 
 // 获取连接参数
@@ -37,13 +38,13 @@ async function getUserToken () {
   console.log('=== code ===', code)
   const res = await axios.post('https://github.com/login/oauth/access_token', { code, client_id: process.env.VUE_APP_clientId, client_secret: process.env.VUE_APP_clientSecret }, { headers: { Accept: 'application/vnd.github.v3.star+json' } })
   console.log('=== getUserToken res ===', res.data)
-  const token = res.data.access_token
+  token.value = res.data.access_token
   console.log('=== token ===', token)
 }
 
 // 获取用户信息， 使用 token
 async function getUserInfo () {
-  const res = await axios.get('https://api.github.com/user', { headers: { Accept: 'application/vnd.github.v3.star+json', Authorization: `token ${token}` } })
+  const res = await axios.get('https://api.github.com/user', { headers: { Accept: 'application/vnd.github.v3.star+json', Authorization: `token ${token.value}` } })
   console.log('=== getUserInfo res ===', res)
   return res.data
 }
@@ -68,7 +69,7 @@ function checkUserToken () {
 onMounted(async () => {
   // checkUserToken()
   await getUserToken()
-  // getUserInfo()
+  await getUserInfo()
   // getUserInfoNoToken('HanFuYan')
   // const list = await getUserStar()
   // console.log('=== list ===', list)
