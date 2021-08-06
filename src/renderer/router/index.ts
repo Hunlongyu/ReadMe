@@ -14,7 +14,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/me/App.vue')
       },
       {
-        path: '/star',
+        path: 'star',
         component: Star
       },
       {

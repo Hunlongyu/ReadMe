@@ -1,6 +1,6 @@
-import zhCn from '../../assets/lang/zh-cn.json'
-import zhTw from '../../assets/lang/zh-tw.json'
-import en from '../../assets/lang/en.json'
+import zhCn from './lang/zh-cn.json'
+import zhTw from './lang/zh-tw.json'
+import en from './lang/en.json'
 
 const messages = {
   'zh-cn': { ...zhCn },
