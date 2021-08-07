@@ -82,7 +82,7 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from 'vue'
 import languageList from './language.json'
-import { getTrending } from '../../utils/tools'
+import { getTrending } from '../../utils/trending'
 import { checkStarRepository, starRepository } from '../../utils/star'
 import type { trendingRepoType } from '../../../types'
 

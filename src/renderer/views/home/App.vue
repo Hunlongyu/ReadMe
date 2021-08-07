@@ -16,63 +16,40 @@ import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Frame from '../../components/Frame.vue'
 import NavMenu from '../../components/NavMenu.vue'
-import axios from 'axios'
+import { me } from '../../plugins/database'
+import type { UserType } from '../../../types'
+import { getUserToken, getUserInfo } from '../../utils/user'
+import { getUrlParams } from '../../utils/tools'
 
 const router = useRouter()
-
-// const token = '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'
 const token = ref('')
-const login = 'Hunlongyu'
+const store = ref<UserType>()
 
-// 获取连接参数
-function getQueryString (param: string) {
-  var reg = new RegExp('(^|&)' + param + '=([^&]*)(&|$)')
-  var r = window.location.search.substr(1).match(reg)
-  if (r != null) return unescape(r[2])
-  return ''
-}
-
-// 获取用户 token
-async function getUserToken () {
-  const code = getQueryString('code')
-  console.log('=== code ===', code)
-  const res = await axios.post('https://github.com/login/oauth/access_token', { code, client_id: process.env.VUE_APP_clientId, client_secret: process.env.VUE_APP_clientSecret }, { headers: { Accept: 'application/vnd.github.v3.star+json' } })
-  console.log('=== getUserToken res ===', res.data)
-  token.value = res.data.access_token
-  console.log('=== token ===', token)
-}
-
-// 获取用户信息， 使用 token
-async function getUserInfo () {
-  const res = await axios.get('https://api.github.com/user', { headers: { Accept: 'application/vnd.github.v3.star+json', Authorization: `token ${token.value}` } })
-  console.log('=== getUserInfo res ===', res)
-  return res.data
-}
-
-// 获取用户信息，不使用 token。
-// 区别是：
-// 使用 token 可以获取到 email
-// 授权后，可以直接 star unstar
-async function getUserInfoNoToken (name: string) {
-  const res = await axios.get(`https://api.github.com/users/${name}`, { headers: { Accept: 'application/vnd.github.v3.star+json' } })
-  console.log('=== getUserInfoNoToken res ===', res)
-  return res.data
-}
-
-function checkUserToken () {
-  const token = ''
-  if (token === '') {
-    router.push({ name: 'Login' })
+// 检查并获取用户 token
+async function checkUserToken () {
+  const meInfo = await me.get()
+  if (!meInfo || !meInfo.token) {
+    const code = getUrlParams('code')
+    if (!code) {
+      router.push({ name: 'Login' })
+    } else {
+      const res = await getUserToken()
+      if (res) {
+        token.value = res
+        const result = await getUserInfo(res)
+        store.value = result
+        store.value.token = res
+        me.update(store.value)
+      }
+    }
+  } else {
+    store.value = meInfo
+    token.value = meInfo.token
   }
 }
 
 onMounted(async () => {
-  // checkUserToken()
-  await getUserToken()
-  await getUserInfo()
-  // getUserInfoNoToken('HanFuYan')
-  // const list = await getUserStar()
-  // console.log('=== list ===', list)
+  await checkUserToken()
 })
 </script>
 <style lang="scss" scoped>

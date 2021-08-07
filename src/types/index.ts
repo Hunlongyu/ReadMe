@@ -1,10 +1,12 @@
+/*eslint camelcase: "error"*/
+
 // 个人信息
 export interface UserType {
-  avatar_url: string
+  avatar_url?: string
   bio?: string
   blog?: string
   company?: string
-  created_at: string
+  created_at?: string
   email?: string
   events_url?: string
   followers?: number
@@ -14,12 +16,12 @@ export interface UserType {
   gists_url?: string
   gravatar_id?: string
   hireable?: string
-  html_url: string
+  html_url?: string
   id: number
-  location: string
-  login: string
-  name: string
-  node_id: string
+  location?: string
+  login?: string
+  name?: string
+  node_id?: string
   organizations_url?: string
   public_gists?: number
   public_repos?: number

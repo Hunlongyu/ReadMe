@@ -1,5 +1,6 @@
 import Dexie from 'dexie'
 import { UserType } from '../../../types'
+import { initMe } from './module/init'
 
 export class Database extends Dexie {
   me: Dexie.Table<UserType, number>
@@ -8,7 +9,7 @@ export class Database extends Dexie {
     super('Database')
 
     this.version(1).stores({
-      me: 'id, token, name, login, url, html_url, email, avatar_url, type, url, repos_url, organizations_url'
+      me: 'id, token, name, login'
     })
 
     this.me = this.table('me')
@@ -18,5 +19,9 @@ export class Database extends Dexie {
 const db = new Database()
 
 db.open()
+
+db.on('populate', () => {
+  db.me.bulkAdd(initMe)
+})
 
 export default db
