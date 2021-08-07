@@ -12,7 +12,11 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { reactive } from '@vue/reactivity'
+import { getAllSelfStar } from '@/renderer/utils/star'
+import { onMounted, reactive, ref } from 'vue'
+import { me, star } from '../../plugins/database'
+import type { SelfStarType } from '../../../types'
+
 const cat = reactive({
   list: [
     {
@@ -50,6 +54,29 @@ const cat = reactive({
       ]
     }
   ]
+})
+
+const all = ref<SelfStarType[]>([])
+
+async function getSelfStarList () {
+  const res = await me.get()
+  if (res && res.login) {
+    const list = await getAllSelfStar()
+    console.log('=== list ===', list)
+  }
+}
+
+async function initAddStarList () {
+  const res = await star.all()
+  if (!res.length) {
+    await getSelfStarList()
+  } else {
+    all.value = res
+  }
+}
+
+onMounted(async () => {
+  await initAddStarList()
 })
 </script>
 <style lang="scss" scoped>

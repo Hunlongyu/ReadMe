@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
-import { StarredType } from '../../types'
+import { StarredType, SelfStarType } from '../../types'
+import { getToken } from './tools'
 
 /**
  * 列出用户收藏的仓库
@@ -9,8 +10,9 @@ import { StarredType } from '../../types'
  * @param token 用户 token
  * @returns StarredType[]
  */
-async function starredRepositoryList (sort = 'created', direction = 'desc', page: number, token: string): Promise<AxiosResponse | []> {
+async function getSelfStarByFilter (sort = 'created', direction = 'desc', page: number): Promise<AxiosResponse | []> {
   try {
+    const token = await getToken()
     const res = await axios.get('https://api.github.com/user/starred', { params: { sort, direction, per_page: 100, page }, headers: { accept: 'application/vnd.github.v3+json', Authorization: `token ${token}` } })
     if (res) return res.data
     return []
@@ -19,8 +21,26 @@ async function starredRepositoryList (sort = 'created', direction = 'desc', page
   }
 }
 
+async function getAllSelfStar (): Promise<SelfStarType[] | []> {
+  let idx = 1
+  const token = await getToken()
+  const starList: SelfStarType[] = []
+  async function getSelfStar (page: number) {
+    const res = await axios.get('https://api.github.com/user/starred', { params: { sort: 'created', direction: 'desc', per_page: 100, page }, headers: { accept: 'application/vnd.github.v3+json', Authorization: `token ${token}` } })
+    if (res.data.length > 0) {
+      idx++
+      starList.push(...res.data)
+      getSelfStar(idx)
+    } else {
+      return starList
+    }
+  }
+  getSelfStar(idx)
+  return starList
+}
+
 // 获取用户所有 star
-async function getUserStar (author: string) {
+async function getUserStar (author: string): Promise<StarredType[] | []> {
   let starIndex = 1
   const starList: StarredType[] = []
   async function getStar (num: number) {
@@ -38,8 +58,9 @@ async function getUserStar (author: string) {
 }
 
 // 收藏仓库
-async function starRepository (owner: string, repo: string, token: string): Promise<boolean> {
+async function starRepository (owner: string, repo: string): Promise<boolean> {
   try {
+    const token = await getToken()
     const res = await axios.put(`https://api.github.com/user/starred/${owner}/${repo}`, { owner, repo }, { headers: { accept: 'application/vnd.github.v3+json', Authorization: `token ${token}` } })
     return res.status === 204
   } catch (error) {
@@ -48,8 +69,9 @@ async function starRepository (owner: string, repo: string, token: string): Prom
 }
 
 // 取消收藏仓库
-async function unStarRepository (owner: string, repo: string, token: string): Promise<boolean> {
+async function unStarRepository (owner: string, repo: string): Promise<boolean> {
   try {
+    const token = await getToken()
     const res = await axios.delete(`https://api.github.com/user/starred/${owner}/${repo}`, { headers: { accept: 'application/vnd.github.v3+json', Authorization: `token ${token}` } })
     return res.status === 204
   } catch (error) {
@@ -58,8 +80,9 @@ async function unStarRepository (owner: string, repo: string, token: string): Pr
 }
 
 // 检查是否已经收藏过
-async function checkStarRepository (owner: string, repo: string, token: string): Promise<boolean> {
+async function checkStarRepository (owner: string, repo: string): Promise<boolean> {
   try {
+    const token = await getToken()
     const res = await axios.get(`https://api.github.com/user/starred/${owner}/${repo}`, { headers: { accept: 'application/vnd.github.v3+json', Authorization: `token ${token}` } })
     return res.status === 204
   } catch (error) {
@@ -78,10 +101,11 @@ async function repositoryStargazersList (owner: string, repo: string, page: numb
 }
 
 export {
+  getSelfStarByFilter,
+  getAllSelfStar,
   getUserStar,
   starRepository,
   unStarRepository,
   checkStarRepository,
-  starredRepositoryList,
   repositoryStargazersList
 }

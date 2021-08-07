@@ -1,3 +1,5 @@
+import { me } from '../plugins/database'
+
 // 获取链接参数
 function getUrlParams (name: string, url?: string): string {
   const uri = url || window.location.search.substring(1)
@@ -5,6 +7,12 @@ function getUrlParams (name: string, url?: string): string {
   return params.get(name) || ''
 }
 
+async function getToken (): Promise<string | undefined> {
+  const res = await me.get()
+  return res?.token
+}
+
 export {
+  getToken,
   getUrlParams
 }

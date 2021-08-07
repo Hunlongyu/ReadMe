@@ -3,7 +3,7 @@ import axios from 'axios'
 import { trendingRepoType } from '../../types/index'
 
 // 组合趋势列表的接口链接
-async function getTrending (s: string, p: string, d: string) {
+async function getTrending (s: string, p: string, d: string): Promise<trendingRepoType[]> {
   let url = 'https://github.com/trending'
   if (p) {
     url += `/${p}`
@@ -19,7 +19,7 @@ async function getTrending (s: string, p: string, d: string) {
 }
 
 // 获取趋势列表
-async function getTrendingList (url: string) {
+async function getTrendingList (url: string): Promise<trendingRepoType[]> {
   try {
     const result = await axios.get(url)
     const data = result.data
