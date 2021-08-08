@@ -8,7 +8,9 @@
       </div>
     </div>
     <div class="list"></div>
-    <div class="content"></div>
+    <div class="content">
+      <markdown />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -16,6 +18,7 @@ import { getAllSelfStar } from '@/renderer/utils/star'
 import { onMounted, reactive, ref } from 'vue'
 import { me, star } from '../../plugins/database'
 import type { SelfStarType } from '../../../types'
+import Markdown from '../../components/Markdown.vue'
 
 const cat = reactive({
   list: [
