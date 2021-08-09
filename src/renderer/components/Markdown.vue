@@ -1,6 +1,8 @@
 <template>
   <div class="markdown">
-    markdown
+    <div class="markdown-wrapper">
+      markdown
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -11,6 +13,11 @@ console.log('markdown')
 .markdown{
   width: 100%;
   height: 100%;
-  border: 1px solid #000;
+  position: relative;
+  overflow-y: auto;
+  .markdown-wrapper{
+    position: absolute;
+    width: 100%;
+  }
 }
 </style>

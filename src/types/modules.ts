@@ -106,8 +106,16 @@ export interface OwnerType {
   url?: string
 }
 
+// 仓库权限
 export interface PermissionsType {
   admin?: boolean
   push?: boolean
   pull?: boolean
+}
+
+export interface TreeNodeType {
+  id: number
+  label: string
+  value?: string
+  $treeNodeId: string
 }
