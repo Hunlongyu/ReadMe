@@ -5,15 +5,15 @@
         <el-tree :data="list" :default-expanded-keys="[1, 2, 3]" node-key="id" @node-click="nodeClickEvent"/>
       </div>
     </div>
-    <div class="list">
+    <div class="list scroll">
       <div class="list-wrapper">
-        <div class="item">
-          <div class="item-name">markdedjs / marked</div>
-          <div class="item-description">a markdown parser and compiler.built for speed</div>
+        <div class="item" v-for="(i, j) in all" :key="j">
+          <div class="item-name">{{i.full_name}}</div>
+          <div class="item-description">{{i.description || '--'}}</div>
           <div class="item-info">
-            <div class="item-language">JavaScript</div>
-            <div class="item-star">25515</div>
-            <div class="item-fork">3057</div>
+            <div class="item-language">{{i.language || '--'}}</div>
+            <div class="item-star">{{i.stargazers_count || '--'}}</div>
+            <div class="item-fork">{{i.forks_count || '--'}}</div>
           </div>
         </div>
       </div>
@@ -84,6 +84,7 @@ async function getSelfStarList () {
   const res = await me.get()
   if (res && res.login) {
     const list = await getAllSelfStar()
+    all.value = list
     console.log('=== list ===', list)
   }
 }
@@ -117,15 +118,25 @@ onMounted(async () => {
     }
   }
   .list{
+    height: 100%;
     width: 280px;
+    overflow-y: auto;
+    position: relative;
     background-color: #f8f8f8;
     border-left: 1px solid #d9e3e5;
     border-right: 1px solid #d9e3e5;
+    .list-wrapper{
+      width: 100%;
+      position: absolute;
+    }
     .item{
-      border: 1px solid #000;
+      border-bottom: 1px solid #d9e3e5;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       padding: 6px;
+      height: 90px;
+      cursor: pointer;
       .item-name{
         font-size: 16px;
         font-size: #333;
@@ -133,6 +144,11 @@ onMounted(async () => {
       .item-description{
         margin: 6px 0 4px;
         font-size: 14px;
+        height: 34px;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
         color: #666;
       }
       .item-info{
