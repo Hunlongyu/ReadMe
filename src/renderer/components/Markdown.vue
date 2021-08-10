@@ -12,7 +12,7 @@ import Mdit from 'markdown-it'
 import axios from 'axios'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github.css'
-import 'github-markdown-css'
+import '../assets/css/primer.css'
 
 const repo = ref<SelfStarType>()
 const source = ref<string>()

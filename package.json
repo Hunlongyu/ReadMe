@@ -16,7 +16,6 @@
     "core-js": "^3.6.5",
     "dexie": "^3.0.3",
     "element-plus": "^1.0.2-beta.65",
-    "github-markdown-css": "^4.0.0",
     "highlight.js": "^11.2.0",
     "markdown-it": "^12.2.0",
     "modern-normalize": "^1.1.0",
