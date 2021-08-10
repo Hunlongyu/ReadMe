@@ -16,6 +16,9 @@
     "core-js": "^3.6.5",
     "dexie": "^3.0.3",
     "element-plus": "^1.0.2-beta.65",
+    "github-markdown-css": "^4.0.0",
+    "highlight.js": "^11.2.0",
+    "markdown-it": "^12.2.0",
     "modern-normalize": "^1.1.0",
     "vue": "^3.0.0",
     "vue-i18n": "^9.1.7",
@@ -23,6 +26,7 @@
   },
   "devDependencies": {
     "@types/electron-devtools-installer": "^2.2.0",
+    "@types/markdown-it": "^12.0.3",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
     "@vue/cli-plugin-babel": "~4.5.0",

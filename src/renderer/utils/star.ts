@@ -35,7 +35,7 @@ async function getAllSelfStar (): Promise<SelfStarType[] | []> {
       return starList
     }
   }
-  getSelfStar(idx)
+  await getSelfStar(idx)
   return starList
 }
 

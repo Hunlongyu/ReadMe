@@ -7,7 +7,7 @@
     </div>
     <div class="list scroll">
       <div class="list-wrapper">
-        <div class="item" v-for="(i, j) in all" :key="j">
+        <div class="item" v-for="(i, j) in all" :key="j" @click="itemClickEvent(i)">
           <div class="item-name">{{i.full_name}}</div>
           <div class="item-description">{{i.description || '--'}}</div>
           <div class="item-info">
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="content">
-      <markdown />
+      <markdown ref="markdown" />
     </div>
   </div>
 </template>
@@ -30,6 +30,7 @@ import { me, star } from '../../plugins/database'
 import type { SelfStarType } from '../../../types'
 import type { TreeNodeType } from '../../../types/modules'
 import Markdown from '../../components/Markdown.vue'
+import type { mdApi } from '../../components/Markdown.vue'
 
 const list = ref(
   [
@@ -76,6 +77,17 @@ const list = ref(
 
 const all = ref<SelfStarType[]>([])
 
+const repo = ref<SelfStarType | null>(null)
+
+const markdown = ref<mdApi>()
+
+function itemClickEvent (e: SelfStarType) {
+  repo.value = e
+  if (markdown.value) {
+    markdown.value.init(e)
+  }
+}
+
 function nodeClickEvent (data: TreeNodeType) {
   console.log('=== data ===', data)
 }
@@ -83,9 +95,7 @@ function nodeClickEvent (data: TreeNodeType) {
 async function getSelfStarList () {
   const res = await me.get()
   if (res && res.login) {
-    const list = await getAllSelfStar()
-    all.value = list
-    console.log('=== list ===', list)
+    all.value = await getAllSelfStar()
   }
 }
 
