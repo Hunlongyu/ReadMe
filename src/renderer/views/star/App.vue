@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="content">
-      <markdown ref="markdown" />
+      <Markdown ref="markdown" />
     </div>
   </div>
 </template>

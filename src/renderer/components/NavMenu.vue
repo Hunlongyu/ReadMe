@@ -3,7 +3,7 @@
     <div class="avatar nt-box">
       <img src="../assets/logo.png" alt="" @click="routerEvent('me')">
     </div>
-    <div class="menu">
+    <div class="menu-nav">
       <span :class="['button', 'nt-btn', active === 'star' ? 'active' : '']" @click="routerEvent('star')">
         <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="white" fill-opacity="0.01"/><path d="M23.9986 5L17.8856 17.4776L4 19.4911L14.0589 29.3251L11.6544 43L23.9986 36.4192L36.3454 43L33.9586 29.3251L44 19.4911L30.1913 17.4776L23.9986 5Z" fill="none" stroke="#333" stroke-width="3" stroke-linejoin="round"/></svg>
       </span>
@@ -57,7 +57,7 @@ function routerEvent (e: string) {
       width: 100%;
     }
   }
-  .menu{
+  .menu-nav{
     flex: 1;
     margin-top: 40px;
     display: flex;

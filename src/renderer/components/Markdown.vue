@@ -1,5 +1,5 @@
 <template>
-  <div class="markdown scroll">
+  <div class="markdown scroll" v-loading="loading">
     <div class="markdown-wrapper">
       <div class="markdown-body" v-html="source"></div>
     </div>
@@ -8,38 +8,30 @@
 <script lang="ts" setup>
 import type { SelfStarType } from '@/types'
 import { defineExpose, ref } from 'vue'
-import Mdit from 'markdown-it'
-import axios from 'axios'
-import hljs from 'highlight.js'
+import { getReadMeMd, renderMarkdwon } from '../utils/markdown'
 import 'highlight.js/styles/github.css'
-import '../assets/css/primer.css'
 
 const repo = ref<SelfStarType>()
 const source = ref<string>()
+const loading = ref(false)
 
-function init (e: SelfStarType) {
+async function init (e: SelfStarType) {
+  source.value = ''
+  loading.value = true
   repo.value = e
-  console.log('markdown', repo.value)
-  getMd()
+  const res = await getReadMeMd(e)
+  if (res) {
+    const val = await renderMarkdwon(res)
+    source.value = val
+  }
+  loading.value = false
 }
 
-async function getMd () {
-  // const res = await axios.get('https://raw.githubusercontent.com/JanGuillermo/vue3-markdown-it/master/README.md')
-  const res = await axios.get('https://raw.githubusercontent.com/markdown-it/markdown-it/master/README.md')
-  const md = new Mdit({
-    html: true,
-    linkify: true,
-    typographer: true,
-    highlight: (str, lang) => {
-      if (lang && hljs.getLanguage(lang)) {
-        try {
-          return hljs.highlight(str, { language: lang }).value
-        } catch (__) {}
-      }
-      return ''
-    }
+const dom = document.querySelector('.markdown')
+if (dom) {
+  dom.addEventListener('click', (e) => {
+    console.log(e)
   })
-  source.value = md.render(res.data)
 }
 
 export interface mdApi {
@@ -53,6 +45,7 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/css/primer.css';
 .markdown{
   width: 100%;
   height: 100%;
