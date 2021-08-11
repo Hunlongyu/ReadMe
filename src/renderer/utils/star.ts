@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 import { StarredType, SelfStarType } from '../../types'
 import { getToken } from './tools'
+import { star } from '../plugins/database'
 
 /**
  * 列出用户收藏的仓库
@@ -21,6 +22,7 @@ async function getSelfStarByFilter (sort = 'created', direction = 'desc', page: 
   }
 }
 
+// 获取登录用户的所有 star
 async function getAllSelfStar (): Promise<SelfStarType[] | []> {
   let idx = 1
   const token = await getToken()
@@ -39,7 +41,7 @@ async function getAllSelfStar (): Promise<SelfStarType[] | []> {
   return starList
 }
 
-// 获取用户所有 star
+// 获取查询账号所有 star
 async function getUserStar (author: string): Promise<StarredType[] | []> {
   let starIndex = 1
   const starList: StarredType[] = []
@@ -100,6 +102,32 @@ async function repositoryStargazersList (owner: string, repo: string, page: numb
   }
 }
 
+export interface listType {
+  id: number
+  label: string
+  children?: listType[]
+}
+
+async function getStarLanguageList (): Promise<listType[]> {
+  const all = await star.all()
+  const arr = []
+  for (let i = 0; i < all.length; i++) {
+    const lang = all[i].language
+    if (lang) arr.push(lang)
+  }
+  const data = [...new Set(arr)]
+  const time = new Date().getTime()
+  const list = []
+  for (let i = 0; i < data.length; i++) {
+    const doc = {
+      id: time + i,
+      label: data[i]
+    }
+    list.push(doc)
+  }
+  return list
+}
+
 export {
   getSelfStarByFilter,
   getAllSelfStar,
@@ -107,5 +135,6 @@ export {
   starRepository,
   unStarRepository,
   checkStarRepository,
-  repositoryStargazersList
+  repositoryStargazersList,
+  getStarLanguageList
 }

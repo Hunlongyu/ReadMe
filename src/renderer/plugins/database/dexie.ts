@@ -11,7 +11,7 @@ export class Database extends Dexie {
 
     this.version(1).stores({
       me: 'id, token, name, login',
-      star: 'id, starred_at, repo'
+      star: '&id, full_name, language, stargazers_count, forks'
     })
 
     this.me = this.table('me')
