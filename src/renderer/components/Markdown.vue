@@ -7,7 +7,7 @@
 </template>
 <script lang="ts" setup>
 import type { SelfStarType } from '@/types'
-import { defineExpose, ref } from 'vue'
+import { defineExpose, ref, nextTick } from 'vue'
 import { getReadMeMd, renderMarkdwon } from '../utils/markdown'
 import 'highlight.js/styles/github.css'
 
@@ -23,14 +23,21 @@ async function init (e: SelfStarType) {
   if (res) {
     const val = await renderMarkdwon(res)
     source.value = val
+    nextTick(() => {
+      aLinkEvent()
+    })
   }
   loading.value = false
 }
 
-const dom = document.querySelector('.markdown')
-if (dom) {
-  dom.addEventListener('click', (e) => {
-    console.log(e)
+// 使用外部浏览器打开 MD 里的链接
+function aLinkEvent () {
+  document.body.addEventListener('click', event => {
+    event.preventDefault()
+    const dom = event?.target as HTMLLinkElement
+    if (dom.tagName === 'A') {
+      window.shell.openExternal(dom.href)
+    }
   })
 }
 
