@@ -36,7 +36,11 @@ function aLinkEvent () {
     event.preventDefault()
     const dom = event?.target as HTMLLinkElement
     if (dom.tagName === 'A') {
-      window.shell.openExternal(dom.href)
+      const href = dom.href
+      const reg = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/
+      if (href.match(reg)) {
+        window.shell.openExternal(dom.href)
+      }
     }
   })
 }
