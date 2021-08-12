@@ -40,6 +40,7 @@ async function checkUserToken () {
         store.value = result
         store.value.token = res
         me.update(store.value)
+        router.go(0)
       }
     }
   } else {
