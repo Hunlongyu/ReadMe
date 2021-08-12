@@ -11,6 +11,7 @@
   },
   "main": "background.js",
   "dependencies": {
+    "@octokit/core": "^3.5.1",
     "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.10",
     "core-js": "^3.6.5",

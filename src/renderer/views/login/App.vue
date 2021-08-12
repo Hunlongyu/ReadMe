@@ -18,7 +18,7 @@
 import Frame from '../../components/Frame.vue'
 
 function authLogin () {
-  window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.VUE_APP_clientId}&scope=repo%20gist%20notifications&redirect_uri=http://localhost:8080/`
+  window.location.href = `https://github.com/login/oauth/authorize?response_type=code&state=${new Date().getTime()}&client_id=${process.env.VUE_APP_clientId}&scope=repo%20gist%20notifications&redirect_uri=http://localhost:8080/`
 }
 </script>
 <style lang="scss" scoped>

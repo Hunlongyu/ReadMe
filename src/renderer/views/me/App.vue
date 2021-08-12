@@ -1,66 +1,101 @@
 <template>
   <div class="me">
     <div class="info">
-      <p>avatar</p>
-      <p>name</p>
-      <p>describe</p>
+      <div class="CircleBadge CircleBadge--medium avatar">
+        <img class="CircleBadge-icon" :src="avatar_url" alt="">
+      </div>
+      <div class="username">{{name}}</div>
+      <div class="description">{{description}}</div>
     </div>
     <div class="more">
-      <div>
-        <img src="https://github-profile-trophy.vercel.app/?username=Hunlongyu&margin-w=28" alt="">
+      <div class="trophy">
+        <img :src="`https://github-profile-trophy.vercel.app/?username=${login}&margin-w=28`" alt="">
       </div>
-      <div>
-        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Hunlongyu" alt="">
-        <img src="https://github-readme-stats.vercel.app/api?username=Hunlongyu&show_icons=true&count_private=true&line_height=40" alt="">
+      <div class="stats">
+        <img :src="`https://github-readme-stats.vercel.app/api/top-langs/?username=${login}`" alt="">
+        <img :src="`https://github-readme-stats.vercel.app/api?username=${login}&show_icons=true&count_private=true&line_height=40`" alt="">
       </div>
     </div>
-    <div class="contributions">
-      <p>contributions</p>
+    <!-- <div class="contributions">
       <p>https://skyline.github.com/api/contributions?username=dend&year=2021</p>
-    </div>
+    </div> -->
     <div class="logout">
-      <button class="button nt-btn" @click="logoutEvent">logout</button>
+      <button class="btn" type="button" @click="logoutEvent">Logout</button>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { useRouter } from 'vue-router'
-import axios from 'axios'
+import { onMounted, ref } from 'vue'
+import { me } from '@/renderer/plugins/database'
 
 const router = useRouter()
+const avatar_url = ref()
+const name = ref()
+const description = ref()
+const login = ref()
+const token = ref()
 
-function logoutEvent () {
-  axios({
-    method: 'delete',
-    url: 'https://api.github.com/applications/dce5a448c5e9cca4d566/token',
-    auth: {
-      username: `${process.env.VUE_APP_clientId}`,
-      password: `${process.env.VUE_APP_clientSecret}`
-    },
-    data: {
-      access_token: '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'
-    }
-  }).then(() => {
-    router.push('login')
-    console.log('then')
-  }).catch(() => {
-    router.push('login')
-    console.log('error')
+// 从数据库获取用户信息
+async function getUserInfo () {
+  const res = await me.get()
+  avatar_url.value = res?.avatar_url
+  name.value = res?.name
+  description.value = res?.bio
+  login.value = res?.login
+  token.value = res?.token
+}
+
+// 退出登录
+async function logoutEvent () {
+  const doc = { id: 0, token: '', name: '', login: '' }
+  me.clear().then(() => {
+    me.add(doc).then(() => {
+      router.push({ name: 'Login' })
+    })
   })
 }
+
+onMounted(async () => {
+  getUserInfo()
+})
 </script>
 <style lang="scss" scoped>
 .me{
   flex: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   border-top: 1px solid #d9e3e5;
-  text-align: center;
+  .info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    width: 100%;
+    .username{
+      margin-top: 10px;
+      font-size: 18px;
+    }
+    .description{
+      margin-top: 8px;
+      font-size: 14px;
+    }
+  }
+  .more{
+    width: 800px;
+    margin-top: 20px;
+    .stats{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
   .logout{
     text-align: center;
-    .button{
-      padding: 10px 25px;
-    }
+    margin-top: 40px;
   }
 }
 </style>

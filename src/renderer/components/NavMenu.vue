@@ -1,7 +1,7 @@
 <template>
   <div class="navMenu">
     <div class="avatar nt-box">
-      <img src="../assets/logo.png" alt="" @click="routerEvent('me')">
+      <img :src="avatar_url" alt="" @click="routerEvent('me')">
     </div>
     <div class="menu-nav">
       <span :class="['button', 'nt-btn', active === 'star' ? 'active' : '']" @click="routerEvent('star')">
@@ -23,15 +23,28 @@
 </template>
 <script lang="ts" setup>
 import { ref } from '@vue/reactivity'
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { me } from '../plugins/database'
 
 const router = useRouter()
 const active = ref('star')
+const avatar_url = ref()
+
+async function getAvatarUrl () {
+  const res = await me.get()
+  avatar_url.value = res?.avatar_url
+}
 
 function routerEvent (e: string) {
   active.value = e
   router.push(e)
 }
+
+onMounted(() => {
+  getAvatarUrl()
+})
+
 </script>
 <style lang="scss" scoped>
 .navMenu{
