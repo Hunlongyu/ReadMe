@@ -33,7 +33,7 @@
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item command="PDF">PDF</el-dropdown-item>
+              <el-dropdown-item command="HTML">HTML</el-dropdown-item>
               <el-dropdown-item command="JPG">JPG</el-dropdown-item>
               <el-dropdown-item command="PNG">PNG</el-dropdown-item>
               <el-dropdown-item command="Markdown">Markdown</el-dropdown-item>
@@ -55,6 +55,8 @@ import { defineExpose, ref, nextTick } from 'vue'
 import { getReadMeMd, renderMarkdwon } from '../utils/markdown'
 import 'highlight.js/styles/github.css'
 import copy from 'clipboard-copy'
+import html2canvas from 'html2canvas'
+import FileSaver from 'file-saver'
 
 const repo = ref<SelfStarType>()
 const source = ref<string>()
@@ -95,23 +97,32 @@ function fastCloneGit (site: string) {
   return ''
 }
 
-async function init (e: SelfStarType) {
-  source.value = ''
-  loading.value = true
-  repo.value = e
-  const res = await getReadMeMd(e)
-  if (res) {
-    const val = await renderMarkdwon(res)
-    source.value = val
-    nextTick(() => {
-      aLinkEvent()
+// 导出各种格式
+async function exportEvent (type: string) {
+  const dom = document.querySelector('.markdown-wrapper') as HTMLElement
+  const name = repo.value?.full_name
+  if (type === 'HTML') {
+    const file = new File([dom.outerHTML], 'file.html', { type: 'text/html;charset=utf-8' })
+    FileSaver.saveAs(file)
+  }
+  if (type === 'JPG') {
+    html2canvas(dom, { useCORS: true, allowTaint: false }).then(canvas => {
+      const jpg = canvas.toDataURL('image/jpg')
+      FileSaver.saveAs(jpg, `${name}.jpg`)
     })
   }
-  loading.value = false
-}
-
-async function exportEvent (type: string) {
-  console.log('exportEvent', type)
+  if (type === 'PNG') {
+    html2canvas(dom, { useCORS: true, allowTaint: false }).then(canvas => {
+      const png = canvas.toDataURL('image/png')
+      FileSaver.saveAs(png, `${name}.png`)
+    })
+  }
+  if (type === 'Markdown') {
+    if (!repo.value) return false
+    const res = await getReadMeMd(repo.value)
+    const file = new File([res.content], `${repo.value.full_name} - ${res.name}`, { type: 'text/plain;charset=utf-8' })
+    FileSaver.saveAs(file)
+  }
 }
 
 // 使用外部浏览器打开 MD 里的链接
@@ -127,6 +138,22 @@ function aLinkEvent () {
       }
     }
   })
+}
+
+// 初始化
+async function init (e: SelfStarType) {
+  source.value = ''
+  loading.value = true
+  repo.value = e
+  const res = await getReadMeMd(e)
+  if (res) {
+    const val = await renderMarkdwon(res)
+    source.value = val
+    nextTick(() => {
+      aLinkEvent()
+    })
+  }
+  loading.value = false
 }
 
 export interface mdApi {
