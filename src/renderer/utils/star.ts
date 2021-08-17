@@ -60,10 +60,12 @@ async function getUserStar (author: string): Promise<StarredType[] | []> {
 }
 
 // 收藏仓库
-async function starRepository (owner: string, repo: string): Promise<boolean> {
+async function starRepository (fullName: string): Promise<boolean> {
   try {
     const token = await getToken()
-    const res = await axios.put(`https://api.github.com/user/starred/${owner}/${repo}`, { owner, repo }, { headers: { accept: 'application/vnd.github.v3+json', Authorization: `token ${token}` } })
+    const owner = fullName.split('/')[0]
+    const repo = fullName.split('/')[1]
+    const res = await axios.put(`https://api.github.com/user/starred/${fullName}`, { owner, repo }, { headers: { accept: 'application/vnd.github.v3+json', Authorization: `token ${token}` } })
     return res.status === 204
   } catch (error) {
     return false
@@ -71,10 +73,10 @@ async function starRepository (owner: string, repo: string): Promise<boolean> {
 }
 
 // 取消收藏仓库
-async function unStarRepository (owner: string, repo: string): Promise<boolean> {
+async function unStarRepository (fullName: string): Promise<boolean> {
   try {
     const token = await getToken()
-    const res = await axios.delete(`https://api.github.com/user/starred/${owner}/${repo}`, { headers: { accept: 'application/vnd.github.v3+json', Authorization: `token ${token}` } })
+    const res = await axios.delete(`https://api.github.com/user/starred/${fullName}`, { headers: { accept: 'application/vnd.github.v3+json', Authorization: `token ${token}` } })
     return res.status === 204
   } catch (error) {
     return false
@@ -82,10 +84,10 @@ async function unStarRepository (owner: string, repo: string): Promise<boolean> 
 }
 
 // 检查是否已经收藏过
-async function checkStarRepository (owner: string, repo: string): Promise<boolean> {
+async function checkStarRepository (fullName: string): Promise<boolean> {
   try {
     const token = await getToken()
-    const res = await axios.get(`https://api.github.com/user/starred/${owner}/${repo}`, { headers: { accept: 'application/vnd.github.v3+json', Authorization: `token ${token}` } })
+    const res = await axios.get(`https://api.github.com/user/starred/${fullName}`, { headers: { accept: 'application/vnd.github.v3+json', Authorization: `token ${token}` } })
     return res.status === 204
   } catch (error) {
     return false
