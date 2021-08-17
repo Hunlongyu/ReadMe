@@ -1,11 +1,11 @@
 <template>
   <div class="md">
-    <div class="md-header">
+    <div class="md-header" v-show="repo">
       <div class="md-header-left">
-        <span class="icon-btn" title="Refresh">
+        <span class="icon-btn" title="Refresh" @click="refresh">
           <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M42 8V24" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 24L6 40" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 24C6 33.9411 14.0589 42 24 42C28.8556 42 33.2622 40.0774 36.5 36.9519" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M42.0007 24C42.0007 14.0589 33.9418 6 24.0007 6C18.9152 6 14.3223 8.10896 11.0488 11.5" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
-        <span class="icon-btn" title="Github">
+        <span class="icon-btn" title="Github" @click="githubSite">
           <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="white" fill-opacity="0.01"/><path d="M29.3444 30.4767C31.7481 29.9771 33.9292 29.1109 35.6247 27.8393C38.5202 25.6677 40 22.3137 40 19C40 16.6754 39.1187 14.5051 37.5929 12.6669C36.7427 11.6426 39.2295 4.00001 37.02 5.02931C34.8105 6.05861 31.5708 8.33691 29.8726 7.8341C28.0545 7.29577 26.0733 7.00001 24 7.00001C22.1992 7.00001 20.4679 7.22313 18.8526 7.63452C16.5046 8.23249 14.2591 6.00001 12 5.02931C9.74086 4.05861 10.9736 11.9633 10.3026 12.7946C8.84119 14.6052 8 16.7289 8 19C8 22.3137 9.79086 25.6677 12.6863 27.8393C14.6151 29.2858 17.034 30.2077 19.7401 30.6621" stroke="#333" stroke-width="2" stroke-linecap="round"/><path d="M19.7402 30.662C18.5817 31.9372 18.0024 33.148 18.0024 34.2946C18.0024 35.4411 18.0024 38.3465 18.0024 43.0108" stroke="#333" stroke-width="2" stroke-linecap="round"/><path d="M29.3443 30.4767C30.4421 31.9175 30.991 33.2112 30.991 34.3577C30.991 35.5043 30.991 38.3886 30.991 43.0108" stroke="#333" stroke-width="2" stroke-linecap="round"/><path d="M6 31.2156C6.89887 31.3255 7.56554 31.7388 8 32.4555C8.65169 33.5304 11.0742 37.5181 13.8251 37.5181C15.6591 37.5181 17.0515 37.5181 18.0024 37.5181" stroke="#333" stroke-width="2" stroke-linecap="round"/></svg>
         </span>
         <span class="icon-btn" title="Star">
@@ -13,29 +13,30 @@
         </span>
       </div>
       <div class="md-header-right">
-        <el-dropdown trigger="click">
+        <el-dropdown trigger="click" @command="gitCloneEvent">
           <span class="el-dropdown-link md-dropdown-btn">
             Clone<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item>https://www.baidu.com</el-dropdown-item>
-              <el-dropdown-item>ssh://www.baidu.com</el-dropdown-item>
-              <el-dropdown-item divided>[加速] - https://www.baidu.com</el-dropdown-item>
-              <el-dropdown-item>[加速] - https://www.baidu.com</el-dropdown-item>
+              <el-dropdown-item :command="repo?.clone_url">[官网] - {{ repo?.clone_url }}</el-dropdown-item>
+              <el-dropdown-item :command="repo?.ssh_url">[官网] - {{ repo?.ssh_url }}</el-dropdown-item>
+              <el-dropdown-item :command="fastCloneGit('fastgit')" divided>[加速] - {{ fastCloneGit('fastgit') }}</el-dropdown-item>
+              <el-dropdown-item :command="fastCloneGit('gitclone')">[加速] - {{ fastCloneGit('gitclone') }}</el-dropdown-item>
+              <el-dropdown-item :command="fastCloneGit('cnpmjs')">[加速] - {{ fastCloneGit('cnpmjs') }}</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
-        <el-dropdown trigger="click">
+        <el-dropdown trigger="click" @command="exportEvent">
           <span class="el-dropdown-link md-dropdown-btn">
             Export<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item>PDF</el-dropdown-item>
-              <el-dropdown-item>JPG</el-dropdown-item>
-              <el-dropdown-item>PNG</el-dropdown-item>
-              <el-dropdown-item>Markdown</el-dropdown-item>
+              <el-dropdown-item command="PDF">PDF</el-dropdown-item>
+              <el-dropdown-item command="JPG">JPG</el-dropdown-item>
+              <el-dropdown-item command="PNG">PNG</el-dropdown-item>
+              <el-dropdown-item command="Markdown">Markdown</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -53,10 +54,46 @@ import type { SelfStarType } from '@/types'
 import { defineExpose, ref, nextTick } from 'vue'
 import { getReadMeMd, renderMarkdwon } from '../utils/markdown'
 import 'highlight.js/styles/github.css'
+import copy from 'clipboard-copy'
 
 const repo = ref<SelfStarType>()
 const source = ref<string>()
 const loading = ref(false)
+
+// 刷新加载 markdown
+async function refresh () {
+  if (repo.value) {
+    init(repo.value)
+  }
+}
+
+// 打开 Github 库主页
+async function githubSite () {
+  if (repo.value?.html_url) {
+    window.shell.openExternal(repo.value.html_url)
+  }
+}
+
+// 复制克隆地址到剪贴板
+function gitCloneEvent (url: string) {
+  copy(`git clone ${url}`)
+}
+
+// 获取其他克隆地址
+function fastCloneGit (site: string) {
+  if (repo.value?.clone_url) {
+    if (site === 'fastgit') {
+      return repo.value.clone_url.replace('github.com', 'hub.fastgit.org')
+    }
+    if (site === 'gitclone') {
+      return repo.value.clone_url.replace('github.com', 'gitclone.com/github.com')
+    }
+    if (site === 'cnpmjs') {
+      return repo.value.clone_url.replace('github.com', 'github.com.cnpmjs.org')
+    }
+  }
+  return ''
+}
 
 async function init (e: SelfStarType) {
   source.value = ''
@@ -71,6 +108,10 @@ async function init (e: SelfStarType) {
     })
   }
   loading.value = false
+}
+
+async function exportEvent (type: string) {
+  console.log('exportEvent', type)
 }
 
 // 使用外部浏览器打开 MD 里的链接
