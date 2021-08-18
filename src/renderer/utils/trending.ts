@@ -34,7 +34,8 @@ async function getTrendingList (url: string): Promise<trendingRepoType[]> {
         language: '',
         star: 0,
         fork: 0,
-        octiconStar: 0
+        octiconStar: 0,
+        fullName: ''
       }
       const title = dom('.h3').text().replace(/\s+/g, '').trim()
       doc.author = title.split('/')[0].trim() || ''
@@ -44,6 +45,7 @@ async function getTrendingList (url: string): Promise<trendingRepoType[]> {
       doc.star = Number(dom('a > .octicon-star').parent().text().replace(/\s+/g, ' ').replace('Star', '').replace(/,/g, '').trim()) || 0
       doc.fork = Number(dom('a > .octicon-repo-forked').parent().text().replace(/\s+/g, ' ').replace('Star', '').replace(/,/g, '').trim()) || 0
       doc.octiconStar = Number(dom('.float-sm-right').text().trim().split(' ')[0]) || 0
+      doc.fullName = `${doc.author}/${doc.repo}`
       list.push(doc)
     })
     return list

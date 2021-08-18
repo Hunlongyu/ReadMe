@@ -118,9 +118,9 @@ async function trendingChangeEvent () {
 }
 
 async function starRepositoryEvent (e: trendingRepoType) {
-  const result = await checkStarRepository(e.author, e.repo)
+  const result = await checkStarRepository(e.fullName)
   if (result) return false
-  const res = await starRepository(e.author, e.repo)
+  const res = await starRepository(e.fullName)
   if (res) {
     console.log('success')
   } else {

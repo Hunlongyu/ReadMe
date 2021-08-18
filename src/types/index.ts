@@ -274,4 +274,11 @@ export interface trendingRepoType {
   star: number
   fork: number
   octiconStar: number
+  fullName: string
+}
+
+export interface searchType {
+  incomplete_results: boolean
+  items: StarredType[] | []
+  total_count: number
 }
