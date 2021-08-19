@@ -1,11 +1,16 @@
 <template>
   <div class="star">
-    <div class="tags scroll">
+    <div class="tags scroll" v-loading="refreshLoading">
       <div class="cat">
-        <el-tree :data="list" :default-expanded-keys="[1, 2]" node-key="id" @node-click="nodeClickEvent"/>
+        <div class="cat-header">
+          <span class="icon-btn" @click="refreshList">
+            <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M42 8V24" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 24L6 40" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 24C6 33.9411 14.0589 42 24 42C28.8556 42 33.2622 40.0774 36.5 36.9519" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M42.0007 24C42.0007 14.0589 33.9418 6 24.0007 6C18.9152 6 14.3223 8.10896 11.0488 11.5" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+        <el-tree :data="list" ref="tree" :default-expanded-keys="[1, 2]" node-key="id" @node-click="nodeClickEvent"/>
       </div>
     </div>
-    <div class="list scroll">
+    <div class="list scroll"  v-loading="refreshLoading">
       <div class="list-wrapper">
         <div class="item" v-for="(i, j) in all" :key="j" @click="itemClickEvent(i)">
           <div class="item-name">{{i.full_name}}</div>
@@ -32,7 +37,7 @@
 <script lang="ts" setup>
 import { getAllSelfStar, getStarLanguageList, listType } from '@/renderer/utils/star'
 import { onMounted, ref } from 'vue'
-import { me, star } from '../../plugins/database'
+import { settings, star } from '../../plugins/database'
 import type { Repository, TreeNodeType } from '@/types'
 import Markdown from '../../components/Markdown.vue'
 import type { mdApi } from '../../components/Markdown.vue'
@@ -53,11 +58,22 @@ const list = ref<listType[]>(
 )
 
 const all = ref<Repository[]>([])
-
 const repo = ref<Repository>()
-
 const markdown = ref<mdApi>()
+const refreshLoading = ref(false)
+const selectLang = ref()
+const tree = ref()
 
+// 刷新用户收藏列表
+async function refreshList () {
+  refreshLoading.value = true
+  all.value = []
+  await star.clear()
+  await getSelfStarList()
+  refreshLoading.value = false
+}
+
+// 点击列表显示 markdown 内容
 function itemClickEvent (e: Repository) {
   repo.value = e
   if (markdown.value) {
@@ -67,6 +83,7 @@ function itemClickEvent (e: Repository) {
 
 // 列表树点击事件
 async function nodeClickEvent (data: TreeNodeType) {
+  selectLang.value = data.label
   if (data.label === 'All') {
     await initAddStarList()
     return false
@@ -85,36 +102,46 @@ async function getListByLanguage (lang: string) {
 
 // 获取所有 star
 async function getSelfStarList () {
-  const res = await me.get()
-  if (res && res.login) {
-    all.value = await getAllSelfStar()
-    const arr = [...all.value]
-    const arrs = JSON.stringify(arr)
-    const arrj = JSON.parse(arrs)
-    star.bulkAdd(arrj)
-  }
+  const result = await getAllSelfStar()
+  all.value = result
+  await star.bulkAdd(result)
+  await initLanguageList()
 }
 
 // 初始化列表树
 async function initAddStarList () {
   const res = await star.all()
   if (!res.length) {
-    await getSelfStarList()
+    const s = await settings.get()
+    if (s?.token === '') {
+      setTimeout(async () => {
+        await getSelfStarList()
+      }, 3000)
+    }
   } else {
     all.value = res
+    initLanguageList()
   }
 }
 
+// 获取语言列表
 async function initLanguageList () {
   const ls = await getStarLanguageList()
   if (ls) {
     list.value[1].children = ls
+    if (selectLang.value) {
+      for (const i of ls) {
+        if (i.label === selectLang.value) {
+          tree.value.setCurrentKey(i.id)
+          await getListByLanguage(i.label)
+        }
+      }
+    }
   }
 }
 
-onMounted(async () => {
-  await initAddStarList()
-  await initLanguageList()
+onMounted(() => {
+  initAddStarList()
 })
 </script>
 <style lang="scss" scoped>
@@ -130,6 +157,30 @@ onMounted(async () => {
     .cat{
       position: absolute;
       width: 100%;
+      .cat-header{
+        height: 40px;
+        width: 100%;
+        background-color: #fff;
+        border-bottom: 1px solid #d9e3e5;
+        z-index: 2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .icon-btn{
+          display: flex;
+          width: 30px;
+          height: 30px;
+          justify-content: center;
+          align-items: center;
+          border-radius: 3px;
+          margin-left: 12px;
+          cursor: pointer;
+          &:hover{
+            background-color: #f8f8f8;
+            border: 1px solid #d9e3e5;
+          }
+        }
+      }
     }
   }
   .list{
