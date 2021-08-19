@@ -11,23 +11,23 @@
       <div class="type">
         <div class="item">
           <span>Repositories</span>
-          <span>{{content.total_count}}</span>
+          <span>{{numbers?.repositories || 0}}</span>
         </div>
         <div class="item">
           <span>Code</span>
-          <span>1</span>
+          <span>{{numbers?.code || 0}}</span>
         </div>
         <div class="item">
           <span>Commits</span>
-          <span>1</span>
+          <span>{{numbers?.commits || 0}}</span>
         </div>
         <div class="item">
           <span>Issues</span>
-          <span>1</span>
+          <span>{{numbers?.issues || 0}}</span>
         </div>
         <div class="item">
           <span>Users</span>
-          <span>1</span>
+          <span>{{numbers?.users || 0}}</span>
         </div>
       </div>
       <div class="advanced">
@@ -46,7 +46,7 @@
     </div>
     <div class="content scroll" v-loading="loading">
       <div class="content-wrapper">
-        <div class="item" v-for="(i, j) in content.items" :key="j">
+        <div class="item" v-for="(i, j) in content?.items" :key="j">
           <div class="title">
             <div class="title-left">
               <svg class="title-icon" width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="white" fill-opacity="0.01"/><path d="M10 44C8.89543 44 8 43.1046 8 42V6C8 4.89543 8.89543 4 10 4H38C39.1046 4 40 4.89543 40 6V42C40 43.1046 39.1046 44 38 44H10Z" fill="none" stroke="#333" stroke-width="2" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M21 22V4H33V22L27 15.7273L21 22Z" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 4H38" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -77,46 +77,57 @@
             <div class="info-right"></div>
           </div>
         </div>
-        <div class="item" v-if="content.items.length > 0">
-          <el-pagination layout="prev, pager, next" :page-size="100" :current-page="idx" :total="content.total_count" @current-change="currentChangeEvent"></el-pagination>
+        <div class="item" v-if="content && content.items?.length > 0">
+          <el-pagination layout="prev, pager, next" :page-size="100" :current-page="idx" :total="content?.total_count" @current-change="currentChangeEvent"></el-pagination>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, reactive } from 'vue'
-import { searchRepo } from '../../utils/search'
-import type { searchType, StarredType } from '../../../types'
+import { ref } from 'vue'
+import { searchRepo, searchTypeNum } from '../../utils/search'
+import type { SearchRepositoryType, searchNumberType, SearchRepository } from '../../utils/search'
+import { checkStarRepository, unStarRepository, starRepository } from '@/renderer/utils/star'
+import { ElMessage } from 'element-plus'
 
 const searchTxt = ref('')
-const content = reactive<searchType>({
-  incomplete_results: false,
-  items: [],
-  total_count: 0
-})
+const content = ref<SearchRepositoryType>()
+const numbers = ref<searchNumberType>()
 const loading = ref(false)
 const idx = ref(1)
 
+// 搜索事件
 async function searchEvent () {
   loading.value = true
   if (searchTxt.value === '') return false
   const res = await searchRepo(searchTxt.value, idx.value)
   if (res) {
-    content.items = res.items
-    content.total_count = res.total_count
+    content.value = res
   }
   loading.value = false
+  numbers.value = await searchTypeNum(searchTxt.value)
 }
 
+// 切换页面事件
 function currentChangeEvent (num: number) {
   idx.value = num
-  content.items = []
-  searchEvent()
+  if (content.value) {
+    content.value.items = []
+    searchEvent()
+  }
 }
 
-async function starRepositoryEvent (e: StarredType) {
-  console.log('lala', e)
+// 点击收藏按钮事件
+async function starRepositoryEvent (repo: SearchRepository) {
+  const check = await checkStarRepository(repo.full_name)
+  if (check) {
+    await unStarRepository(repo.full_name)
+    ElMessage({ message: '取消收藏成功', type: 'success' })
+  } else {
+    await starRepository(repo.full_name)
+    ElMessage({ message: '收藏成功', type: 'success' })
+  }
 }
 </script>
 <style lang="scss" scoped>

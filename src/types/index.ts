@@ -5,6 +5,12 @@ import {
   PermissionsType
 } from './modules'
 
+import { components } from '@octokit/openapi-types'
+
+export type Repository = components['schemas']['full-repository']
+export type PrivateUser = components['schemas']['private-user']
+export type SearchRepository = components['schemas']['repo-search-result-item']
+
 // 个人信息
 export interface UserType {
   avatar_url?: string
@@ -275,10 +281,4 @@ export interface trendingRepoType {
   fork: number
   octiconStar: number
   fullName: string
-}
-
-export interface searchType {
-  incomplete_results: boolean
-  items: StarredType[] | []
-  total_count: number
 }
