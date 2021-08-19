@@ -1,7 +1,12 @@
 const initMe = [
-  { id: 0, token: '', name: '', login: '' }
+  { id: 0, name: '', login: '' }
+]
+
+const initSettings = [
+  { id: 0, userId: 0, token: '', language: 'zh-cn' }
 ]
 
 export {
-  initMe
+  initMe,
+  initSettings
 }

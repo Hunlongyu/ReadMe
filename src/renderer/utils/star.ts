@@ -1,7 +1,28 @@
+import { Octokit } from '@octokit/core'
 import axios, { AxiosResponse } from 'axios'
-import { StarredType, SelfStarType } from '../../types'
+import { PrivateUser, Repository } from '@/types'
 import { getToken } from './tools'
 import { star } from '../plugins/database'
+
+// 获取登录用户的所有 star
+async function getAllSelfStar (): Promise<Repository[]> {
+  const token = await getToken()
+  const octokit = new Octokit({ auth: token })
+  let idx = 1
+  const list: Repository[] = []
+  async function getSelfStar (page: number) {
+    const res = await octokit.request('GET /user/starred', { per_page: 100, page: page })
+    if (res.data.length > 0) {
+      idx++
+      list.push(...res.data)
+      getSelfStar(idx)
+    } else {
+      return list
+    }
+  }
+  await getSelfStar(idx)
+  return list
+}
 
 /**
  * 列出用户收藏的仓库
@@ -9,7 +30,7 @@ import { star } from '../plugins/database'
  * @param direction asc: 升序  desc: 降序
  * @param page 页码
  * @param token 用户 token
- * @returns StarredType[]
+ * @returns PrivateUser[]
  */
 async function getSelfStarByFilter (sort = 'created', direction = 'desc', page: number): Promise<AxiosResponse | []> {
   try {
@@ -22,29 +43,10 @@ async function getSelfStarByFilter (sort = 'created', direction = 'desc', page: 
   }
 }
 
-// 获取登录用户的所有 star
-async function getAllSelfStar (): Promise<SelfStarType[] | []> {
-  let idx = 1
-  const token = await getToken()
-  const starList: SelfStarType[] = []
-  async function getSelfStar (page: number) {
-    const res = await axios.get('https://api.github.com/user/starred', { params: { sort: 'created', direction: 'desc', per_page: 100, page }, headers: { accept: 'application/vnd.github.v3+json', Authorization: `token ${token}` } })
-    if (res.data.length > 0) {
-      idx++
-      starList.push(...res.data)
-      getSelfStar(idx)
-    } else {
-      return starList
-    }
-  }
-  await getSelfStar(idx)
-  return starList
-}
-
 // 获取查询账号所有 star
-async function getUserStar (author: string): Promise<StarredType[] | []> {
+async function getUserStar (author: string): Promise<PrivateUser[] | []> {
   let starIndex = 1
-  const starList: StarredType[] = []
+  const starList: PrivateUser[] = []
   async function getStar (num: number) {
     const res = await axios.get(`https://api.github.com/users/${author}/starred`, { params: { per_page: 100, page: num }, headers: { Accept: 'application/vnd.github.v3.star+json' } })
     if (res.data.length > 0) {
@@ -131,8 +133,8 @@ async function getStarLanguageList (): Promise<listType[]> {
 }
 
 export {
-  getSelfStarByFilter,
   getAllSelfStar,
+  getSelfStarByFilter,
   getUserStar,
   starRepository,
   unStarRepository,

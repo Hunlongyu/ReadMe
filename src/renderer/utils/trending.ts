@@ -1,6 +1,6 @@
 import cheerio from 'cheerio'
 import axios from 'axios'
-import { trendingRepoType } from '../../types/index'
+import { trendingRepoType } from '@/types'
 
 // 组合趋势列表的接口链接
 async function getTrending (s: string, p: string, d: string): Promise<trendingRepoType[]> {

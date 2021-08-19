@@ -1,4 +1,4 @@
-import { me } from '../plugins/database'
+import { settings } from '../plugins/database'
 
 // 获取链接参数
 function getUrlParams (name: string, url?: string): string {
@@ -8,7 +8,7 @@ function getUrlParams (name: string, url?: string): string {
 }
 
 async function getToken (): Promise<string | undefined> {
-  const res = await me.get()
+  const res = await settings.get()
   return res?.token
 }
 

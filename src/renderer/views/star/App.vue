@@ -33,8 +33,7 @@
 import { getAllSelfStar, getStarLanguageList, listType } from '@/renderer/utils/star'
 import { onMounted, ref } from 'vue'
 import { me, star } from '../../plugins/database'
-import type { SelfStarType } from '../../../types'
-import type { TreeNodeType } from '../../../types/modules'
+import type { Repository, TreeNodeType } from '@/types'
 import Markdown from '../../components/Markdown.vue'
 import type { mdApi } from '../../components/Markdown.vue'
 
@@ -53,13 +52,13 @@ const list = ref<listType[]>(
   ]
 )
 
-const all = ref<SelfStarType[]>([])
+const all = ref<Repository[]>([])
 
-const repo = ref<SelfStarType | null>(null)
+const repo = ref<Repository>()
 
 const markdown = ref<mdApi>()
 
-function itemClickEvent (e: SelfStarType) {
+function itemClickEvent (e: Repository) {
   repo.value = e
   if (markdown.value) {
     markdown.value.init(e)

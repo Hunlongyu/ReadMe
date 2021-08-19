@@ -86,8 +86,9 @@
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue'
+import type { SearchRepository } from '@/types'
+import type { SearchRepositoryType, searchNumberType } from '../../utils/search'
 import { searchRepo, searchTypeNum } from '../../utils/search'
-import type { SearchRepositoryType, searchNumberType, SearchRepository } from '../../utils/search'
 import { checkStarRepository, unStarRepository, starRepository } from '@/renderer/utils/star'
 import { ElMessage } from 'element-plus'
 

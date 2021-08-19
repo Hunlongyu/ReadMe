@@ -84,7 +84,7 @@ import { onMounted, reactive, ref } from 'vue'
 import languageList from './language.json'
 import { getTrending } from '../../utils/trending'
 import { checkStarRepository, starRepository } from '../../utils/star'
-import type { trendingRepoType } from '../../../types'
+import type { trendingRepoType } from '@/types'
 
 const spokenLanguage = reactive({
   value: 'English',

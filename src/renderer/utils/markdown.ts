@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Mdit from 'markdown-it'
 import hljs from 'highlight.js'
-import { SelfStarType } from '@/types'
+import { Repository } from '@/types'
 
 interface mdType {
   name: string
@@ -9,7 +9,7 @@ interface mdType {
 }
 
 // 获取 README.md 的内容
-async function getReadMeMd (repo: SelfStarType): Promise<mdType> {
+async function getReadMeMd (repo: Repository): Promise<mdType> {
   const default_branch = repo.default_branch
   const full_name = repo.full_name
   const md = ['README.md', 'readme.md', 'README.MD', 'Readme.md', 'readme.MD', 'ReadMe.md', 'ReadMe.Md', 'ReadMe.MD', 'README.markdown', 'readme.markdown', 'README', 'readme', 'README.textile']

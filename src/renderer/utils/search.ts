@@ -1,8 +1,6 @@
 import { Octokit } from '@octokit/core'
-import { components } from '@octokit/openapi-types'
 import { getToken } from './tools'
-
-export type SearchRepository = components['schemas']['repo-search-result-item']
+import { SearchRepository } from '@/types'
 
 export interface SearchRepositoryType {
   incomplete_results: boolean
@@ -38,17 +36,17 @@ async function searchTypeNum (txt: string): Promise<searchNumberType> {
   }
   const token = await getToken()
   const octokit = new Octokit({ auth: token })
-  const code = await octokit.request('GET /search/code', { q: txt, per_page: 10 })
+  const code = await octokit.request('GET /search/code', { q: txt, per_page: 1 })
   numbers.code = code.data.total_count
-  const commits = await octokit.request('GET /search/commits', { q: txt, per_page: 10, mediaType: { previews: ['cloak'] } })
+  const commits = await octokit.request('GET /search/commits', { q: txt, per_page: 1, mediaType: { previews: ['cloak'] } })
   numbers.commits = commits.data.total_count
-  const issues = await octokit.request('GET /search/issues', { q: txt, per_page: 10 })
+  const issues = await octokit.request('GET /search/issues', { q: txt, per_page: 1 })
   numbers.issues = issues.data.total_count
-  const repositories = await octokit.request('GET /search/repositories', { q: txt, per_page: 10 })
+  const repositories = await octokit.request('GET /search/repositories', { q: txt, per_page: 1 })
   numbers.repositories = repositories.data.total_count
-  const topics = await octokit.request('GET /search/topics', { q: txt, per_page: 10, mediaType: { previews: ['mercy'] } })
+  const topics = await octokit.request('GET /search/topics', { q: txt, per_page: 1, mediaType: { previews: ['mercy'] } })
   numbers.topics = topics.data.total_count
-  const users = await octokit.request('GET /search/users', { q: txt, per_page: 10, mediaType: { previews: ['mercy'] } })
+  const users = await octokit.request('GET /search/users', { q: txt, per_page: 1, mediaType: { previews: ['mercy'] } })
   numbers.users = users.data.total_count
   return numbers
 }

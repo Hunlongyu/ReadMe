@@ -25,15 +25,43 @@
 import { ref } from '@vue/reactivity'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { me } from '../plugins/database'
+import { me, settings } from '../plugins/database'
+import { getUserToken, getUserInfo } from '../utils/user'
+import { getUrlParams, getToken } from '../utils/tools'
 
 const router = useRouter()
 const active = ref('star')
 const avatar_url = ref()
 
-async function getAvatarUrl () {
-  const res = await me.get()
-  avatar_url.value = res?.avatar_url
+// 检查并获取用户 token
+async function checkUserToken () {
+  const s = await settings.get()
+  if (s?.token === '') {
+    const code = getUrlParams('code')
+    if (!code) {
+      router.push({ name: 'Login' })
+    } else {
+      const token = await getUserToken()
+      s.token = token
+      const info = await getUserInfo(token)
+      s.userId = info.id
+      settings.update(s)
+      me.add(info)
+      avatar_url.value = info.avatar_url
+    }
+  } else {
+    const info = await me.get()
+    if (!info) {
+      const token = await getToken()
+      if (!token) return false
+      const info = await getUserInfo(token)
+      me.add(info)
+      avatar_url.value = info.avatar_url
+    } else {
+      const info = await me.get()
+      avatar_url.value = info?.avatar_url
+    }
+  }
 }
 
 function routerEvent (e: string) {
@@ -42,7 +70,7 @@ function routerEvent (e: string) {
 }
 
 onMounted(() => {
-  getAvatarUrl()
+  checkUserToken()
 })
 
 </script>

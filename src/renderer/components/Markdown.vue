@@ -50,7 +50,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import type { SelfStarType } from '@/types'
+import type { Repository } from '@/types'
 import { defineExpose, ref, nextTick } from 'vue'
 import { getReadMeMd, renderMarkdwon } from '../utils/markdown'
 import { checkStarRepository, unStarRepository, starRepository } from '../utils/star'
@@ -59,7 +59,7 @@ import copy from 'clipboard-copy'
 import html2canvas from 'html2canvas'
 import FileSaver from 'file-saver'
 
-const repo = ref<SelfStarType>()
+const repo = ref<Repository>()
 const source = ref<string>()
 const loading = ref(false)
 const starred = ref(false)
@@ -160,7 +160,7 @@ function aLinkEvent () {
 }
 
 // 初始化
-async function init (e: SelfStarType) {
+async function init (e: Repository) {
   source.value = ''
   loading.value = true
   repo.value = e
