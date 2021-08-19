@@ -34,7 +34,6 @@ const avatar_url = ref()
 const name = ref()
 const description = ref()
 const login = ref()
-const token = ref()
 
 // 从数据库获取用户信息
 async function getUserInfo () {
@@ -43,16 +42,14 @@ async function getUserInfo () {
   name.value = res?.name
   description.value = res?.bio
   login.value = res?.login
-  token.value = res?.token
 }
 
 // 退出登录
 async function logoutEvent () {
-  const doc = { id: 0, token: '', name: '', login: '' }
-  me.clear().then(() => {
-    me.add(doc).then(() => {
-      router.push({ name: 'Login' })
-    })
+  window.api.invoke('event.win.cookies')
+  window.api.on('event.win.cookies_replay', () => {
+    window.api.removeAllListeners('event.win.cookies_replay')
+    router.push({ name: 'Login' })
   })
 }
 

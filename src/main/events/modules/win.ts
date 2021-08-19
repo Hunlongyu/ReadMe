@@ -19,6 +19,11 @@ ipcMain.handle('event.win.openDir', (e, args) => {
   shell.showItemInFolder(args)
 })
 
+ipcMain.handle('event.win.cookies', (e, args) => {
+  e.sender.session.clearStorageData()
+  e.sender.send('event.win.cookies_replay')
+})
+
 ipcMain.handle('event.win.dialog', (e, args: OpenDialogOptions) => {
   const w = win.get()
   if (!w) return false
