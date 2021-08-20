@@ -116,8 +116,19 @@
 </template>
 <script lang="ts" setup>
 import { nextTick, reactive, ref } from 'vue'
-import type { searchNumberType, searchContentType, SearchRepository, SearchCode, searchSortType } from '../../utils/search'
-import { searchRepo, searchCode, searchTypeNum } from '../../utils/search'
+import type {
+  searchNumberType,
+  searchContentType,
+  SearchRepository,
+  SearchCode,
+  searchSortType,
+  SearchRepositoryType,
+  SearchCodeType,
+  SearchCommitType,
+  SearchIssuesType,
+  SearchUsersType
+} from '../../utils/search'
+import { allSearchEvent, searchTypeNum } from '../../utils/search'
 import { checkStarRepository, unStarRepository, starRepository } from '@/renderer/utils/star'
 import { ElMessage } from 'element-plus'
 import Markdown from '../../components/Markdown.vue'
@@ -161,14 +172,12 @@ async function searchTypeClick (type: string) {
 async function searchEvent () {
   if (searchTxt.value === '') return false
   loading.value = true
-  if (active.value === 'repositories') {
-    const res = await searchRepo(sort.value, searchTxt.value, idx.value)
-    content.repositories = res
-  }
-  if (active.value === 'code') {
-    const res = await searchCode(sort.value, searchTxt.value, idx.value)
-    content.code = res
-  }
+  const res = await allSearchEvent(active.value, sort.value, searchTxt.value, idx.value)
+  if (active.value === 'repositories') { content.repositories = res as SearchRepositoryType }
+  if (active.value === 'code') { content.code = res as SearchCodeType }
+  if (active.value === 'commits') { content.commits = res as SearchCommitType }
+  if (active.value === 'issues') { content.issues = res as SearchIssuesType }
+  if (active.value === 'users') { content.users = res as SearchUsersType }
   loading.value = false
   numbers.value = await searchTypeNum(searchTxt.value)
 }
