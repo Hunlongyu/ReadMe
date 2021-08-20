@@ -165,6 +165,8 @@ function aLinkEvent () {
   })
 }
 
+// TODO: 修复 MD 图片无法显示
+
 // 初始化
 async function init (e: Repository) {
   source.value = ''

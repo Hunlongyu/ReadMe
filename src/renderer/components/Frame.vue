@@ -48,10 +48,6 @@ async function checkOS () {
 
 onMounted(() => {
   checkOS()
-  window.api.invoke('event.win.os')
-  window.api.on('event.win.os_replay', (e, args) => {
-    window.api.removeAllListeners('event.win.os_replay')
-  })
 })
 </script>
 
