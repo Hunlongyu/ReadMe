@@ -17,10 +17,27 @@ export interface searchNumberType {
   users: number
 }
 
-async function searchRepo (txt: string, page: number): Promise<SearchRepositoryType> {
+export interface searchCatType {
+  q: string
+  sort?: 'stars' | 'forks' | 'help-wanted-issues' | 'updated' | undefined
+  order?: 'desc' | 'asc' | undefined
+  per_page?: number | undefined
+  page: number | undefined
+}
+
+async function searchRepo (type: string, txt: string, page: number): Promise<SearchRepositoryType> {
   const token = await getToken()
   const octokit = new Octokit({ auth: token })
-  const repositories = await octokit.request('GET /search/repositories', { q: txt, per_page: 100, page })
+  let sort: 'stars' | 'forks' | 'help-wanted-issues' | 'updated' | undefined = 'stars'
+  let order: 'desc' | 'asc' | undefined = 'desc'
+  if (type === '1') { sort = undefined; order = undefined }
+  if (type === '2') { sort = 'stars'; order = 'desc' }
+  if (type === '3') { sort = 'stars'; order = 'asc' }
+  if (type === '4') { sort = 'forks'; order = 'desc' }
+  if (type === '5') { sort = 'forks'; order = 'asc' }
+  if (type === '6') { sort = 'updated'; order = 'desc' }
+  if (type === '7') { sort = 'updated'; order = 'asc' }
+  const repositories = await octokit.request('GET /search/repositories', { q: txt, sort, order, per_page: 100, page })
   return repositories.data
 }
 
