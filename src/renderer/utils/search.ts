@@ -4,7 +4,6 @@ import { components } from '@octokit/openapi-types'
 
 export type SearchRepository = components['schemas']['repo-search-result-item']
 export type SearchCode = components['schemas']['code-search-result-item']
-export type SearchCommit = components['schemas']['commit-search-result-item']
 export type SearchIssues = components['schemas']['issue-search-result-item']
 export type SearchUsers = components['schemas']['user-search-result-item']
 
@@ -19,13 +18,6 @@ export interface SearchRepositoryType {
 export interface SearchCodeType {
   incomplete_results: boolean
   items: SearchCode[]
-  total_count: number
-}
-
-// 提交搜索
-export interface SearchCommitType {
-  incomplete_results: boolean
-  items: SearchCommit[]
   total_count: number
 }
 
@@ -47,14 +39,12 @@ export interface SearchUsersType {
 export interface searchContentType {
   repositories: SearchRepositoryType
   code: SearchCodeType
-  commits: SearchCommitType
   issues: SearchIssuesType
   users: SearchUsersType
 }
 
 export interface searchNumberType {
   code: number,
-  commits: number,
   issues: number,
   repositories: number
   topics: number
@@ -99,22 +89,6 @@ async function searchCode (sortFilter: string, q: string, page: number): Promise
   return codes.data
 }
 
-// 搜索提交记录
-async function searchCommits (sortFilter: string, q: string, page: number): Promise<SearchCommitType> {
-  const token = await getToken()
-  const octokit = new Octokit({ auth: token })
-  let sort: 'committer-date' | 'author-date' | undefined = 'committer-date'
-  let order: 'desc' | 'asc' | undefined = 'desc'
-  if (sortFilter === '1') { sort = undefined; order = undefined }
-  if (sortFilter === '2') { sort = 'committer-date'; order = 'desc' }
-  if (sortFilter === '3') { sort = 'committer-date'; order = 'asc' }
-  if (sortFilter === '4') { sort = 'author-date'; order = 'desc' }
-  if (sortFilter === '5') { sort = 'author-date'; order = 'asc' }
-  const commits = await octokit.request('GET /search/commits', { q, sort, order, per_page: 100, page, mediaType: { previews: ['cloak'] } })
-  console.log(commits.data, '== commits data ==')
-  return commits.data
-}
-
 // 搜索反馈
 async function searchIssues (sortFilter: string, q: string, page: number): Promise<SearchIssuesType> {
   const token = await getToken()
@@ -148,11 +122,10 @@ async function searchUsers (sortFilter: string, q: string, page: number): Promis
 }
 
 // 所有的搜索事件
-async function allSearchEvent (type: string, sortFilter: string, q: string, page: number): Promise<SearchRepositoryType | SearchCodeType | SearchCommitType | SearchIssuesType | SearchUsersType | undefined> {
+async function allSearchEvent (type: string, sortFilter: string, q: string, page: number): Promise<SearchRepositoryType | SearchCodeType | SearchIssuesType | SearchUsersType | undefined> {
   let res
   if (type === 'repositories') { res = await searchRepo(sortFilter, q, page) }
   if (type === 'code') { res = await searchCode(sortFilter, q, page) }
-  if (type === 'commits') { res = await searchCommits(sortFilter, q, page) }
   if (type === 'issues') { res = await searchIssues(sortFilter, q, page) }
   if (type === 'users') { res = await searchUsers(sortFilter, q, page) }
   return res
@@ -162,7 +135,6 @@ async function allSearchEvent (type: string, sortFilter: string, q: string, page
 async function searchTypeNum (txt: string): Promise<searchNumberType> {
   const numbers: searchNumberType = {
     code: 0,
-    commits: 0,
     issues: 0,
     repositories: 0,
     topics: 0,
@@ -172,8 +144,6 @@ async function searchTypeNum (txt: string): Promise<searchNumberType> {
   const octokit = new Octokit({ auth: token })
   const code = await octokit.request('GET /search/code', { q: txt, per_page: 1 })
   numbers.code = code.data.total_count
-  const commits = await octokit.request('GET /search/commits', { q: txt, per_page: 1, mediaType: { previews: ['cloak'] } })
-  numbers.commits = commits.data.total_count
   const issues = await octokit.request('GET /search/issues', { q: txt, per_page: 1 })
   numbers.issues = issues.data.total_count
   const repositories = await octokit.request('GET /search/repositories', { q: txt, per_page: 1 })
@@ -189,6 +159,5 @@ export {
   searchTypeNum,
   searchRepo,
   searchCode,
-  searchCommits,
   allSearchEvent
 }

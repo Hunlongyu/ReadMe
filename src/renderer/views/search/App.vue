@@ -10,10 +10,6 @@
           <span>Code</span>
           <span>{{numbers?.code || 0}}</span>
         </div>
-        <div :class="['item', active === 'commits' ? 'active' : '']" @click="searchTypeClick('commits')">
-          <span>Commits</span>
-          <span>{{numbers?.commits || 0}}</span>
-        </div>
         <div :class="['item', active === 'issues' ? 'active' : '']" @click="searchTypeClick('issues')">
           <span>Issues</span>
           <span>{{numbers?.issues || 0}}</span>
@@ -142,7 +138,6 @@ import type {
   searchSortType,
   SearchRepositoryType,
   SearchCodeType,
-  SearchCommitType,
   SearchIssuesType,
   SearchUsersType,
   SearchUsers
@@ -160,7 +155,6 @@ const searchTxt = ref('')
 const sortType = reactive<searchSortType>({
   repositories: [{ label: 'Best match', value: '1' }, { label: 'Most stars', value: '2' }, { label: 'Fewest stars', value: '3' }, { label: 'Most forks', value: '4' }, { label: 'Fewest forks', value: '5' }, { label: 'Recently updated', value: '6' }, { label: 'Least recently updated', value: '7' }],
   code: [{ label: 'Best match', value: '1' }, { label: 'Recently indexed', value: '2' }, { label: 'Least recently indexed', value: '3' }],
-  commits: [{ label: 'Best match', value: '1' }, { label: 'Recently committed', value: '2' }, { label: 'Least recently indexed', value: '3' }, { label: 'Recently authored', value: '4' }, { label: 'Least recently authored', value: '5' }],
   issues: [{ label: 'Best match', value: '1' }, { label: 'Most commented', value: '2' }, { label: 'Least commented', value: '3' }, { label: 'Newest', value: '4' }, { label: 'Oldest', value: '5' }, { label: 'Recently updated', value: '6' }, { label: 'Least recently updated', value: '7' }],
   users: [{ label: 'Best match', value: '1' }, { label: 'Most followers', value: '2' }, { label: 'Fewest followers', value: '3' }, { label: 'Most recently joined', value: '4' }, { label: 'Least recently joined', value: '5' }, { label: 'Most repositories', value: '6' }, { label: 'Least repositories', value: '7' }]
 })
@@ -168,7 +162,6 @@ const sortType = reactive<searchSortType>({
 const content = reactive<searchContentType>({
   repositories: { incomplete_results: false, items: [], total_count: 0 },
   code: { incomplete_results: false, items: [], total_count: 0 },
-  commits: { incomplete_results: false, items: [], total_count: 0 },
   issues: { incomplete_results: false, items: [], total_count: 0 },
   users: { incomplete_results: false, items: [], total_count: 0 }
 })
@@ -194,7 +187,6 @@ async function searchEvent () {
   const res = await allSearchEvent(active.value, sort.value, searchTxt.value, idx.value)
   if (active.value === 'repositories') { content.repositories = res as SearchRepositoryType }
   if (active.value === 'code') { content.code = res as SearchCodeType }
-  if (active.value === 'commits') { content.commits = res as SearchCommitType }
   if (active.value === 'issues') { content.issues = res as SearchIssuesType }
   if (active.value === 'users') { content.users = res as SearchUsersType }
   loading.value = false
