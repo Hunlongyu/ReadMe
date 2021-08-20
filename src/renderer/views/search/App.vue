@@ -99,7 +99,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import type { SearchRepository } from '@/types'
 import type { SearchRepositoryType, searchNumberType } from '../../utils/search'
 import { searchRepo, searchTypeNum } from '../../utils/search'
@@ -134,9 +134,11 @@ async function searchEvent () {
 async function itemClickEvent (repo: SearchRepository) {
   mdShow.value = true
   title.value = repo.full_name
-  if (markdown.value) {
-    markdown.value.init(repo)
-  }
+  nextTick(() => {
+    if (markdown.value) {
+      markdown.value.init(repo)
+    }
+  })
 }
 
 // 切换页面事件

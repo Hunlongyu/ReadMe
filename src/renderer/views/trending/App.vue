@@ -81,7 +81,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from 'vue'
+import { nextTick, onMounted, reactive, ref } from 'vue'
 import languageList from './language.json'
 import { getTrending, getRepository } from '../../utils/trending'
 import { checkStarRepository, starRepository, unStarRepository } from '../../utils/star'
@@ -129,10 +129,11 @@ async function itemClickEvent (repo: trendingRepoType) {
   const res = await getRepository(repo.author, repo.repo)
   mdShow.value = true
   title.value = repo.fullName
-  if (markdown.value) {
-    const data = res as Repository
-    markdown.value.init(data)
-  }
+  nextTick(() => {
+    if (markdown.value) {
+      markdown.value.init(res as Repository)
+    }
+  })
 }
 
 // 点击收藏事件

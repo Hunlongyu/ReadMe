@@ -36,7 +36,7 @@
 </template>
 <script lang="ts" setup>
 import { getAllSelfStar, getStarLanguageList, listType } from '@/renderer/utils/star'
-import { onMounted, ref } from 'vue'
+import { nextTick, onMounted, ref } from 'vue'
 import { settings, star } from '../../plugins/database'
 import type { Repository, TreeNodeType } from '@/types'
 import Markdown from '../../components/Markdown.vue'
@@ -76,9 +76,11 @@ async function refreshList () {
 // 点击列表显示 markdown 内容
 function itemClickEvent (e: Repository) {
   repo.value = e
-  if (markdown.value) {
-    markdown.value.init(e)
-  }
+  nextTick(() => {
+    if (markdown.value) {
+      markdown.value.init(e)
+    }
+  })
 }
 
 // 列表树点击事件
