@@ -11,6 +11,7 @@ export interface Settings {
   userId: number
   token: string
   language: string
+  os: string
 }
 
 // 个人信息

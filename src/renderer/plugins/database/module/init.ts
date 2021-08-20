@@ -3,7 +3,7 @@ const initMe = [
 ]
 
 const initSettings = [
-  { id: 0, userId: 0, token: '', language: 'zh-cn' }
+  { id: 0, userId: 0, token: '', language: 'zh-cn', os: '' }
 ]
 
 export {

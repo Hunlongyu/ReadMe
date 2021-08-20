@@ -12,7 +12,7 @@
         <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="white" fill-opacity="0.01"/><path d="M14 14L34 34" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 34L34 14" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </span>
     </div>
-    <div class="mac">
+    <div class="mac" v-if="os === 'darwin'">
       <span @click="winEvent('close')" class="close"></span>
       <span @click="winEvent('mini')" class="min"></span>
       <span @click="winEvent('max')" class="max"></span>
@@ -21,10 +21,38 @@
 </template>
 
 <script lang="ts" setup>
+import { onMounted, ref } from 'vue'
+import { settings } from '../plugins/database'
+
+const os = ref()
+
 // 窗口事件
 function winEvent (e: string) {
   window.api.invoke(`event.win.${e}`)
 }
+
+async function checkOS () {
+  const s = await settings.get()
+  if (s?.os === '') {
+    window.api.invoke('event.win.os')
+    window.api.on('event.win.os_replay', (e, args) => {
+      s.os = args
+      os.value = args
+      settings.update(s)
+      window.api.removeAllListeners('event.win.os_replay')
+    })
+  } else {
+    os.value = s?.os
+  }
+}
+
+onMounted(() => {
+  checkOS()
+  window.api.invoke('event.win.os')
+  window.api.on('event.win.os_replay', (e, args) => {
+    window.api.removeAllListeners('event.win.os_replay')
+  })
+})
 </script>
 
 <style scoped lang="scss">

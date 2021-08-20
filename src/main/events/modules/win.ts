@@ -1,4 +1,5 @@
 import { ipcMain, shell, dialog } from 'electron'
+import os from 'os'
 import { OpenDialogOptions } from 'electron/main'
 import win from '../../win'
 
@@ -19,9 +20,14 @@ ipcMain.handle('event.win.openDir', (e, args) => {
   shell.showItemInFolder(args)
 })
 
-ipcMain.handle('event.win.cookies', (e, args) => {
+ipcMain.handle('event.win.logout', (e, args) => {
   e.sender.session.clearStorageData()
-  e.sender.send('event.win.cookies_replay')
+  e.sender.send('event.win.logout_replay')
+})
+
+ipcMain.handle('event.win.os', (e, args) => {
+  const sys = os.platform()
+  e.sender.send('event.win.os_replay', sys)
 })
 
 ipcMain.handle('event.win.dialog', (e, args: OpenDialogOptions) => {

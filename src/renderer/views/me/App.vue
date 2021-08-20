@@ -46,9 +46,9 @@ async function getUserInfo () {
 
 // 退出登录
 async function logoutEvent () {
-  window.api.invoke('event.win.cookies')
-  window.api.on('event.win.cookies_replay', () => {
-    window.api.removeAllListeners('event.win.cookies_replay')
+  window.api.invoke('event.win.logout')
+  window.api.on('event.win.logout_replay', () => {
+    window.api.removeAllListeners('event.win.logout_replay')
     router.push({ name: 'Login' })
   })
 }
