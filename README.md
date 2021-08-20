@@ -3,36 +3,37 @@
 
 ### TODO
 
-[] login single win
 
-[] search advanced mode
-[] search language filter
+- [ ] login single win
 
-[] markdown edit (online / offline)
-[] markdown image link
-[] markdown code copy
+- [ ] search advanced mode
+- [ ] search language filter
 
-[] settings language (en & zh-cn)
-[] settings theme (dark & light)
-[] settings async with private gits
+- [ ] markdown edit (online / offline)
+- [ ] markdown image link
+- [ ] markdown code copy
 
-[] app auto update
-[] app update log
+- [ ] settings language (en & zh-cn)
+- [ ] settings theme (dark & light)
+- [ ] settings async with private gits
 
-[] code preview
-[] code tree
-[] code preview lightheight
-[] code search and lightheight
+- [ ] app auto update
+- [ ] app update log
 
-[] gits preview
-[] gits create \ edite \ save \ export \ delete
+- [ ] code preview
+- [ ] code tree
+- [ ] code preview lightheight
+- [ ] code search and lightheight
 
-[] activity view
+- [ ] gits preview
+- [ ] gits create \ edite \ save \ export \ delete
 
-[] notifications view
-[] notifications done \ save \ unsubscribe
+- [ ] activity view
 
-[] tray
+- [ ] notifications view
+- [ ] notifications done \ save \ unsubscribe
 
-[] me modify avatar
-[] me modify description
+- [ ] tray
+
+- [ ] me modify avatar
+- [ ] me modify description
