@@ -39,11 +39,9 @@
       <div class="content-wrapper">
         <div class="item" v-for="(i, j) in content" :key="j">
           <div class="title">
-            <div class="title-left">
+            <div class="title-left" @click="itemClickEvent(i)">
               <svg class="title-icon" width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="white" fill-opacity="0.01"/><path d="M10 44C8.89543 44 8 43.1046 8 42V6C8 4.89543 8.89543 4 10 4H38C39.1046 4 40 4.89543 40 6V42C40 43.1046 39.1046 44 38 44H10Z" fill="none" stroke="#333" stroke-width="2" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M21 22V4H33V22L27 15.7273L21 22Z" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 4H38" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span class="title-author">{{i.author}}</span>
-              <span class="title-split">/</span>
-              <span class="title-repo">{{i.repo}}</span>
+              <span class="title-author">{{i.fullName}}</span>
             </div>
             <div class="title-right">
               <el-button size="mini" @click="starRepositoryEvent(i)">
@@ -77,14 +75,20 @@
         </div>
       </div>
     </div>
+    <el-drawer v-model="mdShow" direction="rtl" size="70%" :title="title">
+      <Markdown ref="markdown"/>
+    </el-drawer>
   </div>
 </template>
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from 'vue'
 import languageList from './language.json'
-import { getTrending } from '../../utils/trending'
-import { checkStarRepository, starRepository } from '../../utils/star'
-import type { trendingRepoType } from '@/types'
+import { getTrending, getRepository } from '../../utils/trending'
+import { checkStarRepository, starRepository, unStarRepository } from '../../utils/star'
+import type { Repository, trendingRepoType } from '@/types'
+import Markdown from '../../components/Markdown.vue'
+import type { mdApi } from '../../components/Markdown.vue'
+import { ElMessage } from 'element-plus'
 
 const spokenLanguage = reactive({
   value: 'English',
@@ -109,6 +113,9 @@ const date = reactive({
 
 const content = ref<trendingRepoType[]>([])
 const loading = ref(false)
+const mdShow = ref(false)
+const markdown = ref<mdApi>()
+const title = ref('')
 
 // 切换说话语言
 async function trendingChangeEvent () {
@@ -117,14 +124,26 @@ async function trendingChangeEvent () {
   loading.value = false
 }
 
+// 选择一个库查看
+async function itemClickEvent (repo: trendingRepoType) {
+  const res = await getRepository(repo.author, repo.repo)
+  mdShow.value = true
+  title.value = repo.fullName
+  if (markdown.value) {
+    const data = res as Repository
+    markdown.value.init(data)
+  }
+}
+
+// 点击收藏事件
 async function starRepositoryEvent (e: trendingRepoType) {
   const result = await checkStarRepository(e.fullName)
-  if (result) return false
-  const res = await starRepository(e.fullName)
-  if (res) {
-    console.log('success')
+  if (result) {
+    await unStarRepository(e.fullName)
+    ElMessage({ message: '取消收藏成功', type: 'success' })
   } else {
-    console.warn('warning')
+    await starRepository(e.fullName)
+    ElMessage({ message: '收藏成功', type: 'success' })
   }
 }
 
@@ -190,6 +209,10 @@ onMounted(() => {
           }
           .title-left{
             display: flex;
+            cursor: pointer;
+            &:hover{
+              color: #409eff;
+            }
           }
           .title-icon{
             margin-right: 8px;

@@ -58,6 +58,7 @@ import 'highlight.js/styles/github.css'
 import copy from 'clipboard-copy'
 import html2canvas from 'html2canvas'
 import FileSaver from 'file-saver'
+import { ElMessage } from 'element-plus'
 
 const repo = ref<Repository>()
 const source = ref<string>()
@@ -89,8 +90,10 @@ async function starClickEvent () {
   if (!repo.value?.full_name) return false
   if (starred.value) {
     await unStarRepository(repo.value.full_name)
+    ElMessage({ message: '取消收藏成功', type: 'success' })
   } else {
     await starRepository(repo.value.full_name)
+    ElMessage({ message: '收藏成功', type: 'success' })
   }
   checkStarred()
 }
@@ -146,7 +149,9 @@ async function exportEvent (type: string) {
 
 // 使用外部浏览器打开 MD 里的链接
 function aLinkEvent () {
-  document.body.addEventListener('click', event => {
+  const md = document.querySelector('.markdown-body')
+  if (!md) return false
+  md.addEventListener('click', event => {
     event.preventDefault()
     const dom = event?.target as HTMLLinkElement
     if (dom.tagName === 'A') {
@@ -164,7 +169,7 @@ async function init (e: Repository) {
   source.value = ''
   loading.value = true
   repo.value = e
-  checkStarred()
+  await checkStarred()
   const res = await getReadMeMd(e)
   if (res) {
     const val = await renderMarkdwon(res)

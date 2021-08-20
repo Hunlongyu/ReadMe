@@ -1,6 +1,8 @@
 import cheerio from 'cheerio'
+import { Octokit } from '@octokit/core'
+import { getToken } from './tools'
 import axios from 'axios'
-import { trendingRepoType } from '@/types'
+import { trendingRepoType, FullRepository } from '@/types'
 
 // 组合趋势列表的接口链接
 async function getTrending (s: string, p: string, d: string): Promise<trendingRepoType[]> {
@@ -54,6 +56,15 @@ async function getTrendingList (url: string): Promise<trendingRepoType[]> {
   }
 }
 
+// 获取仓库详情
+async function getRepository (author: string, repo: string): Promise<FullRepository> {
+  const token = await getToken()
+  const octokit = new Octokit({ auth: token })
+  const res = await octokit.request('GET /repos/{owner}/{repo}', { owner: author, repo })
+  return res.data
+}
+
 export {
-  getTrending
+  getTrending,
+  getRepository
 }
