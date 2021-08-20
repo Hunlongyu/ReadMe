@@ -86,6 +86,7 @@ async function checkStarred () {
   }
 }
 
+// 收藏按钮点击事件
 async function starClickEvent () {
   if (!repo.value?.full_name) return false
   if (starred.value) {
@@ -124,7 +125,7 @@ async function exportEvent (type: string) {
   const dom = document.querySelector('.markdown-wrapper') as HTMLElement
   const name = repo.value?.full_name
   if (type === 'HTML') {
-    const file = new File([dom.outerHTML], 'file.html', { type: 'text/html;charset=utf-8' })
+    const file = new File([dom.outerHTML], `${name}.html`, { type: 'text/html;charset=utf-8' })
     FileSaver.saveAs(file)
   }
   if (type === 'JPG') {
