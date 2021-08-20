@@ -48,7 +48,7 @@
       <div class="content-wrapper">
         <div class="item" v-for="(i, j) in content?.items" :key="j">
           <div class="title">
-            <div class="title-left">
+            <div class="title-left" @click="itemClickEvent(i)">
               <svg class="title-icon" width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="white" fill-opacity="0.01"/><path d="M10 44C8.89543 44 8 43.1046 8 42V6C8 4.89543 8.89543 4 10 4H38C39.1046 4 40 4.89543 40 6V42C40 43.1046 39.1046 44 38 44H10Z" fill="none" stroke="#333" stroke-width="2" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M21 22V4H33V22L27 15.7273L21 22Z" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 4H38" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               <span class="title-author">{{i.full_name}}</span>
             </div>
@@ -82,6 +82,9 @@
         </div>
       </div>
     </div>
+    <el-drawer v-model="mdShow" direction="rtl" size="70%" :title="title">
+      <Markdown ref="markdown"/>
+    </el-drawer>
   </div>
 </template>
 <script lang="ts" setup>
@@ -91,12 +94,17 @@ import type { SearchRepositoryType, searchNumberType } from '../../utils/search'
 import { searchRepo, searchTypeNum } from '../../utils/search'
 import { checkStarRepository, unStarRepository, starRepository } from '@/renderer/utils/star'
 import { ElMessage } from 'element-plus'
+import Markdown from '../../components/Markdown.vue'
+import type { mdApi } from '../../components/Markdown.vue'
 
 const searchTxt = ref('')
 const content = ref<SearchRepositoryType>()
 const numbers = ref<searchNumberType>()
 const loading = ref(false)
 const idx = ref(1)
+const mdShow = ref(false)
+const markdown = ref<mdApi>()
+const title = ref('')
 
 // 搜索事件
 async function searchEvent () {
@@ -108,6 +116,15 @@ async function searchEvent () {
   }
   loading.value = false
   numbers.value = await searchTypeNum(searchTxt.value)
+}
+
+// 选择一个库查看
+async function itemClickEvent (repo: SearchRepository) {
+  mdShow.value = true
+  title.value = repo.full_name
+  if (markdown.value) {
+    markdown.value.init(repo)
+  }
 }
 
 // 切换页面事件
@@ -213,6 +230,10 @@ async function starRepositoryEvent (repo: SearchRepository) {
           }
           .title-left{
             display: flex;
+            cursor: pointer;
+            &:hover{
+              color: #409eff;
+            }
           }
           .title-icon{
             margin-right: 8px;
