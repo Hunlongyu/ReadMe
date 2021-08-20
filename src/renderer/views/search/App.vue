@@ -107,6 +107,24 @@
             <el-pagination layout="prev, pager, next" :page-size="100" :current-page="idx" :total="content.code.total_count" @current-change="currentChangeEvent"></el-pagination>
           </div>
         </div>
+        <div class="content-wrapper users" v-if="active === 'users'">
+          <div class="item" v-for="(i, j) in content.users.items" :key="j">
+            <div class="title">
+              <div class="title-left" @click="usersItemClickEvent(i)">
+                <img class="avatar avatar-6 mr-2" alt="jonrohan" :src="i.avatar_url" />
+                <span class="title-author">{{i.login}}</span>
+              </div>
+              <div class="title-right">
+                <el-button size="mini">
+                  <span class="mini-name">follow</span>
+                </el-button>
+              </div>
+            </div>
+          </div>
+          <div class="item" v-if="content && content.users.items?.length > 0">
+            <el-pagination layout="prev, pager, next" :page-size="100" :current-page="idx" :total="content.users.total_count" @current-change="currentChangeEvent"></el-pagination>
+          </div>
+        </div>
       </div>
     </div>
     <el-drawer v-model="mdShow" direction="rtl" size="70%" :title="title">
@@ -126,7 +144,8 @@ import type {
   SearchCodeType,
   SearchCommitType,
   SearchIssuesType,
-  SearchUsersType
+  SearchUsersType,
+  SearchUsers
 } from '../../utils/search'
 import { allSearchEvent, searchTypeNum } from '../../utils/search'
 import { checkStarRepository, unStarRepository, starRepository } from '@/renderer/utils/star'
@@ -198,6 +217,10 @@ async function codeItemClickEvent (code: SearchCode) {
   console.log(code)
 }
 
+async function usersItemClickEvent (user: SearchUsers) {
+  console.log(user, 'user')
+}
+
 // 切换页面事件
 function currentChangeEvent (num: number) {
   idx.value = num
@@ -223,7 +246,7 @@ async function starRepositoryEvent (repo: SearchRepository) {
   display: flex;
   border-top: 1px solid #d9e3e5;
   .filter{
-    width: 200px;
+    width: 300px;
     background-color: #f8f8f8;
     border-right: 1px solid #d9e3e5;
     display: flex;
@@ -315,6 +338,8 @@ async function starRepositoryEvent (repo: SearchRepository) {
             }
             .title-left{
               display: flex;
+              justify-content: center;
+              align-items: center;
               cursor: pointer;
               &:hover{
                 color: #409eff;
