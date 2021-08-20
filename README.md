@@ -1,28 +1,38 @@
 # readme
 
-git config --global http.sslBackend "openssl"
 
-star: https://docs.github.com/en/rest/reference/activity#starring
+### TODO
 
-## Project setup
-```
-yarn install
-```
+[] login single win
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+[] search advanced mode
+[] search language filter
 
-### Compiles and minifies for production
-```
-yarn build
-```
+[] markdown edit (online / offline)
+[] markdown image link
+[] markdown code copy
 
-### Lints and fixes files
-```
-yarn lint
-```
+[] settings language (en & zh-cn)
+[] settings theme (dark & light)
+[] settings async with private gits
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+[] app auto update
+[] app update log
+
+[] code preview
+[] code tree
+[] code preview lightheight
+[] code search and lightheight
+
+[] gits preview
+[] gits create \ edite \ save \ export \ delete
+
+[] activity view
+
+[] notifications view
+[] notifications done \ save \ unsubscribe
+
+[] tray
+
+[] me modify avatar
+[] me modify description
