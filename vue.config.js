@@ -1,6 +1,7 @@
 module.exports = {
   pages: {
-    index: 'src/renderer/main.ts'
+    index: 'src/renderer/main.ts',
+    login: 'src/renderer/views/login/main.ts'
   },
   pluginOptions: {
     electronBuilder: {
