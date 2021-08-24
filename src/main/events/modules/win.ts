@@ -3,16 +3,22 @@ import os from 'os'
 import { OpenDialogOptions } from 'electron/main'
 import win from '../../win'
 
+ipcMain.handle('event.win.open', (e, args) => {
+  const params = args[0]
+  win.open(params.name)
+})
+
 ipcMain.handle('event.win.mini', (e, args) => {
-  win.mini()
+  win.mini(args.name)
 })
 
 ipcMain.handle('event.win.max', (e, args) => {
-  win.max()
+  win.max(args.name)
 })
 
 ipcMain.handle('event.win.close', (e, args) => {
-  win.close()
+  const params = args[0]
+  win.close(params.name)
 })
 
 
@@ -31,6 +37,7 @@ ipcMain.handle('event.win.os', (e, args) => {
 })
 
 ipcMain.handle('event.win.dialog', (e, args: OpenDialogOptions) => {
+  console.log('=== event win dialog ===', e)
   const w = win.get()
   if (!w) return false
   dialog.showOpenDialog(w, args).then(res => {

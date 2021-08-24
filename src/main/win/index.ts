@@ -65,7 +65,6 @@ class Router {
 
     let win: BrowserWindow | null
     win = this.windows[name] = await createWindow(name, config)
-
     win.on('close', () => {
       win && win.hide()
       delete this.windows[name]

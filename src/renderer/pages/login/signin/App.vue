@@ -14,16 +14,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { onMounted } from 'vue'
-
-async function authLogin () {
-  // window.location.href = `https://github.com/login/oauth/authorize?response_type=code&state=${new Date().getTime()}&client_id=${process.env.VUE_APP_clientId}&scope=repo%20gist%20notifications&redirect_uri=http://localhost:8080/#/login`
+function authLogin () {
+  window.location.href = `https://github.com/login/oauth/authorize?response_type=code&state=${new Date().getTime()}&client_id=${process.env.VUE_APP_clientId}&scope=repo%20gist%20notifications&redirect_uri=http://localhost:8080/login`
 }
-
-onMounted(() => {
-  console.log(window.location.href, 'win link')
-})
-
 </script>
 <style lang="scss">
 html,body,#app{

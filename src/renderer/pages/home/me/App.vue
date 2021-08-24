@@ -25,11 +25,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import { me } from '@/renderer/plugins/database'
 
-const router = useRouter()
 const avatar_url = ref()
 const name = ref()
 const description = ref()
@@ -49,7 +47,8 @@ async function logoutEvent () {
   window.api.invoke('event.win.logout')
   window.api.on('event.win.logout_replay', () => {
     window.api.removeAllListeners('event.win.logout_replay')
-    router.push({ name: 'Login' })
+    window.api.invoke('event.win.open', [{ name: 'login' }])
+    window.api.invoke('event.win.close', [{ name: 'home' }])
   })
 }
 

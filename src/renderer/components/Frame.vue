@@ -28,7 +28,7 @@ const os = ref()
 
 // 窗口事件
 function winEvent (e: string) {
-  window.api.invoke(`event.win.${e}`)
+  window.api.invoke(`event.win.${e}`, [{ name: 'home' }])
 }
 
 async function checkOS () {

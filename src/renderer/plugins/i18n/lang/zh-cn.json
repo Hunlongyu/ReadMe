@@ -1,5 +1,5 @@
 {
-  "login": {
+  "signin": {
     "sign": "使用 Github 账号登陆",
     "describe1": "1. 登陆后可同步用户信息和设置",
     "describe2": "2. 登陆后可直接添加或取消收藏"

@@ -26,8 +26,8 @@ import { ref } from '@vue/reactivity'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { me, settings } from '../plugins/database'
-import { getUserToken, getUserInfo } from '../utils/user'
-import { getUrlParams, getToken } from '../utils/tools'
+import { getUserInfo } from '../utils/user'
+import { getToken } from '../utils/tools'
 
 const router = useRouter()
 const active = ref('star')
@@ -37,18 +37,7 @@ const avatar_url = ref()
 async function checkUserToken () {
   const s = await settings.get()
   if (s?.token === '') {
-    const code = getUrlParams('code')
-    if (!code) {
-      router.push({ name: 'Login' })
-    } else {
-      const token = await getUserToken()
-      s.token = token
-      const info = await getUserInfo(token)
-      s.userId = info.id
-      settings.update(s)
-      me.add(info)
-      avatar_url.value = info.avatar_url
-    }
+    window.api.invoke('event.win.open', [{ name: 'login' }])
   } else {
     const info = await me.get()
     if (!info) {

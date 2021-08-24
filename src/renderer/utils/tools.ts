@@ -1,3 +1,4 @@
+import { Octokit } from '@octokit/core'
 import { settings } from '../plugins/database'
 
 // 获取链接参数
@@ -12,7 +13,17 @@ async function getToken (): Promise<string | undefined> {
   return res?.token
 }
 
+async function checkToken () {
+  const token = await getToken()
+  if (!token) return false
+  const octokit = new Octokit({ auth: token })
+  const res = await octokit.request('GET /user/emails')
+  console.log(res, 'checkToken')
+  return true
+}
+
 export {
   getToken,
-  getUrlParams
+  getUrlParams,
+  checkToken
 }
