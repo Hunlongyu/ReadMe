@@ -1,7 +1,7 @@
 <template>
   <div class="chart">
-    <div class="chart-wrapper">
-      <img :src="chartUrl" alt="">
+    <div class="chart-wrapper" v-loading="imgLoading">
+      <img :src="chartUrl" @load="imgLoadEvent" alt="">
     </div>
   </div>
 </template>
@@ -10,10 +10,15 @@
 import { ref, defineProps, onMounted, onBeforeUnmount } from 'vue'
 
 const chartUrl = ref()
+const imgLoading = ref(true)
 
 const props = defineProps({
   fullName: String
 })
+
+function imgLoadEvent () {
+  imgLoading.value = false
+}
 
 onMounted(() => {
   chartUrl.value = `https://starchart.cc/${props.fullName}.svg`

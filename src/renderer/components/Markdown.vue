@@ -184,6 +184,7 @@ function aLinkEvent () {
 async function init (e: Repository) {
   loading.value = true
   repo.value = e
+  chartShow.value = false
   await checkStarred()
   const res = await getReadMeMd(e)
   if (res) {
