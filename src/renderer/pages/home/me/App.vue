@@ -1,26 +1,28 @@
 <template>
-  <div class="me">
-    <div class="info">
-      <div class="CircleBadge CircleBadge--medium avatar">
-        <img class="CircleBadge-icon" :src="avatar_url" alt="">
+  <div class="me scroll">
+    <div class="me-wrapper">
+      <div class="info">
+        <div class="CircleBadge CircleBadge--medium avatar">
+          <img class="CircleBadge-icon" :src="avatar_url" alt="">
+        </div>
+        <div class="username">{{name}}</div>
+        <div class="description">{{description}}</div>
       </div>
-      <div class="username">{{name}}</div>
-      <div class="description">{{description}}</div>
+      <div class="more">
+        <div class="trophy">
+          <img :src="`https://github-profile-trophy.vercel.app/?username=${login}&margin-w=28`" alt="">
+        </div>
+        <div class="stats">
+          <img :src="`https://github-readme-stats.vercel.app/api/top-langs/?username=${login}`" alt="">
+          <img :src="`https://github-readme-stats.vercel.app/api?username=${login}&show_icons=true&count_private=true&line_height=40`" alt="">
+        </div>
+        <div class="contributions">
+          <img :src="`http://ghchart.rshah.org/${login}`" :alt="`${login}`" />
+        </div>
+      </div>
+      <div class="logout">
+        <button class="btn" type="button" @click="logoutEvent">Logout</button>
     </div>
-    <div class="more">
-      <div class="trophy">
-        <img :src="`https://github-profile-trophy.vercel.app/?username=${login}&margin-w=28`" alt="">
-      </div>
-      <div class="stats">
-        <img :src="`https://github-readme-stats.vercel.app/api/top-langs/?username=${login}`" alt="">
-        <img :src="`https://github-readme-stats.vercel.app/api?username=${login}&show_icons=true&count_private=true&line_height=40`" alt="">
-      </div>
-    </div>
-    <!-- <div class="contributions">
-      <p>https://skyline.github.com/api/contributions?username=dend&year=2021</p>
-    </div> -->
-    <div class="logout">
-      <button class="btn" type="button" @click="logoutEvent">Logout</button>
     </div>
   </div>
 </template>
@@ -59,11 +61,18 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .me{
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
   border-top: 1px solid #d9e3e5;
+  position: relative;
+  overflow-y: auto;
+  width: 100%;
+  .me-wrapper{
+    position: absolute;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
   .info{
     display: flex;
     flex-direction: column;
@@ -88,10 +97,18 @@ onMounted(async () => {
       display: flex;
       justify-content: space-between;
     }
+    .contributions{
+      margin-top: 20px;
+      img{
+        width: 100%;
+        height: auto
+      }
+    }
   }
   .logout{
     text-align: center;
     margin-top: 40px;
+    margin-bottom: 40px;
   }
 }
 </style>
