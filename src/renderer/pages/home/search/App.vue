@@ -2,41 +2,35 @@
   <div class="search">
     <div class="filter">
       <div class="type">
-        <div :class="['item', active === 'repositories' ? 'active' : '']" @click="searchTypeClick('repositories')">
+        <div :class="['item', typeActive === 'repositories' ? 'active' : '']" @click="searchTypeClick('repositories')">
           <span>Repositories</span>
           <span>{{numbers?.repositories || 0}}</span>
         </div>
-        <div :class="['item', active === 'code' ? 'active' : '']" @click="searchTypeClick('code')">
+        <div :class="['item', typeActive === 'code' ? 'active' : '']" @click="searchTypeClick('code')">
           <span>Code</span>
           <span>{{numbers?.code || 0}}</span>
         </div>
-        <div :class="['item', active === 'issues' ? 'active' : '']" @click="searchTypeClick('issues')">
+        <div :class="['item', typeActive === 'issues' ? 'active' : '']" @click="searchTypeClick('issues')">
           <span>Issues</span>
           <span>{{numbers?.issues || 0}}</span>
         </div>
-        <div :class="['item', active === 'users' ? 'active' : '']" @click="searchTypeClick('users')">
+        <div :class="['item', typeActive === 'users' ? 'active' : '']" @click="searchTypeClick('users')">
           <span>Users</span>
           <span>{{numbers?.users || 0}}</span>
         </div>
       </div>
-      <div class="advanced">
-        <div class="item">
-          <span>With this many stars</span>
-          <el-input size="mini"></el-input>
-        </div>
-        <div class="item">
-          <span>With this many forks</span>
-          <el-input size="mini"></el-input>
-        </div>
-      </div>
+      <el-divider v-show="lngList"></el-divider>
       <div class="language">
-        <span>javascript</span>
+        <div v-for="(i, j) in lngList" :key="j" :class="['item', lngActive === i.label ? 'active' : '']" @click="searchLngClick(i)">
+          <span>{{i.label}}</span>
+          <span>{{i.value || 0}}</span>
+        </div>
       </div>
     </div>
     <div class="search-box">
       <div class="search-header">
         <el-select v-model="sort" size="small" @change="searchEvent">
-          <el-option v-for="i in sortType[active]" :key="i.value" :label="i.label" :value="i.value"></el-option>
+          <el-option v-for="i in sortType[typeActive]" :key="i.value" :label="i.label" :value="i.value"></el-option>
         </el-select>
         <el-input v-model="searchTxt" @keypress.enter="searchEvent" size="small">
           <template #append>
@@ -45,7 +39,7 @@
         </el-input>
       </div>
       <div class="content scroll" v-loading="loading">
-        <div class="content-wrapper repository" v-if="active === 'repositories'">
+        <div class="content-wrapper repository" v-if="typeActive === 'repositories'">
           <div class="item" v-for="(i, j) in content.repositories.items" :key="j">
             <div class="title">
               <div class="title-left" @click="repoItemClickEvent(i)">
@@ -81,7 +75,7 @@
             <el-pagination layout="prev, pager, next" :page-size="100" :current-page="idx" :total="content.repositories.total_count" @current-change="currentChangeEvent"></el-pagination>
           </div>
         </div>
-        <div class="content-wrapper code" v-if="active === 'code'">
+        <div class="content-wrapper code" v-if="typeActive === 'code'">
           <div class="item" v-for="(i, j) in content.code.items" :key="j">
             <div class="title">
               <div class="title-left" @click="codeItemClickEvent(i)">
@@ -103,7 +97,7 @@
             <el-pagination layout="prev, pager, next" :page-size="100" :current-page="idx" :total="content.code.total_count" @current-change="currentChangeEvent"></el-pagination>
           </div>
         </div>
-        <div class="content-wrapper users" v-if="active === 'users'">
+        <div class="content-wrapper users" v-if="typeActive === 'users'">
           <div class="item" v-for="(i, j) in content.users.items" :key="j">
             <div class="title">
               <div class="title-left" @click="usersItemClickEvent(i)">
@@ -131,6 +125,7 @@
 <script lang="ts" setup>
 import { nextTick, reactive, ref } from 'vue'
 import type {
+  labelValueType,
   searchNumberType,
   searchContentType,
   SearchRepository,
@@ -142,15 +137,21 @@ import type {
   SearchUsersType,
   SearchUsers
 } from '../../../utils/search'
-import { allSearchEvent, searchTypeNum } from '../../../utils/search'
+import {
+  getSearchRepoLanguage,
+  allSearchEvent,
+  searchTypeNum
+} from '../../../utils/search'
 import { checkStarRepository, unStarRepository, starRepository } from '@/renderer/utils/star'
 import { ElMessage } from 'element-plus'
 import Markdown from '../../../components/Markdown.vue'
 import type { mdApi } from '../../../components/Markdown.vue'
 
 const sort = ref('1')
-const active = ref('code')
+const typeActive = ref('repositories')
 const searchTxt = ref('')
+const lngActive = ref('')
+const lngList = ref<labelValueType[]>()
 
 const sortType = reactive<searchSortType>({
   repositories: [{ label: 'Best match', value: '1' }, { label: 'Most stars', value: '2' }, { label: 'Fewest stars', value: '3' }, { label: 'Most forks', value: '4' }, { label: 'Fewest forks', value: '5' }, { label: 'Recently updated', value: '6' }, { label: 'Least recently updated', value: '7' }],
@@ -174,23 +175,36 @@ const markdown = ref<mdApi>()
 const title = ref('')
 
 async function searchTypeClick (type: string) {
-  active.value = type
+  lngActive.value = ''
+  typeActive.value = type
   idx.value = 1
   sort.value = '1'
   await searchEvent()
+}
+
+async function searchLngClick (s: labelValueType) {
+  lngActive.value = s.label
+  searchEvent()
 }
 
 // 搜索事件
 async function searchEvent () {
   if (searchTxt.value === '') return false
   loading.value = true
-  const res = await allSearchEvent(active.value, sort.value, searchTxt.value, idx.value)
-  if (active.value === 'repositories') { content.repositories = res as SearchRepositoryType }
-  if (active.value === 'code') { content.code = res as SearchCodeType }
-  if (active.value === 'issues') { content.issues = res as SearchIssuesType }
-  if (active.value === 'users') { content.users = res as SearchUsersType }
+  let q = ''
+  if (lngActive.value !== '') {
+    q = `${searchTxt.value + ' language:' + lngActive.value}`
+  } else {
+    q = searchTxt.value
+  }
+  const res = await allSearchEvent(typeActive.value, sort.value, q, idx.value)
+  if (typeActive.value === 'repositories') { content.repositories = res as SearchRepositoryType }
+  if (typeActive.value === 'code') { content.code = res as SearchCodeType }
+  if (typeActive.value === 'issues') { content.issues = res as SearchIssuesType }
+  if (typeActive.value === 'users') { content.users = res as SearchUsersType }
   loading.value = false
   numbers.value = await searchTypeNum(searchTxt.value)
+  lngList.value = await getSearchRepoLanguage(searchTxt.value)
 }
 
 // 选择一个库查看
@@ -216,7 +230,7 @@ async function usersItemClickEvent (user: SearchUsers) {
 // 切换页面事件
 function currentChangeEvent (num: number) {
   idx.value = num
-  if (active.value === 'repositories') { content.repositories.items = [] }
+  if (typeActive.value === 'repositories') { content.repositories.items = [] }
   searchEvent()
 }
 
@@ -250,7 +264,6 @@ async function starRepositoryEvent (repo: SearchRepository) {
     .type, .language{
       display: flex;
       flex-direction: column;
-      margin-bottom: 40px;
       .item{
         display: flex;
         justify-content: space-between;
@@ -276,9 +289,6 @@ async function starRepositoryEvent (repo: SearchRepository) {
         background-color: #ffffff;
         border: 1px solid #d9e3e5;
       }
-    }
-    .advanced{
-      margin-bottom: 40px;
     }
   }
   .search-box{

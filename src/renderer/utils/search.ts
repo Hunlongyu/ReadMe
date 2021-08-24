@@ -1,3 +1,5 @@
+import axios from 'axios'
+import cheerio from 'cheerio'
 import { Octokit } from '@octokit/core'
 import { getToken } from './tools'
 import { components } from '@octokit/openapi-types'
@@ -51,7 +53,7 @@ export interface searchNumberType {
   users: number
 }
 
-interface labelValueType {
+export interface labelValueType {
   label: string
   value: string
 }
@@ -74,6 +76,21 @@ async function searchRepo (sortFilter: string, q: string, page: number): Promise
   if (sortFilter === '7') { sort = 'updated'; order = 'asc' }
   const repositories = await octokit.request('GET /search/repositories', { q, sort, order, per_page: 100, page })
   return repositories.data
+}
+
+// 获取 language 列表
+async function getSearchRepoLanguage (q: string): Promise<labelValueType[]> {
+  const res = await axios.get(`https://github.com/search?q=${q}`)
+  const data = res.data
+  const $ = cheerio.load(data)
+  const list: labelValueType[] = []
+  $('.filter-list li').each((i, n) => {
+    const dom = cheerio.load(n)
+    const count = dom('.count').text()
+    const lng = dom('.filter-item').text().replace(count, '').trim()
+    list.push({ label: lng, value: count })
+  })
+  return list
 }
 
 // 搜索代码
@@ -158,6 +175,7 @@ async function searchTypeNum (txt: string): Promise<searchNumberType> {
 export {
   searchTypeNum,
   searchRepo,
+  getSearchRepoLanguage,
   searchCode,
   allSearchEvent
 }
