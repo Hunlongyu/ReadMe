@@ -12,8 +12,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-import Frame from '../../components/Frame.vue'
-import NavMenu from '../../components/NavMenu.vue'
+import Frame from '../../../components/Frame.vue'
+import NavMenu from '../../../components/NavMenu.vue'
 </script>
 <style lang="scss" scoped>
 .home{

@@ -1,33 +1,43 @@
 <template>
-  <div class="login">
-    <frame />
-    <div class="login-wrapper nt-bg">
+  <div class="signin theme-light">
+    <div class="signin-wrapper nt-bg">
       <div class="left"></div>
       <div class="right">
         <div class="box nt-box">
-          <button class="button nt-btn" @click="authLogin">{{ $t('login.sign') }}</button>
+          <button class="button nt-btn" @click="authLogin">{{ $t('signin.sign') }}</button>
           <span class="line nt-line" data-title=""></span>
-          <p>{{ $t('login.describe1') }}</p>
-          <p>{{ $t('login.describe2') }}</p>
+          <p>{{ $t('signin.describe1') }}</p>
+          <p>{{ $t('signin.describe2') }}</p>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import Frame from '../../components/Frame.vue'
+import { onMounted } from 'vue'
 
-function authLogin () {
-  window.location.href = `https://github.com/login/oauth/authorize?response_type=code&state=${new Date().getTime()}&client_id=${process.env.VUE_APP_clientId}&scope=repo%20gist%20notifications&redirect_uri=http://localhost:8080/`
+async function authLogin () {
+  // window.location.href = `https://github.com/login/oauth/authorize?response_type=code&state=${new Date().getTime()}&client_id=${process.env.VUE_APP_clientId}&scope=repo%20gist%20notifications&redirect_uri=http://localhost:8080/#/login`
 }
+
+onMounted(() => {
+  console.log(window.location.href, 'win link')
+})
+
 </script>
-<style lang="scss" scoped>
-.login{
+<style lang="scss">
+html,body,#app{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.signin{
   display: flex;
   width: 100%;
   height: 100%;
   flex-direction: column;
-  .login-wrapper{
+  .signin-wrapper{
     flex: 1;
     position: relative;
     display: flex;

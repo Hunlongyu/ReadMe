@@ -141,12 +141,12 @@ import type {
   SearchIssuesType,
   SearchUsersType,
   SearchUsers
-} from '../../utils/search'
-import { allSearchEvent, searchTypeNum } from '../../utils/search'
+} from '../../../utils/search'
+import { allSearchEvent, searchTypeNum } from '../../../utils/search'
 import { checkStarRepository, unStarRepository, starRepository } from '@/renderer/utils/star'
 import { ElMessage } from 'element-plus'
-import Markdown from '../../components/Markdown.vue'
-import type { mdApi } from '../../components/Markdown.vue'
+import Markdown from '../../../components/Markdown.vue'
+import type { mdApi } from '../../../components/Markdown.vue'
 
 const sort = ref('1')
 const active = ref('code')

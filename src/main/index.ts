@@ -20,7 +20,7 @@ app.on('window-all-closed', () => {
 })
 
 app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) win.open()
+  if (BrowserWindow.getAllWindows().length === 0) win.open('login')
 })
 
 app.on('ready', async () => {

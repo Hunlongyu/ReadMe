@@ -37,10 +37,10 @@
 <script lang="ts" setup>
 import { getAllSelfStar, getStarLanguageList, listType } from '@/renderer/utils/star'
 import { nextTick, onMounted, ref } from 'vue'
-import { settings, star } from '../../plugins/database'
+import { settings, star } from '../../../plugins/database'
 import type { Repository, TreeNodeType } from '@/types'
-import Markdown from '../../components/Markdown.vue'
-import type { mdApi } from '../../components/Markdown.vue'
+import Markdown from '../../../components/Markdown.vue'
+import type { mdApi } from '../../../components/Markdown.vue'
 
 const list = ref<listType[]>(
   [

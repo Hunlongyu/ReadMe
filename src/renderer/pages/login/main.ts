@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import router from '../../router/login'
 import { createI18n } from 'vue-i18n'
 import 'modern-normalize'
 import ElementPlus from 'element-plus'
@@ -11,4 +12,4 @@ const i18n = createI18n({
   messages
 })
 
-createApp(App).use(ElementPlus).use(i18n).mount('#app')
+createApp(App).use(router).use(ElementPlus).use(i18n).mount('#app')

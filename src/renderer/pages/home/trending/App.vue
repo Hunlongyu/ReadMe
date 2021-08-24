@@ -83,11 +83,11 @@
 <script lang="ts" setup>
 import { nextTick, onMounted, reactive, ref } from 'vue'
 import languageList from './language.json'
-import { getTrending, getRepository } from '../../utils/trending'
-import { checkStarRepository, starRepository, unStarRepository } from '../../utils/star'
+import { getTrending, getRepository } from '../../../utils/trending'
+import { checkStarRepository, starRepository, unStarRepository } from '../../../utils/star'
 import type { Repository, trendingRepoType } from '@/types'
-import Markdown from '../../components/Markdown.vue'
-import type { mdApi } from '../../components/Markdown.vue'
+import Markdown from '../../../components/Markdown.vue'
+import type { mdApi } from '../../../components/Markdown.vue'
 import { ElMessage } from 'element-plus'
 
 const spokenLanguage = reactive({

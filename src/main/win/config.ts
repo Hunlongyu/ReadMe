@@ -1,6 +1,12 @@
 import path from 'path'
+import { BrowserWindowConstructorOptions } from 'electron'
 
-const config = {
+interface BWConfig {
+  [type: string]: BrowserWindowConstructorOptions
+}
+
+
+const config: BWConfig = {
   default: {
     webPreferences: {
       webSecurity: false,
@@ -11,8 +17,9 @@ const config = {
   },
   login: {
     frame: true,
-    width: 680,
-    height: 820
+    width: (860 + 600),
+    height: 670,
+    autoHideMenuBar: true
   },
   home: {
     frame: false,

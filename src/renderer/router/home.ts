@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import Home from '../views/home/App.vue'
-import Star from '../views/star/App.vue'
+import Home from '../pages/home/main/App.vue'
+import Star from '../pages/home/star/App.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -11,7 +11,7 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: 'me',
-        component: () => import('../views/me/App.vue')
+        component: () => import('../pages/home/me/App.vue')
       },
       {
         path: 'star',
@@ -19,22 +19,17 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'search',
-        component: () => import('../views/search/App.vue')
+        component: () => import('../pages/home/search/App.vue')
       },
       {
         path: 'trending',
-        component: () => import('../views/trending/App.vue')
+        component: () => import('../pages/home/trending/App.vue')
       },
       {
         path: 'settings',
-        component: () => import('../views/settings/App.vue')
+        component: () => import('../pages/home/settings/App.vue')
       }
     ]
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import('../views/login/App.vue')
   }
 ]
 
