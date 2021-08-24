@@ -59,16 +59,17 @@ class Router {
 
   async open (name: string, config?: BrowserWindowConstructorOptions) {
     if (this.windows[name]) {
+      if (this.windows[name].isMinimized()) this.windows[name].restore()
       this.windows[name].focus()
       return false
     }
 
-    let win: BrowserWindow | null
+    let win: BrowserWindow
     win = this.windows[name] = await createWindow(name, config)
     win.on('close', () => {
       win && win.hide()
       delete this.windows[name]
-      win = null
+      win.destroy()
     })
 
     win.once('ready-to-show', () => {

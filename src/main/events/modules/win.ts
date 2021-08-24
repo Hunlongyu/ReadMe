@@ -37,8 +37,7 @@ ipcMain.handle('event.win.os', (e, args) => {
 })
 
 ipcMain.handle('event.win.dialog', (e, args: OpenDialogOptions) => {
-  console.log('=== event win dialog ===', e)
-  const w = win.get()
+  const w = win.get('home')
   if (!w) return false
   dialog.showOpenDialog(w, args).then(res => {
     e.sender.send('event.win.dialog_replay', res)

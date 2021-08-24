@@ -38,7 +38,15 @@ async function checkHasCode () {
     window.api.invoke('event.win.open', [{ name: 'home' }])
     window.api.invoke('event.win.close', [{ name: 'login' }])
   } else {
-    router.push({ path: 'signin' })
+    const s = await settings.get()
+    if (!s?.token) {
+      router.push({ path: 'signin' })
+    } else {
+      setTimeout(() => {
+        window.api.invoke('event.win.open', [{ name: 'home' }])
+        window.api.invoke('event.win.close', [{ name: 'login' }])
+      }, 3000)
+    }
   }
 }
 
