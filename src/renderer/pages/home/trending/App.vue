@@ -75,7 +75,7 @@
         </div>
       </div>
     </div>
-    <el-drawer v-model="mdShow" direction="rtl" size="70%" :title="title">
+    <el-drawer v-model="mdShow" direction="rtl" size="70%" :title="title" destroy-on-close>
       <Markdown ref="markdown"/>
     </el-drawer>
   </div>
