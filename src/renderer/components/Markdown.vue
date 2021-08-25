@@ -114,7 +114,12 @@ async function starClickEvent () {
 
 // 复制克隆地址到剪贴板
 function gitCloneEvent (url: string) {
-  copy(`git clone ${url}`)
+  try {
+    copy(`git clone ${url}`)
+    ElMessage({ message: '已复制到剪贴板。', type: 'success' })
+  } catch (err) {
+    ElMessage({ message: '复制失败，请重试。', type: 'warning' })
+  }
 }
 
 // 获取其他克隆地址
@@ -162,7 +167,7 @@ async function exportEvent (type: string) {
 }
 
 // 使用外部浏览器打开 MD 里的链接
-function fixlinkUrl () {
+function fixLinkUrl () {
   const md = document.querySelector('.markdown-body')
   if (!md) return false
   md.addEventListener('click', event => {
@@ -210,7 +215,7 @@ async function init (e: Repository) {
     const val = await renderMarkdwon(res)
     source.value = val
     nextTick(() => {
-      fixlinkUrl()
+      fixLinkUrl()
       fixImgUrl()
     })
   }
