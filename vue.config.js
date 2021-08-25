@@ -15,6 +15,10 @@ module.exports = {
         productName: 'ReadMe',
         copyright: 'Copyright @ 2021 hunlongyu',
         appId: 'com.hunlongyu.readme',
+        nsis: {
+          oneClick: false,
+          allowToChangeInstallationDirectory: true
+        },
         win: {
           target: 'nsis',
           icon: 'build/icons/icon.ico'
@@ -22,15 +26,11 @@ module.exports = {
         mac: {
           icon: 'build/icon/icon.icns',
           category: 'public.app-category.developer-tools',
-          target: 'default',
-          extendInfo: {
-            LSUIElement: 1
-          }
+          target: 'default'
         },
         linux: {
-          icon: 'build/icons/'
-        },
-        nsis: {}
+          icon: 'build/icons/256x256.png'
+        }
       }
     }
   }
