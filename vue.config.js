@@ -15,6 +15,13 @@ module.exports = {
         productName: 'ReadMe',
         copyright: 'Copyright @ 2021 hunlongyu',
         appId: 'com.hunlongyu.readme',
+        publish: [
+          {
+            provider: 'github',
+            owner: 'Hunlongyu',
+            repo: 'ReadMe'
+          }
+        ],
         nsis: {
           oneClick: false,
           allowToChangeInstallationDirectory: true
