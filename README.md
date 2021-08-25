@@ -4,15 +4,15 @@
 ### TODO
 
 
-- [-] login single win
+- [x] login single win
 
-- [-] search language filter
+- [x] search language filter
 
 - [ ] markdown edit (online / offline)
-- [-] markdown image link
-- [-] markdown code copy
+- [x] markdown image link
+- [x] markdown code copy
 
-- [-] settings language (en & zh-cn)
+- [x] settings language (en & zh-cn)
 - [ ] settings theme (dark & light)
 
 - [ ] app auto update
