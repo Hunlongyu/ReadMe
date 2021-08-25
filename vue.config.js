@@ -16,7 +16,19 @@ module.exports = {
         copyright: 'Copyright @ 2021 hunlongyu',
         appId: 'com.hunlongyu.readme',
         win: {
-          target: 'nsis'
+          target: 'nsis',
+          icon: 'build/icons/icon.ico'
+        },
+        mac: {
+          icon: 'build/icon/icon.icns',
+          category: 'public.app-category.developer-tools',
+          target: 'default',
+          extendInfo: {
+            LSUIElement: 1
+          }
+        },
+        linux: {
+          icon: 'build/icons/'
         },
         nsis: {}
       }
