@@ -180,13 +180,17 @@ function mdClickEvent (event: Event) {
     if (href.match(reg)) {
       window.shell.openExternal(dom.href)
     } else {
-      console.log(dom, href, 'fix a')
+      const anchor = href.split('#')[1]
+      if (!anchor) return false
+      const heading = document.querySelector(`#${anchor}`)
+      if (!heading) return false
+      heading.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }
   }
 }
 
 // 使用外部浏览器打开 MD 里的链接
-function fixLinkUrl () {
+function addMdEvent () {
   const md = document.querySelector('.markdown-body')
   if (!md) return false
   md.addEventListener('click', mdClickEvent, true)
@@ -228,7 +232,7 @@ async function init (e: Repository) {
     source.value = val
     nextTick(() => {
       clearMdEvent()
-      fixLinkUrl()
+      addMdEvent()
       fixImgUrl()
     })
   }

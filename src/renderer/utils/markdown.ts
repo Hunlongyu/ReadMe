@@ -2,6 +2,7 @@ import axios from 'axios'
 import Mdit from 'markdown-it'
 import hljs from 'highlight.js'
 import { Repository } from '@/types'
+import markdownItAnchor from 'markdown-it-anchor'
 
 interface mdType {
   name: string
@@ -50,6 +51,7 @@ async function renderMarkdwon ({ content }: mdType): Promise<string> {
       return ''
     }
   })
+  md.use(markdownItAnchor)
   return md.render(content)
 }
 
