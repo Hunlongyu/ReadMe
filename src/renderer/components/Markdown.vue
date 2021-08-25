@@ -168,6 +168,10 @@ function aLinkEvent () {
   md.addEventListener('click', event => {
     event.preventDefault()
     const dom = event?.target as HTMLLinkElement
+    if (dom.tagName === 'SUMMARY') {
+      const p = dom.parentNode as HTMLDetailsElement
+      p.open = !p.open
+    }
     if (dom.tagName === 'A') {
       const href = dom.href
       const reg = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/
