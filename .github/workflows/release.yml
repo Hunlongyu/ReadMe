@@ -20,8 +20,8 @@ jobs:
           node-version: 14
 
       - run: |
-          npm install
-          npm run release
+          yarn
+          yarn release
         shell: pwsh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
