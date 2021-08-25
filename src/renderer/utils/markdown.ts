@@ -3,6 +3,7 @@ import Mdit from 'markdown-it'
 import hljs from 'highlight.js'
 import { Repository } from '@/types'
 import markdownItAnchor from 'markdown-it-anchor'
+import markdownItCopy from 'markdown-it-svg-code-copy'
 
 interface mdType {
   name: string
@@ -52,6 +53,7 @@ async function renderMarkdwon ({ content }: mdType): Promise<string> {
     }
   })
   md.use(markdownItAnchor)
+  md.use(markdownItCopy)
   return md.render(content)
 }
 

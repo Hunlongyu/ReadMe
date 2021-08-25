@@ -10,7 +10,7 @@
 
 - [ ] markdown edit (online / offline)
 - [-] markdown image link
-- [ ] markdown code copy
+- [-] markdown code copy
 
 - [-] settings language (en & zh-cn)
 - [ ] settings theme (dark & light)
