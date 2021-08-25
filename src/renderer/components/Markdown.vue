@@ -211,10 +211,16 @@ function fixImgUrl () {
   if (list.length <= 0) return false
   const fullName = repo.value?.full_name
   const branch = repo.value?.default_branch
+  const isDev = process.env.NODE_ENV !== 'production'
   for (const i of list) {
     const img = i as HTMLImageElement
     const url = `https://raw.githubusercontent.com/${fullName}/${branch}/`
-    const src = img.src.replace('http://localhost:8080/', url)
+    let src = ''
+    if (isDev) {
+      src = img.src.replace('http://localhost:8080/', url)
+    } else {
+      src = img.src.replace('app://./', url)
+    }
     img.src = src + '?' + Math.random()
   }
 }
