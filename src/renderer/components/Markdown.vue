@@ -166,25 +166,37 @@ async function exportEvent (type: string) {
   }
 }
 
+// md 的点击事件
+function mdClickEvent (event: Event) {
+  event.preventDefault()
+  const dom = event?.target as HTMLLinkElement
+  if (dom.tagName === 'SUMMARY') {
+    const p = dom.parentNode as HTMLDetailsElement
+    p.open = !p.open
+  }
+  if (dom.tagName === 'A') {
+    const href = dom.href
+    const reg = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/
+    if (href.match(reg)) {
+      window.shell.openExternal(dom.href)
+    } else {
+      console.log(dom, href, 'fix a')
+    }
+  }
+}
+
 // 使用外部浏览器打开 MD 里的链接
 function fixLinkUrl () {
   const md = document.querySelector('.markdown-body')
   if (!md) return false
-  md.addEventListener('click', event => {
-    event.preventDefault()
-    const dom = event?.target as HTMLLinkElement
-    if (dom.tagName === 'SUMMARY') {
-      const p = dom.parentNode as HTMLDetailsElement
-      p.open = !p.open
-    }
-    if (dom.tagName === 'A') {
-      const href = dom.href
-      const reg = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/
-      if (href.match(reg)) {
-        window.shell.openExternal(dom.href)
-      }
-    }
-  })
+  md.addEventListener('click', mdClickEvent, true)
+}
+
+// 清除 md 的监听事件
+function clearMdEvent () {
+  const md = document.querySelector('.markdown-body')
+  if (!md) return false
+  md.removeEventListener('click', mdClickEvent, true)
 }
 
 // 修复 MD 里相对路径的图片无法显示
@@ -215,6 +227,7 @@ async function init (e: Repository) {
     const val = await renderMarkdwon(res)
     source.value = val
     nextTick(() => {
+      clearMdEvent()
       fixLinkUrl()
       fixImgUrl()
     })
