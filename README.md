@@ -9,7 +9,7 @@
 - [-] search language filter
 
 - [ ] markdown edit (online / offline)
-- [ ] markdown image link
+- [-] markdown image link
 - [ ] markdown code copy
 
 - [-] settings language (en & zh-cn)

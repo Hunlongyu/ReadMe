@@ -162,7 +162,7 @@ async function exportEvent (type: string) {
 }
 
 // 使用外部浏览器打开 MD 里的链接
-function aLinkEvent () {
+function fixlinkUrl () {
   const md = document.querySelector('.markdown-body')
   if (!md) return false
   md.addEventListener('click', event => {
@@ -182,7 +182,21 @@ function aLinkEvent () {
   })
 }
 
-// TODO: 修复 MD 图片无法显示
+// 修复 MD 里相对路径的图片无法显示
+function fixImgUrl () {
+  const md = document.querySelector('.markdown-body')
+  if (!md) return false
+  const list = md.querySelectorAll('img')
+  if (list.length <= 0) return false
+  const fullName = repo.value?.full_name
+  const branch = repo.value?.default_branch
+  for (const i of list) {
+    const img = i as HTMLImageElement
+    const url = `https://raw.githubusercontent.com/${fullName}/${branch}/`
+    const src = img.src.replace('http://localhost:8080/', url)
+    img.src = src + '?' + Math.random()
+  }
+}
 
 // 初始化
 async function init (e: Repository) {
@@ -195,7 +209,8 @@ async function init (e: Repository) {
     const val = await renderMarkdwon(res)
     source.value = val
     nextTick(() => {
-      aLinkEvent()
+      fixlinkUrl()
+      fixImgUrl()
     })
   }
   loading.value = false
