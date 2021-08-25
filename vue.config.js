@@ -37,6 +37,9 @@ module.exports = {
         },
         linux: {
           icon: 'build/icons/256x256.png'
+        },
+        snap: {
+          publish: ['github']
         }
       }
     }
