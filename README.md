@@ -4,18 +4,16 @@
 ### TODO
 
 
-- [ ] login single win
+- [-] login single win
 
-- [ ] search advanced mode
-- [ ] search language filter
+- [-] search language filter
 
 - [ ] markdown edit (online / offline)
 - [ ] markdown image link
 - [ ] markdown code copy
 
-- [ ] settings language (en & zh-cn)
+- [-] settings language (en & zh-cn)
 - [ ] settings theme (dark & light)
-- [ ] settings async with private gits
 
 - [ ] app auto update
 - [ ] app update log

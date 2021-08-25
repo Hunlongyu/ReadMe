@@ -20,9 +20,6 @@
           <img :src="`http://ghchart.rshah.org/${login}`" :alt="`${login}`" />
         </div>
       </div>
-      <div class="logout">
-        <button class="btn" type="button" @click="logoutEvent">Logout</button>
-    </div>
     </div>
   </div>
 </template>
@@ -42,16 +39,6 @@ async function getUserInfo () {
   name.value = res?.name
   description.value = res?.bio
   login.value = res?.login
-}
-
-// 退出登录
-async function logoutEvent () {
-  window.api.invoke('event.win.logout')
-  window.api.on('event.win.logout_replay', () => {
-    window.api.removeAllListeners('event.win.logout_replay')
-    window.api.invoke('event.win.open', [{ name: 'login' }])
-    window.api.invoke('event.win.close', [{ name: 'home' }])
-  })
 }
 
 onMounted(async () => {

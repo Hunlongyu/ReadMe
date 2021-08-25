@@ -1,61 +1,122 @@
 <template>
   <div class="settings">
-    <div class="soft">
-      <div class="logo">logo</div>
-      <div class="name">ReadMe</div>
-      <div class="version">v2.0.1</div>
-    </div>
-    <div class="theme">
-      <div class="dark">{{ $t('settings.dark') }}</div>
-      <div class="light">{{ $t('settings.light') }}</div>
-      <div class="system">{{ $t('settings.dark') }}</div>
-    </div>
-    <div class="language">
-      <div @click="changeLanguage('zh-cn')">zh-cn</div>
-      <div @click="changeLanguage('zh-tw')">zh-tw</div>
-      <div @click="changeLanguage('en')">en</div>
-      <button class="button nt-btn" @click="logoutEvent">logout</button>
+    <div class="settings-wrapper">
+      <div class="soft item">
+        <div class="name">README</div>
+        <div class="version">v2.0.0</div>
+      </div>
+      <div class="theme item">
+        <div class="dark">
+          <img src="" alt="">
+          <span>{{ $t('settings.dark') }}</span>
+        </div>
+        <div class="light">
+          <img src="" alt="">
+          <span>{{ $t('settings.light') }}</span>
+        </div>
+        <div class="system">
+          <img src="" alt="">
+          <span>{{ $t('settings.dark') }}</span>
+        </div>
+      </div>
+      <div class="language item">
+        <el-select size="mini" v-model="lang" @change="changeLanguage">
+          <el-option label="简体中文" value="zh-cn"></el-option>
+          <el-option label="繁体中文" value="zh-tw"></el-option>
+          <el-option label="English" value="en"></el-option>
+        </el-select>
+      </div>
+      <div class="logout item">
+        <el-button size="mini" type="danger" plain @click="logoutEvent">切换账号</el-button>
+      </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router'
-import axios from 'axios'
+import { onMounted, ref } from 'vue'
+import { settings } from '@/renderer/plugins/database'
 
-const router = useRouter()
 const { locale } = useI18n()
+const lang = ref()
 
-function changeLanguage (e: string) {
+// 切换语言
+async function changeLanguage (e: string) {
   locale.value = e
+  const s = await settings.get()
+  if (!s) return false
+  s.language = e
+  settings.update(s)
 }
 
-function logoutEvent () {
-  axios({
-    method: 'delete',
-    url: 'https://api.github.com/applications/dce5a448c5e9cca4d566/token',
-    auth: {
-      username: `${process.env.VUE_APP_clientId}`,
-      password: `${process.env.VUE_APP_clientSecret}`
-    },
-    data: {
-      access_token: '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'
-    }
-  }).then(() => {
-    router.push('login')
-    console.log('then')
-  }).catch(() => {
-    router.push('login')
-    console.log('error')
+// 初始化
+async function initSettings () {
+  const res = await settings.get()
+  lang.value = res?.language
+}
+
+// 退出登录
+async function logoutEvent () {
+  window.api.invoke('event.win.logout')
+  window.api.on('event.win.logout_replay', () => {
+    window.api.removeAllListeners('event.win.logout_replay')
+    window.api.invoke('event.win.open', [{ name: 'login' }])
+    window.api.invoke('event.win.close', [{ name: 'home' }])
   })
 }
+
+onMounted(() => {
+  initSettings()
+})
 
 </script>
 <style lang="scss" scoped>
 .settings{
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  border-top: 1px solid #d9e3e5;
+  position: relative;
+  overflow-y: auto;
+  width: 100%;
+  .settings-wrapper{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: block;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    .item{
+      margin-top: 20px;
+    }
+    .soft{
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      .name{
+        font-size: 30px;
+        font-weight: bold;
+      }
+      .version{
+        font-size: 14px;
+      }
+    }
+    .theme{
+      display: flex;
+      justify-content: flex-start;
+      .dark, .light, .system{
+        display: flex;
+        width: 100px;
+        height: 80px;
+        margin-right: 10px;
+        flex-direction: column;
+        align-items: center;
+        img{
+          width: 100px;
+          height: 60px;
+        }
+      }
+    }
+  }
 }
 </style>

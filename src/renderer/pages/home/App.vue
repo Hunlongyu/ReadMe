@@ -1,6 +1,24 @@
 <template>
   <router-view class="theme-light"/>
 </template>
+<script lang="ts" setup>
+import { settings } from '@/renderer/plugins/database'
+import { onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { locale } = useI18n()
+
+async function init () {
+  const s = await settings.get()
+  if (s) {
+    locale.value = s.language
+  }
+}
+
+onMounted(() => {
+  init()
+})
+</script>
 <style lang="scss">
 @import "../../assets/scss/index.scss";
 html, body, #app{
