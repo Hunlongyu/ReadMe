@@ -9,10 +9,9 @@ jobs:
   release:
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
-    strategy:
-      fail-fast: false
 
     strategy:
+      fail-fast: false
       matrix:
         os: [windows-latest]
 
