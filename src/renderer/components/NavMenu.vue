@@ -38,6 +38,7 @@ async function checkUserToken () {
   const s = await settings.get()
   if (s?.token === '') {
     window.api.invoke('event.win.open', [{ name: 'login' }])
+    window.api.invoke('event.win.close', [{ name: 'home' }])
   } else {
     const info = await me.get()
     if (!info) {
