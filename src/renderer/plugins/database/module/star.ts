@@ -27,5 +27,8 @@ export default {
   },
   async where (type: string, arg: string): Promise<Repository[]> {
     return await star.where(type).equals(arg).toArray()
+  },
+  async search (reg: RegExp): Promise<Repository[]> {
+    return await star.toArray().then(res => res.filter(f => reg.test(f.full_name)))
   }
 }
