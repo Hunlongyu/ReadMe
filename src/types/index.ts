@@ -11,6 +11,7 @@ export interface Settings {
   token: string
   language: string
   os: string
+  theme: string
 }
 
 export interface trendingRepoType {
