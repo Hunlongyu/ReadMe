@@ -64,7 +64,7 @@ import 'highlight.js/styles/github.css'
 import copy from 'clipboard-copy'
 import html2canvas from 'html2canvas'
 import FileSaver from 'file-saver'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import StartChart from './StartChart.vue'
 
 const repo = ref<Repository>()
@@ -233,13 +233,21 @@ async function init (e: Repository) {
   source.value = ''
   await checkStarred()
   const res = await getReadMeMd(e)
-  if (res) {
+  if (res.name && res.content) {
     const val = await renderMarkdwon(res)
     source.value = val
     nextTick(() => {
       clearMdEvent()
       addMdEvent()
       fixImgUrl()
+    })
+  } else {
+    ElMessageBox.confirm('没有找到 README 文件，是否到 Github 去反馈该仓库，以帮助优化软件。', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      window.shell.openExternal('https://github.com/Hunlongyu/ReadMe/issues')
     })
   }
   loading.value = false
