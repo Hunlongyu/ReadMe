@@ -6,15 +6,15 @@
         <div class="version">v2.0.0</div>
       </div>
       <div class="theme item">
-        <div class="dark">
+        <div class="dark" @click="changeTheme('dark')">
           <img src="" alt="">
           <span>{{ $t('settings.dark') }}</span>
         </div>
-        <div class="light">
+        <div class="light" @click="changeTheme('light')">
           <img src="" alt="">
           <span>{{ $t('settings.light') }}</span>
         </div>
-        <div class="system">
+        <div class="system" @click="changeTheme('system')">
           <img src="" alt="">
           <span>{{ $t('settings.dark') }}</span>
         </div>
@@ -36,6 +36,7 @@
 import { useI18n } from 'vue-i18n'
 import { onMounted, ref } from 'vue'
 import { settings } from '@/renderer/plugins/database'
+import bus from '@/renderer/plugins/mitt'
 
 const { locale } = useI18n()
 const lang = ref()
@@ -47,6 +48,11 @@ async function changeLanguage (e: string) {
   if (!s) return false
   s.language = e
   settings.update(s)
+}
+
+// 切换主题
+async function changeTheme (theme: string) {
+  bus.emit('bus.settings.theme', theme)
 }
 
 // 初始化

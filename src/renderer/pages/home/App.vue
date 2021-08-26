@@ -1,25 +1,37 @@
 <template>
-  <router-view class="theme-light"/>
+  <router-view :class="`theme-${theme}`"/>
 </template>
 <script lang="ts" setup>
 import { settings } from '@/renderer/plugins/database'
-import { onMounted } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import bus from '@/renderer/plugins/mitt'
 
 const { locale } = useI18n()
+const theme = ref('light')
 
 async function init () {
   const s = await settings.get()
   if (s) {
     locale.value = s.language
+    theme.value = s.theme
   }
+}
+
+// 切换主题
+function changeTheme (e: string) {
+  theme.value = e
 }
 
 onMounted(() => {
   init()
-  const isDevelopment = process.env.NODE_ENV !== 'production'
-  console.log(isDevelopment)
+  bus.on('bus.settings.theme', changeTheme)
 })
+
+onBeforeUnmount(() => {
+  bus.off('bus.settings.theme', changeTheme)
+})
+
 </script>
 <style lang="scss">
 @import "../../assets/scss/index.scss";
