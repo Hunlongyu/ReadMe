@@ -1,5 +1,7 @@
 # readme
 
+dev: http://localhost:8080/login#/loading
+prod: app://./login.html#/loading
 
 ### TODO
 

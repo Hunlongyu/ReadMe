@@ -3,7 +3,7 @@
     <div class="filter">
       <div class="fr-item">
         <span>Spoken Language: </span>
-        <el-select v-model="spokenLanguage.value" size="mini" @change="trendingChangeEvent">
+        <el-select allow-create filterable default-first-option clearable v-model="spokenLanguage.value" size="mini" @change="trendingChangeEvent">
           <el-option
             v-for="item in spokenLanguage.list"
             :key="item.value"
@@ -14,7 +14,7 @@
       </div>
       <div class="fr-item">
         <span>Language: </span>
-        <el-select v-model="language.value" size="mini" @change="trendingChangeEvent">
+        <el-select allow-create filterable default-first-option clearable v-model="language.value" size="mini" @change="trendingChangeEvent">
           <el-option
             v-for="(item, index) in language.list.language"
             :key="index"
@@ -119,6 +119,7 @@ const title = ref('')
 
 // 切换说话语言
 async function trendingChangeEvent () {
+  if (spokenLanguage.value === '' || language.value === '') return false
   loading.value = true
   content.value = await getTrending(spokenLanguage.value, language.value, date.value)
   loading.value = false
