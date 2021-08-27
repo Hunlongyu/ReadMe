@@ -67,6 +67,7 @@ import FileSaver from 'file-saver'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import StartChart from './StartChart.vue'
 import { sendIssues_MdNotFound } from '../utils/issues'
+import bus from '@/renderer/plugins/mitt'
 
 const repo = ref<Repository>()
 const source = ref<string>()
@@ -111,6 +112,7 @@ async function starClickEvent () {
     ElMessage({ message: '收藏成功', type: 'success' })
   }
   checkStarred()
+  bus.emit('bus.star.check', 'refresh')
 }
 
 // 复制克隆地址到剪贴板

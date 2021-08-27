@@ -12,6 +12,7 @@ export interface Settings {
   language: string
   os: string
   theme: string
+  refresh: boolean
 }
 
 export interface trendingRepoType {

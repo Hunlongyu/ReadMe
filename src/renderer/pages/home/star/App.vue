@@ -41,11 +41,12 @@
 </template>
 <script lang="ts" setup>
 import { getAllSelfStar, getStarLanguageList, listType } from '@/renderer/utils/star'
-import { nextTick, onMounted, ref } from 'vue'
-import { star } from '../../../plugins/database'
+import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
+import { settings, star } from '../../../plugins/database'
 import type { Repository, TreeNodeType } from '@/types'
 import Markdown from '../../../components/Markdown.vue'
 import type { mdApi } from '../../../components/Markdown.vue'
+import bus from '@/renderer/plugins/mitt'
 
 const list = ref<listType[]>(
   [
@@ -72,10 +73,14 @@ const searchText = ref('')
 
 // 刷新用户收藏列表
 async function refreshList () {
+  const s = await settings.get()
+  if (!s) return false
+  if (!s.refresh) return false
   refreshLoading.value = true
   all.value = []
   await star.clear()
   await getSelfStarList()
+  await initLanguageList()
   refreshLoading.value = false
 }
 
@@ -155,6 +160,11 @@ async function initLanguageList () {
 
 onMounted(() => {
   initAddStarList()
+  bus.on('bus.star.check', refreshList)
+})
+
+onBeforeUnmount(() => {
+  bus.off('bus.star.check', refreshList)
 })
 </script>
 <style lang="scss" scoped>
