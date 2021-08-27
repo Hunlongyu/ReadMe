@@ -66,6 +66,7 @@ import html2canvas from 'html2canvas'
 import FileSaver from 'file-saver'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import StartChart from './StartChart.vue'
+import { sendIssues_MdNotFound } from '../utils/issues'
 
 const repo = ref<Repository>()
 const source = ref<string>()
@@ -242,12 +243,13 @@ async function init (e: Repository) {
       fixImgUrl()
     })
   } else {
-    ElMessageBox.confirm('没有找到 README 文件，是否到 Github 去反馈该仓库，以帮助优化软件。', '提示', {
+    ElMessageBox.confirm('没有找到 README 文件，是否反馈该仓库，以帮助优化软件。', '提示', {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: 'warning'
     }).then(() => {
-      window.shell.openExternal('https://github.com/Hunlongyu/ReadMe/issues')
+      sendIssues_MdNotFound(e)
+      ElMessage({ message: '已提交反馈，将在三个工作日解决，请勿重复提交。', type: 'success' })
     })
   }
   loading.value = false

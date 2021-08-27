@@ -14,7 +14,7 @@ interface mdType {
 async function getReadMeMd (repo: Repository): Promise<mdType> {
   const default_branch = repo.default_branch
   const full_name = repo.full_name
-  const md = ['readme.md', 'README.MD', 'Readme.md', 'readme.MD', 'ReadMe.md', 'ReadMe.Md', 'ReadMe.MD', 'README.markdown', 'readme.markdown', 'README', 'readme', 'readMe.md', 'README.textile', 'README.rst']
+  const md = ['README.md', 'readme.md', 'README.MD', 'Readme.md', 'readme.MD', 'ReadMe.md', 'ReadMe.Md', 'ReadMe.MD', 'README.markdown', 'readme.markdown', 'README', 'readme', 'readMe.md', 'README.textile', 'README.rst']
   let idx = 0
   async function getMd (): Promise<mdType> {
     const url = `https://raw.githubusercontent.com/${full_name}/${default_branch}/${md[idx]}`

@@ -15,7 +15,12 @@
 </template>
 <script lang="ts" setup>
 function authLogin () {
-  window.location.href = `https://github.com/login/oauth/authorize?response_type=code&state=${new Date().getTime()}&client_id=${process.env.VUE_APP_clientId}&scope=repo%20gist%20notifications&redirect_uri=app://./login.html#/loading`
+  const isDev = process.env.NODE_ENV !== 'production'
+  if (isDev) {
+    window.location.href = `https://github.com/login/oauth/authorize?response_type=code&state=${new Date().getTime()}&client_id=${process.env.VUE_APP_clientId}&scope=repo%20gist%20notifications&redirect_uri=http://localhost:8080/login#/loading`
+  } else {
+    window.location.href = `https://github.com/login/oauth/authorize?response_type=code&state=${new Date().getTime()}&client_id=${process.env.VUE_APP_clientId}&scope=repo%20gist%20notifications&redirect_uri=app://./login.html#/loading`
+  }
 }
 </script>
 <style lang="scss">
