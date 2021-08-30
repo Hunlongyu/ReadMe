@@ -106,6 +106,15 @@ async function searchCode (sortFilter: string, q: string, page: number): Promise
   return codes.data
 }
 
+async function getCodeContent (url: string): Promise<string> {
+  const res = await axios.get(url)
+  if (res && res.data.content) {
+    const code = window.atob(res.data.content)
+    return code
+  }
+  return ''
+}
+
 // 搜索反馈
 async function searchIssues (sortFilter: string, q: string, page: number): Promise<SearchIssuesType> {
   const token = await getToken()
@@ -177,5 +186,6 @@ export {
   searchRepo,
   getSearchRepoLanguage,
   searchCode,
+  getCodeContent,
   allSearchEvent
 }

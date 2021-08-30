@@ -117,8 +117,11 @@
         </div>
       </div>
     </div>
-    <el-drawer v-model="mdShow" direction="rtl" size="70%" :title="title">
+    <el-drawer v-model="mdShow" direction="rtl" size="75%" :title="title">
       <Markdown ref="markdown"/>
+    </el-drawer>
+    <el-drawer v-model="codeShow" direction="rtl" size="75%">
+      <Code ref="code" />
     </el-drawer>
   </div>
 </template>
@@ -126,16 +129,16 @@
 import { nextTick, reactive, ref } from 'vue'
 import type {
   labelValueType,
-  searchNumberType,
-  searchContentType,
   SearchRepository,
   SearchCode,
+  SearchUsers,
+  searchNumberType,
+  searchContentType,
   searchSortType,
   SearchRepositoryType,
   SearchCodeType,
   SearchIssuesType,
-  SearchUsersType,
-  SearchUsers
+  SearchUsersType
 } from '../../../utils/search'
 import {
   getSearchRepoLanguage,
@@ -145,7 +148,9 @@ import {
 import { checkStarRepository, unStarRepository, starRepository } from '@/renderer/utils/star'
 import { ElMessage } from 'element-plus'
 import Markdown from '../../../components/Markdown.vue'
+import Code from '../../../components/Code.vue'
 import type { mdApi } from '../../../components/Markdown.vue'
+import type { codeApi } from '../../../components/Code.vue'
 
 const sort = ref('1')
 const typeActive = ref('repositories')
@@ -173,6 +178,9 @@ const idx = ref(1)
 const mdShow = ref(false)
 const markdown = ref<mdApi>()
 const title = ref('')
+
+const codeShow = ref(false)
+const code = ref<codeApi>()
 
 async function searchTypeClick (type: string) {
   lngActive.value = ''
@@ -219,8 +227,14 @@ async function repoItemClickEvent (repo: SearchRepository) {
 }
 
 // 选择一个代码查看
-async function codeItemClickEvent (code: SearchCode) {
-  console.log(code)
+async function codeItemClickEvent (e: SearchCode) {
+  console.log(e)
+  codeShow.value = true
+  nextTick(() => {
+    if (code.value) {
+      code.value.init(e)
+    }
+  })
 }
 
 async function usersItemClickEvent (user: SearchUsers) {
