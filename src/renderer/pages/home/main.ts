@@ -4,7 +4,7 @@ import router from '../../router/home'
 import { createI18n } from 'vue-i18n'
 import 'modern-normalize'
 import ElementPlus from 'element-plus'
-import 'element-plus/lib/theme-chalk/index.css'
+import 'element-plus/dist/index.css'
 import messages from '../../plugins/i18n'
 
 const i18n = createI18n({
