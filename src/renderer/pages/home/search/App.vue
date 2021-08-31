@@ -120,7 +120,7 @@
     <el-drawer v-model="mdShow" direction="rtl" size="75%" :title="title">
       <Markdown ref="markdown"/>
     </el-drawer>
-    <el-drawer v-model="codeShow" direction="rtl" size="75%">
+    <el-drawer v-model="codeShow" direction="rtl" size="75%" :withHeader="false">
       <Code ref="code" />
     </el-drawer>
   </div>
@@ -232,7 +232,7 @@ async function codeItemClickEvent (e: SearchCode) {
   codeShow.value = true
   nextTick(() => {
     if (code.value) {
-      code.value.init(e)
+      code.value.init(e, searchTxt.value)
     }
   })
 }
