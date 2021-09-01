@@ -37,7 +37,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, defineExpose } from 'vue'
+import { ref, defineExpose, nextTick } from 'vue'
 import hljsVuePlugin from '@highlightjs/vue-plugin'
 import type { SearchCode } from '../utils/search'
 import { getCodeContent } from '../utils/search'
@@ -69,6 +69,9 @@ async function getSearchCodeContent (repo: SearchCode) {
   code.value = res
   loading.value = false
   getSearchNumber(res, searchTxt.value)
+  nextTick(() => {
+    previewSearchTxt()
+  })
 }
 
 // 查找当前代码含有多少个搜索关键字
@@ -126,14 +129,26 @@ function previewSearchTxt () {
   if (current.value < total.value && current.value > 1) {
     current.value--
   }
-  const list = document.querySelectorAll('span')
   const matchList = []
-  for (let i = 0; i < list.length; i++) {
-    const txt = list[i].innerHTML
-    if (txt.indexOf(searchTxt.value) >= 0) {
-      matchList.push(list[i])
+  const strList = document.querySelectorAll('.hljs-string')
+  if (strList.length) {
+    for (let i = 0; i < strList.length; i++) {
+      const txt = strList[i].innerHTML
+      if (txt.indexOf(searchTxt.value) >= 0) {
+        matchList.push(strList[i])
+      }
     }
   }
+  const numList = document.querySelectorAll('.hljs-number')
+  if (numList.length) {
+    for (let i = 0; i < numList.length; i++) {
+      const txt = numList[i].innerHTML
+      if (txt.indexOf(searchTxt.value) >= 0) {
+        matchList.push(numList[i])
+      }
+    }
+  }
+  if (!matchList) return false
   const bgc = document.querySelector('.code-bgc')
   if (bgc) bgc.classList.remove('code-bgc')
   const m = matchList[current.value - 1]
@@ -144,17 +159,29 @@ function previewSearchTxt () {
 
 // 下一个搜索关键字位置
 function nextSearchTxt () {
-  if (current.value < total.value && current.value > 0) {
+  if (current.value < total.value && current.value >= 1) {
     current.value++
   }
-  const list = document.querySelectorAll('span')
   const matchList = []
-  for (let i = 0; i < list.length; i++) {
-    const txt = list[i].innerHTML
-    if (txt.indexOf(searchTxt.value) >= 0) {
-      matchList.push(list[i])
+  const strList = document.querySelectorAll('.hljs-string')
+  if (strList.length) {
+    for (let i = 0; i < strList.length; i++) {
+      const txt = strList[i].innerHTML
+      if (txt.indexOf(searchTxt.value) >= 0) {
+        matchList.push(strList[i])
+      }
     }
   }
+  const numList = document.querySelectorAll('.hljs-number')
+  if (numList.length) {
+    for (let i = 0; i < numList.length; i++) {
+      const txt = numList[i].innerHTML
+      if (txt.indexOf(searchTxt.value) >= 0) {
+        matchList.push(numList[i])
+      }
+    }
+  }
+  if (!matchList) return false
   const bgc = document.querySelector('.code-bgc')
   if (bgc) bgc.classList.remove('code-bgc')
   const m = matchList[current.value - 1]
