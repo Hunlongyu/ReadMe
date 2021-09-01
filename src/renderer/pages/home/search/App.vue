@@ -147,6 +147,9 @@
     <el-drawer v-model="codeShow" direction="rtl" size="75%" :withHeader="false">
       <Code ref="code" />
     </el-drawer>
+    <el-drawer v-model="userShow" direction="rtl" size="75%" :withHeader="false">
+      <User ref="user" />
+    </el-drawer>
   </div>
 </template>
 <script lang="ts" setup>
@@ -175,8 +178,10 @@ import { convertTxtToMd } from '@/renderer/utils/issues'
 import { ElMessage } from 'element-plus'
 import Markdown from '../../../components/Markdown.vue'
 import Code from '../../../components/Code.vue'
+import User from '../../../components/User.vue'
 import type { mdApi } from '../../../components/Markdown.vue'
 import type { codeApi } from '../../../components/Code.vue'
+import type { userApi } from '../../../components/User.vue'
 
 const sort = ref('1')
 const typeActive = ref('repositories')
@@ -207,6 +212,9 @@ const title = ref('')
 
 const codeShow = ref(false)
 const code = ref<codeApi>()
+
+const userShow = ref(false)
+const user = ref<userApi>()
 
 async function searchTypeClick (type: string) {
   lngActive.value = ''
@@ -267,13 +275,13 @@ function issuesItemClickEvent (e: SearchIssues) {
   window.shell.openExternal(e.html_url)
 }
 
-// issues 打开 github 链接
-function githubRepoLink (url: string) {
-  window.shell.openExternal(url)
-}
-
-async function usersItemClickEvent (user: SearchUsers) {
-  console.log(user, 'user')
+async function usersItemClickEvent (e: SearchUsers) {
+  userShow.value = true
+  nextTick(() => {
+    if (user.value) {
+      user.value.init('api', e)
+    }
+  })
 }
 
 // 切换页面事件

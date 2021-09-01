@@ -1,44 +1,22 @@
 <template>
-  <div class="me scroll">
-    <div class="me-wrapper">
-      <div class="info">
-        <div class="CircleBadge CircleBadge--medium avatar">
-          <img class="CircleBadge-icon" :src="avatar_url" alt="">
-        </div>
-        <div class="username">{{name}}</div>
-        <div class="description">{{description}}</div>
-      </div>
-      <div class="more">
-        <div class="trophy">
-          <img :src="`https://github-profile-trophy.vercel.app/?username=${login}&margin-w=28`" alt="">
-        </div>
-        <div class="stats">
-          <img :src="`https://github-readme-stats.vercel.app/api/top-langs/?username=${login}`" alt="">
-          <img :src="`https://github-readme-stats.vercel.app/api?username=${login}&show_icons=true&count_private=true&line_height=40`" alt="">
-        </div>
-        <div class="contributions">
-          <img :src="`http://ghchart.rshah.org/${login}`" :alt="`${login}`" />
-        </div>
-      </div>
-    </div>
+  <div class="me">
+    <User ref="user" />
   </div>
 </template>
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
+import User from '@/renderer/components/User.vue'
 import { me } from '@/renderer/plugins/database'
+import type { userApi } from '../../../components/User.vue'
 
-const avatar_url = ref()
-const name = ref()
-const description = ref()
-const login = ref()
+const user = ref<userApi>()
 
 // 从数据库获取用户信息
 async function getUserInfo () {
   const res = await me.get()
-  avatar_url.value = res?.avatar_url
-  name.value = res?.name
-  description.value = res?.bio
-  login.value = res?.login
+  if (res && user.value) {
+    user.value.init('db', res)
+  }
 }
 
 onMounted(async () => {
