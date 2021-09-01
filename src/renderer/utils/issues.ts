@@ -1,6 +1,7 @@
 import { Octokit } from '@octokit/core'
 import type { Repository } from '@/types'
 import { getToken } from './tools'
+import Mdit from 'markdown-it'
 
 // 反馈 md 没有发现
 async function sendIssues_MdNotFound (repo: Repository): Promise<boolean> {
@@ -18,6 +19,17 @@ async function sendIssues_MdNotFound (repo: Repository): Promise<boolean> {
   return true
 }
 
+// 将 txt 转换成 md 格式
+function convertTxtToMd (txt: string): string {
+  const md = new Mdit({
+    html: true,
+    linkify: true,
+    typographer: true
+  })
+  return md.render(txt)
+}
+
 export {
-  sendIssues_MdNotFound
+  sendIssues_MdNotFound,
+  convertTxtToMd
 }

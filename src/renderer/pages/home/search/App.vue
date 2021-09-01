@@ -97,6 +97,30 @@
             <el-pagination layout="prev, pager, next" :page-size="100" :current-page="idx" :total="content.code.total_count" @current-change="currentChangeEvent"></el-pagination>
           </div>
         </div>
+        <div class="content-wrapper issues" v-if="typeActive === 'issues'">
+          <div class="item" v-for="(i, j) in content.issues.items" :key="j">
+            <div class="title">
+              <div class="title-left" @click="issuesItemClickEvent(i)">
+                <svg class="title-icon" width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="white" fill-opacity="0.01"/><path d="M10 44C8.89543 44 8 43.1046 8 42V6C8 4.89543 8.89543 4 10 4H38C39.1046 4 40 4.89543 40 6V42C40 43.1046 39.1046 44 38 44H10Z" fill="none" stroke="#333" stroke-width="2" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M21 22V4H33V22L27 15.7273L21 22Z" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 4H38" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="title-author">{{i.title}}</span>
+              </div>
+            </div>
+            <div class="describe" v-html="convertTxtToMd(i.body || '')"></div>
+            <div class="info">
+              <div class="info-left">
+                <div class="info-language">
+                  <span>{{i.updated_at}}</span>
+                </div>
+              </div>
+              <div class="info-right">
+                <span>{{i.html_url}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="item" v-if="content && content.code.items?.length > 0">
+            <el-pagination layout="prev, pager, next" :page-size="100" :current-page="idx" :total="content.code.total_count" @current-change="currentChangeEvent"></el-pagination>
+          </div>
+        </div>
         <div class="content-wrapper users" v-if="typeActive === 'users'">
           <div class="item" v-for="(i, j) in content.users.items" :key="j">
             <div class="title">
@@ -131,6 +155,7 @@ import type {
   labelValueType,
   SearchRepository,
   SearchCode,
+  SearchIssues,
   SearchUsers,
   searchNumberType,
   searchContentType,
@@ -146,6 +171,7 @@ import {
   searchTypeNum
 } from '../../../utils/search'
 import { checkStarRepository, unStarRepository, starRepository } from '@/renderer/utils/star'
+import { convertTxtToMd } from '@/renderer/utils/issues'
 import { ElMessage } from 'element-plus'
 import Markdown from '../../../components/Markdown.vue'
 import Code from '../../../components/Code.vue'
@@ -228,13 +254,22 @@ async function repoItemClickEvent (repo: SearchRepository) {
 
 // 选择一个代码查看
 async function codeItemClickEvent (e: SearchCode) {
-  console.log(e)
   codeShow.value = true
   nextTick(() => {
     if (code.value) {
       code.value.init(e, searchTxt.value)
     }
   })
+}
+
+// 选择一条反馈查看
+function issuesItemClickEvent (e: SearchIssues) {
+  window.shell.openExternal(e.html_url)
+}
+
+// issues 打开 github 链接
+function githubRepoLink (url: string) {
+  window.shell.openExternal(url)
 }
 
 async function usersItemClickEvent (user: SearchUsers) {
@@ -402,6 +437,14 @@ async function starRepositoryEvent (repo: SearchRepository) {
                 }
               }
             }
+          }
+        }
+      }
+      .issues{
+        .describe{
+          pointer-events: none;
+          :deep img{
+            display: none !important;
           }
         }
       }
