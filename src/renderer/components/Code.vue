@@ -17,14 +17,14 @@
           </span>
         </div>
         <div class="code-header-right">
-          <el-input v-model="searchTxt" size="mini" @change="searchTextChange" @keydown.enter="nextSearchTxt">
+          <el-input v-model="searchTxt" size="mini" @change="searchTextChange" @keydown.enter="searchContentKey('next')">
             <template #suffix>
               {{current}} / {{total}}
             </template>
           </el-input>
           <el-button-group>
-            <el-button icon="el-icon-top" size="mini" @click="previewSearchTxt"></el-button>
-            <el-button icon="el-icon-bottom" size="mini" @click="nextSearchTxt"></el-button>
+            <el-button icon="el-icon-top" size="mini" @click="searchContentKey('preview')"></el-button>
+            <el-button icon="el-icon-bottom" size="mini" @click="searchContentKey('next')"></el-button>
           </el-button-group>
         </div>
       </div>
@@ -59,7 +59,7 @@ async function init (e: SearchCode, txt: string) {
   searchTxt.value = txt
   loading.value = true
   code.value = ''
-  current.value = 1
+  current.value = 0
   getSearchCodeContent(e)
 }
 
@@ -70,7 +70,7 @@ async function getSearchCodeContent (repo: SearchCode) {
   loading.value = false
   getSearchNumber(res, searchTxt.value)
   nextTick(() => {
-    previewSearchTxt()
+    searchContentKey('next')
   })
 }
 
@@ -125,9 +125,13 @@ function searchTextChange () {
 }
 
 // 上一个搜索关键字位置
-function previewSearchTxt () {
-  if (current.value < total.value && current.value > 1) {
-    current.value--
+function searchContentKey (type: string) {
+  if (current.value < total.value && current.value >= 0) {
+    if (type === 'preview') {
+      current.value--
+    } else {
+      current.value++
+    }
   }
   const matchList = []
   const strList = document.querySelectorAll('.hljs-string')
@@ -148,36 +152,21 @@ function previewSearchTxt () {
       }
     }
   }
-  if (!matchList) return false
-  const bgc = document.querySelector('.code-bgc')
-  if (bgc) bgc.classList.remove('code-bgc')
-  const m = matchList[current.value - 1]
-  if (!m) return false
-  m.classList.add('code-bgc')
-  m.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })
-}
-
-// 下一个搜索关键字位置
-function nextSearchTxt () {
-  if (current.value < total.value && current.value >= 1) {
-    current.value++
-  }
-  const matchList = []
-  const strList = document.querySelectorAll('.hljs-string')
-  if (strList.length) {
-    for (let i = 0; i < strList.length; i++) {
-      const txt = strList[i].innerHTML
+  const nameList = document.querySelectorAll('.hljs-name')
+  if (nameList.length) {
+    for (let i = 0; i < nameList.length; i++) {
+      const txt = nameList[i].innerHTML
       if (txt.indexOf(searchTxt.value) >= 0) {
-        matchList.push(strList[i])
+        matchList.push(nameList[i])
       }
     }
   }
-  const numList = document.querySelectorAll('.hljs-number')
-  if (numList.length) {
-    for (let i = 0; i < numList.length; i++) {
-      const txt = numList[i].innerHTML
+  const symbolList = document.querySelectorAll('.hljs-symbol')
+  if (symbolList.length) {
+    for (let i = 0; i < symbolList.length; i++) {
+      const txt = symbolList[i].innerHTML
       if (txt.indexOf(searchTxt.value) >= 0) {
-        matchList.push(numList[i])
+        matchList.push(symbolList[i])
       }
     }
   }
