@@ -16,7 +16,7 @@
         </div>
         <div class="system" @click="changeTheme('system')">
           <img src="" alt="">
-          <span>{{ $t('settings.dark') }}</span>
+          <span>{{ $t('settings.system') }}</span>
         </div>
       </div>
       <div class="language item">

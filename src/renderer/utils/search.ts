@@ -127,7 +127,6 @@ async function searchIssues (sortFilter: string, q: string, page: number): Promi
   if (sortFilter === '4') { sort = 'reactions'; order = 'desc' }
   if (sortFilter === '5') { sort = 'reactions-+1'; order = 'asc' }
   const issues = await octokit.request('GET /search/issues', { q, sort, order, per_page: 100, page })
-  console.log(issues.data, '== issues data ==')
   return issues.data
 }
 
@@ -143,7 +142,6 @@ async function searchUsers (sortFilter: string, q: string, page: number): Promis
   if (sortFilter === '4') { sort = 'repositories'; order = 'desc' }
   if (sortFilter === '5') { sort = 'repositories'; order = 'asc' }
   const users = await octokit.request('GET /search/users', { q, sort, order, per_page: 100, page })
-  console.log(users.data, '== users data ==')
   return users.data
 }
 

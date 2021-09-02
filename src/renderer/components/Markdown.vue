@@ -16,6 +16,19 @@
         </span>
       </div>
       <div class="md-header-right">
+        <el-dropdown trigger="click" @command="gitRepoEdit">
+          <span class="el-dropdown-link md-dropdown-btn">
+            Edit<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item command="githubdev">[在线] - GitHub dev</el-dropdown-item>
+              <el-dropdown-item command="github1s">[在线] - Github1s</el-dropdown-item>
+              <el-dropdown-item command="vscode" divided>[本地] - VS Code</el-dropdown-item>
+              <el-dropdown-item command="vs">[本地] - Visual Studio</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
         <el-dropdown trigger="click" @command="gitCloneEvent">
           <span class="el-dropdown-link md-dropdown-btn">
             Clone<i class="el-icon-arrow-down el-icon--right"></i>
@@ -27,6 +40,7 @@
               <el-dropdown-item :command="fastCloneGit('fastgit')" divided>[加速] - {{ fastCloneGit('fastgit') }}</el-dropdown-item>
               <el-dropdown-item :command="fastCloneGit('gitclone')">[加速] - {{ fastCloneGit('gitclone') }}</el-dropdown-item>
               <el-dropdown-item :command="fastCloneGit('cnpmjs')">[加速] - {{ fastCloneGit('cnpmjs') }}</el-dropdown-item>
+              <el-dropdown-item command="githubDesktop" divided>[软件] - Github desktop</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -115,13 +129,43 @@ async function starClickEvent () {
   bus.emit('bus.star.check', 'refresh')
 }
 
+// 编辑仓库代码
+function gitRepoEdit (type: string) {
+  const url = repo.value?.html_url
+  if (type === 'githubdev' && url) {
+    const uri = url.replace('github.com', 'github.dev')
+    window.shell.openExternal(uri)
+    return false
+  }
+  if (type === 'github1s' && url) {
+    const uri = url.replace('github.com', 'github1s.com')
+    window.shell.openExternal(uri)
+    return false
+  }
+  if (type === 'vscode' && url) {
+    const uri = 'vscode://github.remotehub/open?url=' + url
+    window.shell.openExternal(uri)
+    return false
+  }
+  if (type === 'vs' && url) {
+    const uri = 'git-client://clone?repo=' + url
+    window.shell.openExternal(uri)
+    return false
+  }
+}
+
 // 复制克隆地址到剪贴板
 function gitCloneEvent (url: string) {
-  try {
-    copy(`git clone ${url}`)
-    ElMessage({ message: '已复制到剪贴板。', type: 'success' })
-  } catch (err) {
-    ElMessage({ message: '复制失败，请重试。', type: 'warning' })
+  if (url === 'githubDesktop') {
+    const uri = 'x-github-client://openRepo/' + repo.value?.html_url
+    window.shell.openExternal(uri)
+  } else {
+    try {
+      copy(`git clone ${url}`)
+      ElMessage({ message: '已复制到剪贴板。', type: 'success' })
+    } catch (err) {
+      ElMessage({ message: '复制失败，请重试。', type: 'warning' })
+    }
   }
 }
 
@@ -287,6 +331,7 @@ defineExpose({
   display: flex;
   justify-content: space-between;
   align-items: center;
+  user-select: none;
   .md-header-left, .md-header-right{
     height: 100%;
     display: flex;

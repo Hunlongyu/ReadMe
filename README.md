@@ -23,10 +23,10 @@ prod: app://./login.html#/loading
 - [ ] app auto update
 - [ ] app update log
 
-- [ ] code preview
+- [x] code preview
 - [ ] code tree
-- [ ] code preview lightheight
-- [ ] code search and lightheight
+- [x] code preview lightheight
+- [x] code search and lightheight
 
 - [ ] gits preview
 - [ ] gits create \ edite \ save \ export \ delete

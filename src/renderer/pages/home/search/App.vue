@@ -71,7 +71,7 @@
               <div class="info-right"></div>
             </div>
           </div>
-          <div class="item" v-if="content && content.repositories.items.length > 0">
+          <div class="item" v-if="content && content.repositories.total_count > 100">
             <el-pagination layout="prev, pager, next" :page-size="100" :current-page="idx" :total="content.repositories.total_count" @current-change="currentChangeEvent"></el-pagination>
           </div>
         </div>
@@ -93,7 +93,7 @@
               <div class="info-right"></div>
             </div>
           </div>
-          <div class="item" v-if="content && content.code.items?.length > 0">
+          <div class="item" v-if="content && content.code.total_count > 100">
             <el-pagination layout="prev, pager, next" :page-size="100" :current-page="idx" :total="content.code.total_count" @current-change="currentChangeEvent"></el-pagination>
           </div>
         </div>
@@ -117,7 +117,7 @@
               </div>
             </div>
           </div>
-          <div class="item" v-if="content && content.code.items?.length > 0">
+          <div class="item" v-if="content && content.code.total_count > 100">
             <el-pagination layout="prev, pager, next" :page-size="100" :current-page="idx" :total="content.code.total_count" @current-change="currentChangeEvent"></el-pagination>
           </div>
         </div>
@@ -135,7 +135,7 @@
               </div>
             </div>
           </div>
-          <div class="item" v-if="content && content.users.items?.length > 0">
+          <div class="item" v-if="content && content.users.total_count > 100">
             <el-pagination layout="prev, pager, next" :page-size="100" :current-page="idx" :total="content.users.total_count" @current-change="currentChangeEvent"></el-pagination>
           </div>
         </div>
