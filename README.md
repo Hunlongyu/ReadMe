@@ -13,7 +13,7 @@ prod: app://./login.html#/loading
 
 - [x] search language filter
 
-- [ ] markdown edit (online / offline)
+- [x] markdown edit (online / offline)
 - [x] markdown image link
 - [x] markdown code copy
 

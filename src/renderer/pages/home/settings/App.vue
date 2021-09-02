@@ -14,10 +14,6 @@
           <img src="" alt="">
           <span>{{ $t('settings.light') }}</span>
         </div>
-        <div class="system" @click="changeTheme('system')">
-          <img src="" alt="">
-          <span>{{ $t('settings.system') }}</span>
-        </div>
       </div>
       <div class="language item">
         <el-select size="mini" v-model="lang" @change="changeLanguage">
