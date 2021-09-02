@@ -26,6 +26,10 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../pages/home/trending/App.vue')
       },
       {
+        path: 'gist',
+        component: () => import('../pages/home/gist/App.vue')
+      },
+      {
         path: 'settings',
         component: () => import('../pages/home/settings/App.vue')
       }

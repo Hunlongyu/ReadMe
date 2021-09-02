@@ -9,7 +9,7 @@ async function getUserToken (code: string): Promise<string> {
   return res.data.access_token
 }
 
-// 获取用户信息， 使用 token
+// 获取用户信息，使用 token
 async function getUserInfo (token: string): Promise<PublicUser> {
   const octokit = new Octokit({ auth: token })
   const res = await octokit.request('GET /user')
@@ -27,30 +27,30 @@ interface mdType {
   content: string
 }
 
-async function getUserMD (user: PublicUser | SearchUsers) {
-  const login = user.login
-  const md = ['README.md', 'readme.md', 'README.MD', 'Readme.md', 'readme.MD', 'ReadMe.md', 'ReadMe.Md', 'ReadMe.MD', 'README.markdown', 'readme.markdown', 'README', 'readme', 'readMe.md', 'README.textile', 'README.rst']
-  let idx = 0
-  async function getMd (): Promise<mdType> {
-    const url = `https://raw.githubusercontent.com/${login}/${login}/master/${md[idx]}`
-    try {
-      const res = await axios.get(url)
-      return { name: md[idx], content: res.data }
-    } catch (error) {
-      idx++
-      if (idx < md.length) {
-        const res = await getMd()
-        if (res) return res
-        return { name: md[idx], content: '' }
-      } else {
-        return { name: md[idx], content: '' }
-      }
-    }
-  }
-  const result = await getMd()
-  if (result.name && result.content) return result
-  return { name: '', content: '' }
-}
+// async function getUserMD (user: PublicUser | SearchUsers) {
+//   const login = user.login
+//   const md = ['README.md', 'readme.md', 'README.MD', 'Readme.md', 'readme.MD', 'ReadMe.md', 'ReadMe.Md', 'ReadMe.MD', 'README.markdown', 'readme.markdown', 'README', 'readme', 'readMe.md', 'README.textile', 'README.rst']
+//   let idx = 0
+//   async function getMd (): Promise<mdType> {
+//     const url = `https://raw.githubusercontent.com/${login}/${login}/master/${md[idx]}`
+//     try {
+//       const res = await axios.get(url)
+//       return { name: md[idx], content: res.data }
+//     } catch (error) {
+//       idx++
+//       if (idx < md.length) {
+//         const res = await getMd()
+//         if (res) return res
+//         return { name: md[idx], content: '' }
+//       } else {
+//         return { name: md[idx], content: '' }
+//       }
+//     }
+//   }
+//   const result = await getMd()
+//   if (result.name && result.content) return result
+//   return { name: '', content: '' }
+// }
 
 export {
   getUserToken,

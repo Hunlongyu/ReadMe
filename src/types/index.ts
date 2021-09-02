@@ -4,6 +4,7 @@ export type Repository = components['schemas']['repository']
 export type FullRepository = components['schemas']['full-repository']
 export type PrivateUser = components['schemas']['private-user']
 export type PublicUser = components['schemas']['public-user']
+export type BaseGist = components['schemas']['base-gist']
 
 export interface Settings {
   id: number

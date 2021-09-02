@@ -13,6 +13,9 @@
       <span :class="['button', 'nt-btn', active === 'trending' ? 'active' : '']" @click="routerEvent('trending')">
         <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="white" fill-opacity="0.01"/><path d="M4 44H44" stroke="#333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 26L12 28V38H4V26Z" fill="none" stroke="#333" stroke-width="3" stroke-linejoin="round"/><path d="M20 24L28 20V38H20V24Z" fill="none" stroke="#333" stroke-width="3" stroke-linejoin="round"/><path d="M36 16L44 12V38H36V16Z" fill="none" stroke="#333" stroke-width="3" stroke-linejoin="round"/><path d="M4 18L12 20L44 4H34" stroke="#333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </span>
+      <span :class="['button', 'nt-btn', active === 'gist' ? 'active' : '']" @click="routerEvent('gist')">
+        <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 13L4 25.4322L16 37" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 13L44 25.4322L32 37" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 4L21 44" stroke="#333" stroke-width="2" stroke-linecap="round"/></svg>
+      </span>
     </div>
     <div class="setting">
       <span :class="['button', 'nt-btn', active === 'settings' ? 'active' : '']" @click="routerEvent('settings')">
