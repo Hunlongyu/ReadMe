@@ -76,6 +76,7 @@ async function itemClickEvent (item: BaseGist) {
   files.value = item.files
 }
 
+// 展开关闭事件
 async function collapseEvent (item: string) {
   const file = JSON.parse(item)
   fileContent.value = ''

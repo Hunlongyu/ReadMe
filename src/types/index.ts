@@ -5,6 +5,7 @@ export type FullRepository = components['schemas']['full-repository']
 export type PrivateUser = components['schemas']['private-user']
 export type PublicUser = components['schemas']['public-user']
 export type BaseGist = components['schemas']['base-gist']
+export type Thread = components['schemas']['thread']
 
 export interface Settings {
   id: number

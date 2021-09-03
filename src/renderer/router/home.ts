@@ -30,6 +30,10 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../pages/home/gist/App.vue')
       },
       {
+        path: 'notification',
+        component: () => import('../pages/home/notification/App.vue')
+      },
+      {
         path: 'settings',
         component: () => import('../pages/home/settings/App.vue')
       }
