@@ -26,7 +26,7 @@ const config: BWConfig = {
   home: {
     frame: false,
     width: isDevelopment ? 1680 : 1280,
-    height: 820
+    height: 860
   }
 }
 
