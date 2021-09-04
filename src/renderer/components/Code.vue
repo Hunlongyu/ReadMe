@@ -23,6 +23,9 @@
             </template>
           </el-input>
           <el-button-group>
+            <el-button size="mini" @click="changeFilterCase" :plain="fcase" :type="fcase ? 'primary': 'default'">
+              <svg width="10" height="10" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 8H32" stroke="#333" stroke-width="2" stroke-linecap="round"/><path d="M28 21H44" stroke="#333" stroke-width="2" stroke-linecap="round"/><path d="M18 42L18 8" stroke="#333" stroke-width="2" stroke-linecap="round"/><path d="M36 42L36 21" stroke="#333" stroke-width="2" stroke-linecap="round"/></svg>
+            </el-button>
             <el-button icon="el-icon-top" size="mini" @click="searchContentKey('preview')"></el-button>
             <el-button icon="el-icon-bottom" size="mini" @click="searchContentKey('next')"></el-button>
           </el-button-group>
@@ -37,7 +40,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, defineExpose, nextTick } from 'vue'
+import { ref, defineExpose, nextTick, onBeforeUnmount } from 'vue'
 import hljsVuePlugin from '@highlightjs/vue-plugin'
 import type { SearchCode } from '../utils/search'
 import { getCodeContent } from '../utils/search'
@@ -52,6 +55,7 @@ const code = ref('')
 const searchTxt = ref('')
 const current = ref(1)
 const total = ref(1)
+const fcase = ref(false)
 
 // 初始化
 async function init (e: SearchCode, txt: string) {
@@ -70,19 +74,10 @@ async function getSearchCodeContent (repo: SearchCode) {
   window.api.on('event.tools.base64_replay', (e, args) => {
     code.value = args
     loading.value = false
-    getSearchNumber(res, searchTxt.value)
     nextTick(() => {
-      searchContentKey('next')
+      searchContentKey('preview')
     })
   })
-}
-
-// 查找当前代码含有多少个搜索关键字
-function getSearchNumber (content: string, code: string) {
-  const reg = RegExp(code, 'g')
-  const res = content.match(reg)
-  if (!res) return false
-  total.value = res.length
 }
 
 // 进入 github
@@ -99,7 +94,7 @@ function copyCode () {
       copy(code.value)
       ElMessage({ message: '复制成功', type: 'success' })
     } catch (err) {
-      ElMessage({ message: err, type: 'warning' })
+      ElMessage({ message: JSON.stringify(err), type: 'warning' })
     }
   }
 }
@@ -124,56 +119,51 @@ function saveFile () {
 function searchTextChange () {
   current.value = 1
   total.value = 1
-  getSearchNumber(code.value, searchTxt.value)
+  searchContentKey('preview')
 }
 
-// 上一个搜索关键字位置
+function changeFilterCase () {
+  fcase.value = !fcase.value
+  searchTextChange()
+}
+
+// 搜索关键字位置
 function searchContentKey (type: string) {
-  if (current.value < total.value && current.value >= 0) {
-    if (type === 'preview') {
+  if (type === 'preview') {
+    if (current.value <= 1) {
+      current.value = 1
+    } else {
       current.value--
+    }
+  } else {
+    if (current.value >= total.value) {
+      current.value = total.value
     } else {
       current.value++
     }
   }
   const matchList = []
-  const strList = document.querySelectorAll('.hljs-string')
-  if (strList.length) {
-    for (let i = 0; i < strList.length; i++) {
-      const txt = strList[i].innerHTML
-      if (txt.indexOf(searchTxt.value) >= 0) {
-        matchList.push(strList[i])
-      }
+
+  const dom = document.querySelector('.code-wrapper')
+  if (!dom) return false
+  const arr = dom.querySelectorAll('span')
+  if (!arr.length) return false
+
+  for (let i = 0; i < arr.length; i++) {
+    const txt = arr[i].innerHTML
+    let reg = new RegExp(searchTxt.value, 'i')
+    if (fcase.value) {
+      reg = new RegExp(searchTxt.value)
+    } else {
+      reg = new RegExp(searchTxt.value, 'i')
+    }
+    if (reg.test(txt)) {
+      matchList.push(arr[i])
     }
   }
-  const numList = document.querySelectorAll('.hljs-number')
-  if (numList.length) {
-    for (let i = 0; i < numList.length; i++) {
-      const txt = numList[i].innerHTML
-      if (txt.indexOf(searchTxt.value) >= 0) {
-        matchList.push(numList[i])
-      }
-    }
-  }
-  const nameList = document.querySelectorAll('.hljs-name')
-  if (nameList.length) {
-    for (let i = 0; i < nameList.length; i++) {
-      const txt = nameList[i].innerHTML
-      if (txt.indexOf(searchTxt.value) >= 0) {
-        matchList.push(nameList[i])
-      }
-    }
-  }
-  const symbolList = document.querySelectorAll('.hljs-symbol')
-  if (symbolList.length) {
-    for (let i = 0; i < symbolList.length; i++) {
-      const txt = symbolList[i].innerHTML
-      if (txt.indexOf(searchTxt.value) >= 0) {
-        matchList.push(symbolList[i])
-      }
-    }
-  }
+
   if (!matchList) return false
+  total.value = matchList.length
   const bgc = document.querySelector('.code-bgc')
   if (bgc) bgc.classList.remove('code-bgc')
   const m = matchList[current.value - 1]
@@ -181,6 +171,11 @@ function searchContentKey (type: string) {
   m.classList.add('code-bgc')
   m.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })
 }
+
+onBeforeUnmount(() => {
+  current.value = 0
+  total.value = 1
+})
 
 export interface codeApi {
   init: typeof init
