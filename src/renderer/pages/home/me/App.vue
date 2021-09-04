@@ -26,7 +26,6 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .me{
   flex: 1;
-  border-top: 1px solid #d9e3e5;
   position: relative;
   overflow-y: auto;
   width: 100%;

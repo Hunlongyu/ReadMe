@@ -101,7 +101,6 @@ onMounted(() => {
     width: 280px;
     position: relative;
     background-color: #f8f8f8;
-    border-left: 1px solid #d9e3e5;
     border-right: 1px solid #d9e3e5;
     .list-body{
       position: absolute;
