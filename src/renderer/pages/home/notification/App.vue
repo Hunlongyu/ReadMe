@@ -2,6 +2,11 @@
   <div class="notification" v-loading="loading">
     <div class="filter">
       <div class="fr-item">
+        <span class="icon-btn" title="Refresh" @click="filterChangeEvent">
+          <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M42 8V24" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 24L6 40" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 24C6 33.9411 14.0589 42 24 42C28.8556 42 33.2622 40.0774 36.5 36.9519" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M42.0007 24C42.0007 14.0589 33.9418 6 24.0007 6C18.9152 6 14.3223 8.10896 11.0488 11.5" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </div>
+      <div class="fr-item">
         <span>All: </span>
         <el-select v-model="all" size="mini" @change="filterChangeEvent">
           <el-option label="True" :value="true"></el-option>
@@ -70,7 +75,13 @@ function filterChangeEvent () {
 
 // 列表点击事件
 async function itemClickEvent (e: Thread) {
-  window.shell.openExternal(e.repository.html_url)
+  if (e.subject.type === 'Issue') {
+    const url = e.subject.url.replace('api.github.com', 'www.github.com').replace('/repos/', '/')
+    window.shell.openExternal(url)
+    readItem(e)
+  } else {
+    window.shell.openExternal(e.repository.html_url)
+  }
 }
 
 // 标记已读
@@ -118,12 +129,30 @@ onMounted(() => {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 10px;
     .fr-item{
       font-size: 14px;
       margin-right: 16px;
       :deep .el-select{
         width: 120px;
+      }
+      .icon-btn{
+        display: flex;
+        width: 34px;
+        height: 34px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 3px;
+        margin-left: 0px;
+        cursor: pointer;
+        &:hover{
+          background-color: #f8f8f8;
+          border: 1px solid #d9e3e5;
+        }
+        &.active{
+          background-color: #f8f8f8;
+          border: 1px solid #d9e3e5;
+        }
       }
     }
   }
