@@ -19,7 +19,7 @@ function authLogin () {
   if (isDev) {
     window.location.href = `https://github.com/login/oauth/authorize?response_type=code&state=${new Date().getTime()}&client_id=${process.env.VUE_APP_clientId}&scope=repo%20gist%20notifications&redirect_uri=http://localhost:8080/login#/loading`
   } else {
-    window.location.href = `https://github.com/login/oauth/authorize?response_type=code&state=${new Date().getTime()}&client_id=${process.env.VUE_APP_clientId}&scope=repo%20gist%20notifications&redirect_uri=app://./login.html#/loading`
+    window.location.href = `https://github.com/login/oauth/authorize?response_type=code&state=${new Date().getTime()}&client_id=${process.env.CLIENT_ID}&scope=repo%20gist%20notifications&redirect_uri=app://./login.html#/loading`
   }
 }
 </script>
