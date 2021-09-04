@@ -40,19 +40,20 @@
             </div>
           </div>
         </div>
-        <div class="item">
+        <div class="item" v-if="content.length >= 50">
           <el-button-group>
             <el-button icon="el-icon-arrow-left" size="mini" :disabled="page === 1" @click="changePagesEvent('preview')"></el-button>
             <el-button icon="el-icon-arrow-right" size="mini" :disabled="content.length < 50" @click="changePagesEvent('next')"></el-button>
           </el-button-group>
         </div>
+        <el-empty :image-size="200" v-if="content.length === 0"></el-empty>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
-import { getNotifications, readNofification, getNotificationContent } from '../../../utils/notifications'
+import { getNotifications, readNofification } from '../../../utils/notifications'
 import type { Thread } from '@/types'
 import { ElMessage } from 'element-plus'
 
@@ -69,10 +70,7 @@ function filterChangeEvent () {
 
 // 列表点击事件
 async function itemClickEvent (e: Thread) {
-  console.log('lala', e)
-  const id = Number(e.id)
-  const res = await getNotificationContent(id)
-  console.log(res, ' res ')
+  window.shell.openExternal(e.repository.html_url)
 }
 
 // 标记已读
