@@ -75,7 +75,6 @@ const searchText = ref('')
 async function refreshList () {
   const s = await settings.get()
   if (!s) return false
-  if (!s.refresh) return false
   refreshLoading.value = true
   all.value = []
   await star.clear()
