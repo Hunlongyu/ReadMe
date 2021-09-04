@@ -26,5 +26,5 @@ jobs:
         shell: pwsh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VUE_APP_clientID: ${{ secrets.CLIENT_ID }}
+          VUE_APP_clientId: ${{ secrets.CLIENT_ID }}
           VUE_APP_clientSecret: ${{ secrets.CLIENT_SECRET }}
