@@ -8,7 +8,6 @@ async function getSelfGist (): Promise<BaseGist[]> {
   const token = await getToken()
   const octokit = new Octokit({ auth: token })
   const res = await octokit.request('GET /gists')
-  console.log(res)
   return res.data
 }
 

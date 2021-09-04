@@ -109,8 +109,7 @@ async function searchCode (sortFilter: string, q: string, page: number): Promise
 async function getCodeContent (url: string): Promise<string> {
   const res = await axios.get(url)
   if (res && res.data.content) {
-    const code = window.atob(res.data.content)
-    return code
+    return res.data.content
   }
   return ''
 }

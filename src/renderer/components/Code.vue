@@ -66,11 +66,14 @@ async function init (e: SearchCode, txt: string) {
 // 获取搜索内容
 async function getSearchCodeContent (repo: SearchCode) {
   const res = await getCodeContent(repo.git_url)
-  code.value = res
-  loading.value = false
-  getSearchNumber(res, searchTxt.value)
-  nextTick(() => {
-    searchContentKey('next')
+  window.api.invoke('event.tools.base64', [{ content: res }])
+  window.api.on('event.tools.base64_replay', (e, args) => {
+    code.value = args
+    loading.value = false
+    getSearchNumber(res, searchTxt.value)
+    nextTick(() => {
+      searchContentKey('next')
+    })
   })
 }
 

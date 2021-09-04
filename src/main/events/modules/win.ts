@@ -1,4 +1,4 @@
-import { ipcMain, shell, dialog, nativeTheme } from 'electron'
+import { ipcMain, shell, dialog } from 'electron'
 import os from 'os'
 import { OpenDialogOptions } from 'electron/main'
 import win from '../../win'
