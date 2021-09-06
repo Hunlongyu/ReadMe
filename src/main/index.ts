@@ -4,6 +4,7 @@ import { app, protocol, BrowserWindow } from 'electron'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 import win from './win'
 import './events'
+import { autoUpdater } from 'electron-updater'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -32,6 +33,7 @@ app.on('ready', async () => {
     }
   }
   win.open('login')
+  autoUpdater.checkForUpdatesAndNotify()
 })
 
 if (isDevelopment) {

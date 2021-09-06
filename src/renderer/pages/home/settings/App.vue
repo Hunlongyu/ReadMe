@@ -22,11 +22,6 @@
           <el-option label="English" value="en"></el-option>
         </el-select>
       </div>
-      <div class="language item">
-        <el-button size="mini" plain @click="updateCheck">检测更新</el-button>
-        <el-button size="mini" plain @click="updateDownload">下载更新</el-button>
-        <el-button size="mini" plain @click="updateInstall">退出安装</el-button>
-      </div>
       <div class="logout item">
         <el-button size="mini" type="danger" plain @click="logoutEvent">切换账号</el-button>
       </div>
