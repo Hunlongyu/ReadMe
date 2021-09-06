@@ -16,7 +16,7 @@
     </div>
     <div class="content scroll">
       <div class="content-wrapper">
-        <el-collapse accordion @change="collapseEvent">
+        <el-collapse accordion @change="collapseEvent" v-if="files">
           <el-collapse-item v-for="(i, j) in files" :key="j" :name="JSON.stringify(i)">
             <template #title>
               <span class="filename">
@@ -96,6 +96,7 @@ onMounted(() => {
 .gist{
   flex: 1;
   display: flex;
+  border-top: 1px solid #d9e3e5;
   .list{
     height: 100%;
     width: 280px;

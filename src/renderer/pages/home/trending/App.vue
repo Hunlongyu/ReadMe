@@ -1,5 +1,5 @@
 <template>
-  <div class="trending">
+  <div class="trending" v-loading="loading">
     <div class="filter">
       <div class="fr-item">
         <span>Spoken Language: </span>
@@ -35,7 +35,7 @@
         </el-select>
       </div>
     </div>
-    <div class="content scroll" v-loading="loading">
+    <div class="content scroll">
       <div class="content-wrapper">
         <div class="item" v-for="(i, j) in content" :key="j">
           <div class="title">
@@ -121,6 +121,7 @@ const title = ref('')
 async function trendingChangeEvent () {
   if (spokenLanguage.value === '' || language.value === '') return false
   loading.value = true
+  content.value = []
   content.value = await getTrending(spokenLanguage.value, language.value, date.value)
   loading.value = false
 }
