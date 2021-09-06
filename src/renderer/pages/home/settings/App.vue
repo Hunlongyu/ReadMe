@@ -3,7 +3,7 @@
     <div class="settings-wrapper">
       <div class="soft item">
         <div class="name">README</div>
-        <div class="version">v2.0.0</div>
+        <div class="version">v{{pkg.version}}</div>
       </div>
       <div class="theme item">
         <div class="dark" @click="changeTheme('dark')">
@@ -22,18 +22,6 @@
           <el-option label="English" value="en"></el-option>
         </el-select>
       </div>
-      <div class="starRefresh item">
-        <el-popover
-          placement="right"
-          title="提示"
-          :width="200"
-          trigger="hover"
-          content="每次 star 或者 unstar 都刷新本地数据库，当 star 数量较多时不建议开启。可以点击 star 列表上方的刷新按钮手动刷新。">
-          <template #reference>
-            <el-checkbox v-model="refresh" @change="changeRefresh">自动刷新</el-checkbox>
-          </template>
-        </el-popover>
-      </div>
       <div class="logout item">
         <el-button size="mini" type="danger" plain @click="logoutEvent">切换账号</el-button>
       </div>
@@ -45,10 +33,10 @@ import { useI18n } from 'vue-i18n'
 import { onMounted, ref } from 'vue'
 import { settings } from '@/renderer/plugins/database'
 import bus from '@/renderer/plugins/mitt'
+import pkg from '../../../../../package.json'
 
 const { locale } = useI18n()
 const lang = ref()
-const refresh = ref(false)
 
 // 切换语言
 async function changeLanguage (e: string) {
@@ -56,14 +44,6 @@ async function changeLanguage (e: string) {
   const s = await settings.get()
   if (!s) return false
   s.language = e
-  settings.update(s)
-}
-
-// 切换刷新状态
-async function changeRefresh (e: boolean) {
-  const s = await settings.get()
-  if (!s) return false
-  s.refresh = e
   settings.update(s)
 }
 
