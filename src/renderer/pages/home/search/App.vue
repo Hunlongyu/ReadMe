@@ -186,6 +186,7 @@ import type { userApi } from '../../../components/User.vue'
 const sort = ref('1')
 const typeActive = ref('repositories')
 const searchTxt = ref('')
+const oldSearchTxt = ref('')
 const lngActive = ref('')
 const lngList = ref<labelValueType[]>()
 
@@ -232,6 +233,7 @@ async function searchLngClick (s: labelValueType) {
 // 搜索事件
 async function searchEvent () {
   if (searchTxt.value === '') return false
+
   loading.value = true
   let q = ''
   if (lngActive.value !== '') {
@@ -239,14 +241,29 @@ async function searchEvent () {
   } else {
     q = searchTxt.value
   }
-  const res = await allSearchEvent(typeActive.value, sort.value, q, idx.value)
-  if (typeActive.value === 'repositories') { content.repositories = res as SearchRepositoryType }
-  if (typeActive.value === 'code') { content.code = res as SearchCodeType }
-  if (typeActive.value === 'issues') { content.issues = res as SearchIssuesType }
-  if (typeActive.value === 'users') { content.users = res as SearchUsersType }
-  loading.value = false
-  numbers.value = await searchTypeNum(searchTxt.value)
-  lngList.value = await getSearchRepoLanguage(searchTxt.value)
+
+  try {
+    const res = await allSearchEvent(typeActive.value, sort.value, q, idx.value)
+    if (typeActive.value === 'repositories') { content.repositories = res as SearchRepositoryType }
+    if (typeActive.value === 'code') { content.code = res as SearchCodeType }
+    if (typeActive.value === 'issues') { content.issues = res as SearchIssuesType }
+    if (typeActive.value === 'users') { content.users = res as SearchUsersType }
+    lngList.value = await getSearchRepoLanguage(searchTxt.value)
+    loading.value = false
+  } catch (err) {
+    loading.value = false
+    ElMessage({ message: '请等待一会再次尝试。', type: 'warning' })
+  }
+
+  if (oldSearchTxt.value === '') {
+    oldSearchTxt.value = searchTxt.value
+    numbers.value = await searchTypeNum(searchTxt.value)
+  } else {
+    if (searchTxt.value !== oldSearchTxt.value) {
+      oldSearchTxt.value = searchTxt.value
+      numbers.value = await searchTypeNum(searchTxt.value)
+    }
+  }
 }
 
 // 选择一个库查看
