@@ -38,8 +38,6 @@
 import { ref, defineExpose } from 'vue'
 import type { SearchUsers } from '@/renderer/utils/search'
 import type { PublicUser } from '@/types'
-import html2canvas from 'html2canvas'
-import FileSaver from 'file-saver'
 
 const user = ref<SearchUsers | PublicUser>()
 const loading = ref(false)
@@ -64,15 +62,6 @@ function goGithub () {
   if (user.value) {
     window.shell.openExternal(user.value?.html_url)
   }
-}
-
-// 导出图片
-function exportImage () {
-  const dom = document.querySelector('.user-wrapper') as HTMLElement
-  html2canvas(dom, { useCORS: true, allowTaint: false }).then(canvas => {
-    const png = canvas.toDataURL('image/png')
-    FileSaver.saveAs(png, `${user.value?.login}.png`)
-  })
 }
 
 export interface userApi {

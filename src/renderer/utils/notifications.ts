@@ -16,16 +16,7 @@ async function readNofification (thread_id: number): Promise<void> {
   await octokit.request('PATCH /notifications/threads/{thread_id}', { thread_id })
 }
 
-async function getNotificationContent () {
-  const token = await getToken()
-  const octokit = new Octokit({ auth: token })
-  // const res = await octokit.request('GET /notifications/threads/{thread_id}', { thread_id })
-  const res = await octokit.request('GET /events')
-  console.log(res, '==== res ====')
-}
-
 export {
   getNotifications,
-  readNofification,
-  getNotificationContent
+  readNofification
 }
