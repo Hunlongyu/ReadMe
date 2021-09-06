@@ -21,9 +21,37 @@ import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { getUrlParams } from '@/renderer/utils/tools'
 import { getUserToken, getUserInfo } from '@/renderer/utils/user'
+import { useI18n } from 'vue-i18n'
+const { locale } = useI18n()
 
 const router = useRouter()
 
+// 获取系统语言
+async function getSystemLanguage () {
+  window.api.invoke('event.tools.language')
+  window.api.on('event.tools.language_replay', async (e, args) => {
+    const s = await settings.get()
+    if (args === 'zh-CN') {
+      if (!s) return false
+      if (!s.language) {
+        locale.value = 'zh-cn'
+        s.language = 'zh-cn'
+        settings.update(s)
+      }
+    }
+    if (args === 'en-US') {
+      if (!s) return false
+      if (!s.language) {
+        locale.value = 'en'
+        s.language = 'en'
+        settings.update(s)
+      }
+    }
+    window.api.removeAllListeners('event.tools.language_replay')
+  })
+}
+
+// 检查是否有授权 code
 async function checkHasCode () {
   const code = getUrlParams('code')
   if (code) {
@@ -52,6 +80,7 @@ async function checkHasCode () {
 
 onMounted(() => {
   checkHasCode()
+  getSystemLanguage()
 })
 
 </script>
