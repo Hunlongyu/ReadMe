@@ -50,6 +50,10 @@ async function changeLanguage (e: string) {
 // 切换主题
 async function changeTheme (theme: string) {
   bus.emit('bus.settings.theme', theme)
+  const s = await settings.get()
+  if (!s) return false
+  s.theme = theme
+  settings.update(s)
 }
 
 // 初始化

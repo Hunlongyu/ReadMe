@@ -82,8 +82,6 @@ onMounted(() => {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background-color: #f0f0f0;
-  border-right: 1px solid #d9e3e5;
   -webkit-app-region: drag;
   user-select: none;
   .avatar{
@@ -91,7 +89,6 @@ onMounted(() => {
     height: 50px;
     margin-top: 20px;
     border-radius: 50%;
-    background-color: #fff;
     overflow: hidden;
     -webkit-app-region: no-drag;
     img{

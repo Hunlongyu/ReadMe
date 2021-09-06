@@ -38,4 +38,11 @@ $white-4: #cdcdcd;
       background-color: $white-2;
     }
   }
+  .navMenu{
+    background-color: $white;
+    border-right: 1px solid $white-1;
+    .avatar{
+      background-color: $white;
+    }
+  }
 }

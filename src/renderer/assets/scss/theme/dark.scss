@@ -1,7 +1,56 @@
-$black: #000000;
+$black: #1c1c1c;
+$black-1: #121212;
+$black-2: #262626;
+$black-3: #3f3f3f;
+$black-4: #3b3b3b;
+$font-color-1: #001f3f;
 
 .theme-dark{
   .nt-bg{
     background-color: $black;
+  }
+  .nt-box{
+    color: $font-color-1;
+    background-color: $black-2;
+    box-shadow: 10px 10px 12px $black-3, -10px -10px 12px $black-1;
+    &:hover{
+      box-shadow: -6px 6px 12px $black-3, 6px -6px 12px $black-1;
+    }
+  }
+  .nt-btn{
+    color: $font-color-1;
+    background-color: $black-3;
+    box-shadow: 10px 10px 12px $black-2, -10px -10px 12px $black-1;
+    border: 1px solid $black;
+    svg{
+      path{
+        stroke: #ddd;
+      }
+    }
+    &:hover{
+      box-shadow: -6px 6px 12px $black-2, 6px -6px 12px $black-1;
+    }
+    &.active{
+      box-shadow: 10px 10px 12px $black-2, -10px -10px 12px $black-1;
+      background-color: $black-4;
+      svg{
+        path{
+          stroke: #067c5a;
+        }
+      }
+    }
+  }
+  .nt-line{
+    border-bottom: 1px solid $black-4;
+    &::after{
+      background-color: $black-2;
+    }
+  }
+  .navMenu{
+    background-color: $black;
+    border-right: 1px solid $black-1;
+    .avatar{
+      background-color: $black;
+    }
   }
 }
