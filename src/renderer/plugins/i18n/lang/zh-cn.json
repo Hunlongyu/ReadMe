@@ -1,15 +1,48 @@
 {
   "signin": {
     "sign": "使用 Github 账号登陆",
-    "describe1": "1. 登陆后可同步用户信息和设置",
+    "describe1": "1. 登陆后可同步用户信息",
     "describe2": "2. 登陆后可直接添加或取消收藏"
   },
+  "star": {
+    "star_success": "收藏成功",
+    "unstar_success": "取消收藏成功"
+  },
   "search": {
-    "filter": "过滤",
-    "content": "内容"
+    "short_time": "请勿短时间内多次请求接口。"
+  },
+  "notification": {
+    "all": "所有",
+    "participating": "我参与的",
+    "true": "是",
+    "false": "否"
   },
   "settings": {
     "dark": "拟态·暗",
-    "light": "拟态·明"
+    "light": "拟态·明",
+    "logout": "切换账号"
+  },
+  "component": {
+    "refresh": "刷新",
+    "github": "Github",
+    "online": "在线",
+    "local": "本地",
+    "fast": "加速",
+    "software": "软件",
+    "edit": "编辑",
+    "clone": "克隆",
+    "export": "导出",
+    "settings": "设置",
+    "copy_success": "复制成功",
+    "copy_failed": "复制失败",
+    "copy_code": "复制代码",
+    "export_image": "导出图片",
+    "save_file": "保存文件",
+    "match_case": "匹配大小写",
+    "not_found_readme": "没有找到 README 文件，是否反馈该仓库，以帮助优化软件。",
+    "tips": "提示",
+    "confirm": "确定",
+    "cancel": "取消",
+    "feed_success": "已提交反馈，请勿重复提交。"
   }
 }

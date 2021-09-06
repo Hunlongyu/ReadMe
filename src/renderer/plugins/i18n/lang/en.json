@@ -4,12 +4,45 @@
     "describe1": "sync setting",
     "describe2": "star"
   },
+  "star": {
+    "star_success": "star success!",
+    "unstar_success": "unstar success!"
+  },
   "search": {
-    "filter": "Filter",
-    "content": "Content"
+    "short_time": "Do not request the interface multiple times in a short time."
+  },
+  "notification": {
+    "all": "All",
+    "participating": "Participating",
+    "true": "True",
+    "false": "False"
   },
   "settings": {
     "dark": "Dark",
-    "light": "Light"
+    "light": "Light",
+    "logout": "Switch account"
+  },
+  "component": {
+    "refresh": "Refresh",
+    "github": "Github",
+    "online": "Online",
+    "local": "Local",
+    "fast": "Spare",
+    "software": "Software",
+    "edit": "Edit",
+    "clone": "Clone",
+    "export": "Export",
+    "settings": "Settings",
+    "copy_success": "Copy success",
+    "copy_failed": "Copy failed",
+    "copy_code": "Copy code!",
+    "export_image": "Export image!",
+    "save_file": "Save file!",
+    "match_case": "Match case",
+    "not_found_readme": "The readme file is not found. Whether to feed back to the warehouse to help optimize the software.",
+    "tips": "Tips",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "feed_success": "Feedback has been submitted, please do not submit again."
   }
 }

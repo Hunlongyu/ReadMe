@@ -2,22 +2,22 @@
   <div class="notification" v-loading="loading">
     <div class="filter">
       <div class="fr-item">
-        <span class="icon-btn" title="Refresh" @click="filterChangeEvent">
+        <span class="icon-btn" :title="$t('star.refresh')" @click="filterChangeEvent">
           <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M42 8V24" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 24L6 40" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 24C6 33.9411 14.0589 42 24 42C28.8556 42 33.2622 40.0774 36.5 36.9519" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M42.0007 24C42.0007 14.0589 33.9418 6 24.0007 6C18.9152 6 14.3223 8.10896 11.0488 11.5" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
       </div>
       <div class="fr-item">
-        <span>All: </span>
+        <span>{{$t('notification.all')}}: </span>
         <el-select v-model="all" size="mini" @change="filterChangeEvent">
-          <el-option label="True" :value="true"></el-option>
-          <el-option label="False" :value="false"></el-option>
+          <el-option :label="$t('notification.true')" :value="true"></el-option>
+          <el-option :label="$t('notification.false')" :value="false"></el-option>
         </el-select>
       </div>
       <div class="fr-item">
-        <span>Participating: </span>
+        <span>{{$t('notification.participating')}}: </span>
         <el-select v-model="participating" size="mini" @change="filterChangeEvent">
-          <el-option label="True" :value="true"></el-option>
-          <el-option label="False" :value="false"></el-option>
+          <el-option :label="$t('notification.true')" :value="true"></el-option>
+          <el-option :label="$t('notification.false')" :value="false"></el-option>
         </el-select>
       </div>
     </div>

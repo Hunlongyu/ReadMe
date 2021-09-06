@@ -182,7 +182,9 @@ import User from '../../../components/User.vue'
 import type { mdApi } from '../../../components/Markdown.vue'
 import type { codeApi } from '../../../components/Code.vue'
 import type { userApi } from '../../../components/User.vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const sort = ref('1')
 const typeActive = ref('repositories')
 const searchTxt = ref('')
@@ -252,7 +254,7 @@ async function searchEvent () {
     loading.value = false
   } catch (err) {
     loading.value = false
-    ElMessage({ message: '请等待一会再次尝试。', type: 'warning' })
+    ElMessage({ message: t('search.short_time'), type: 'warning' })
   }
 
   if (oldSearchTxt.value === '') {
@@ -313,10 +315,10 @@ async function starRepositoryEvent (repo: SearchRepository) {
   const check = await checkStarRepository(repo.full_name)
   if (check) {
     await unStarRepository(repo.full_name)
-    ElMessage({ message: '取消收藏成功', type: 'success' })
+    ElMessage({ message: t('star.star_success'), type: 'success' })
   } else {
     await starRepository(repo.full_name)
-    ElMessage({ message: '收藏成功', type: 'success' })
+    ElMessage({ message: t('star.unstar_success'), type: 'success' })
   }
 }
 </script>

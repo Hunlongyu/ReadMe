@@ -89,7 +89,9 @@ import type { Repository, trendingRepoType } from '@/types'
 import Markdown from '../../../components/Markdown.vue'
 import type { mdApi } from '../../../components/Markdown.vue'
 import { ElMessage } from 'element-plus'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const spokenLanguage = reactive({
   value: 'English',
   list: [
@@ -143,10 +145,10 @@ async function starRepositoryEvent (e: trendingRepoType) {
   const result = await checkStarRepository(e.fullName)
   if (result) {
     await unStarRepository(e.fullName)
-    ElMessage({ message: '取消收藏成功', type: 'success' })
+    ElMessage({ message: t('star.star_success'), type: 'success' })
   } else {
     await starRepository(e.fullName)
-    ElMessage({ message: '收藏成功', type: 'success' })
+    ElMessage({ message: t('star.unstar_success'), type: 'success' })
   }
 }
 

@@ -23,7 +23,7 @@
         </el-select>
       </div>
       <div class="logout item">
-        <el-button size="mini" type="danger" plain @click="logoutEvent">切换账号</el-button>
+        <el-button size="mini" type="danger" plain @click="logoutEvent">{{ $t('settings.logout') }}</el-button>
       </div>
     </div>
   </div>
@@ -34,7 +34,6 @@ import { onMounted, ref } from 'vue'
 import { settings } from '@/renderer/plugins/database'
 import bus from '@/renderer/plugins/mitt'
 import pkg from '../../../../../package.json'
-import { ElMessage } from 'element-plus'
 
 const { locale } = useI18n()
 const lang = ref()
@@ -67,43 +66,6 @@ async function logoutEvent () {
     window.api.invoke('event.win.open', [{ name: 'login' }])
     window.api.invoke('event.win.close', [{ name: 'home' }])
   })
-}
-
-// 检测更新
-function updateCheck () {
-  window.api.invoke('event.update.check')
-  window.api.on('checking-for-update_replay', () => {
-    ElMessage({ message: '开始检测更新...', type: 'info' })
-    window.api.removeAllListeners('checking-for-update_replay')
-  })
-  window.api.on('update-available_replay', (e, args) => {
-    ElMessage({ message: '检测到更新', type: 'success' })
-    console.log(args, '=== 更新内容 ===')
-    window.api.removeAllListeners('update-available_replay')
-  })
-  window.api.on('update-not-available_replay', () => {
-    ElMessage({ message: '未检测到更新', type: 'info' })
-    window.api.removeAllListeners('update-not-available_replay')
-  })
-}
-
-// 下载更新
-function updateDownload () {
-  window.api.invoke('event.update.download')
-  window.api.on('download-progress_replay', (e, args) => {
-    ElMessage({ message: '开始下载...', type: 'info' })
-    console.log(args, '=== 下载进度 ===')
-    window.api.removeAllListeners('download-progress_replay')
-  })
-  window.api.on('update-downloaded_replay', () => {
-    ElMessage({ message: '下载完成', type: 'success' })
-    window.api.removeAllListeners('update-downloaded_replay')
-  })
-}
-
-// 退出安装更新
-function updateInstall () {
-  window.api.invoke('event.update.install')
 }
 
 onMounted(() => {

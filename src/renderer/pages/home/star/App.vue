@@ -3,7 +3,7 @@
     <div class="tags scroll" v-loading="refreshLoading">
       <div class="cat">
         <div class="cat-header">
-          <span class="icon-btn" @click="refreshList">
+          <span class="icon-btn" @click="refreshList" :title="t('component.refresh')">
             <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M42 8V24" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 24L6 40" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 24C6 33.9411 14.0589 42 24 42C28.8556 42 33.2622 40.0774 36.5 36.9519" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M42.0007 24C42.0007 14.0589 33.9418 6 24.0007 6C18.9152 6 14.3223 8.10896 11.0488 11.5" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
         </div>
@@ -47,6 +47,9 @@ import type { Repository, TreeNodeType } from '@/types'
 import Markdown from '../../../components/Markdown.vue'
 import type { mdApi } from '../../../components/Markdown.vue'
 import bus from '@/renderer/plugins/mitt'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const list = ref<listType[]>(
   [
