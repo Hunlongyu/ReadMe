@@ -2,7 +2,7 @@
   <div class="trending" v-loading="loading">
     <div class="filter">
       <div class="fr-item">
-        <span>Spoken Language: </span>
+        <span>{{t('trending.spoken_language')}}: </span>
         <el-select allow-create filterable default-first-option clearable v-model="spokenLanguage.value" size="mini" @change="trendingChangeEvent">
           <el-option
             v-for="item in spokenLanguage.list"
@@ -13,7 +13,7 @@
         </el-select>
       </div>
       <div class="fr-item">
-        <span>Language: </span>
+        <span>{{t('trending.language')}}: </span>
         <el-select allow-create filterable default-first-option clearable v-model="language.value" size="mini" @change="trendingChangeEvent">
           <el-option
             v-for="(item, index) in language.list.language"
@@ -24,7 +24,7 @@
         </el-select>
       </div>
       <div class="fr-item">
-        <span>Date Range: </span>
+        <span>{{t('trending.date_range')}}: </span>
         <el-select v-model="date.value" size="mini" @change="trendingChangeEvent">
           <el-option
             v-for="item in date.list"

@@ -11,6 +11,11 @@
   "search": {
     "short_time": "Do not request the interface multiple times in a short time."
   },
+  "trending": {
+    "spoken_language": "Spoken language",
+    "language": "Language",
+    "date_range": "Date range"
+  },
   "notification": {
     "all": "All",
     "participating": "Participating",

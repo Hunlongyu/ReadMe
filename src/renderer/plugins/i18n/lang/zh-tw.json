@@ -11,6 +11,11 @@
   "search": {
     "short_time": "请勿短时间内多次请求接口。"
   },
+  "trending": {
+    "spoken_language": "说话语言",
+    "language": "编程语言",
+    "date_range": "时间范围"
+  },
   "notification": {
     "all": "所有",
     "participating": "我参与的",
