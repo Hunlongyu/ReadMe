@@ -1,5 +1,5 @@
 <p align="center">
-	<img width="128" src="https://i.loli.net/2020/05/07/9kLvPnWVCp7538c.png" >
+	<img width="128" src="" >
 </p>
 <p align="center">
 	<a href="https://hunlongyu.github.io/readme_home/" target="_blank">官网</a>
