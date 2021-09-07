@@ -1,8 +1,8 @@
 {
   "signin": {
     "sign": "Sign up with Github ",
-    "describe1": "sync setting",
-    "describe2": "star"
+    "describe1": "1. User information can be synchronized after login.",
+    "describe2": "2. You can star or unstar the git repository."
   },
   "star": {
     "star_success": "star success!",
