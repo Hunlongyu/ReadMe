@@ -1,5 +1,5 @@
 <template>
-  <router-view :class="`theme-${theme}`"/>
+  <router-view :class="`theme-${theme}`" />
 </template>
 <script lang="ts" setup>
 import { settings } from '@/renderer/plugins/database'

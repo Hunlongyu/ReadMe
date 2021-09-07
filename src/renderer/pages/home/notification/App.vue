@@ -2,7 +2,7 @@
   <div class="notification" v-loading="loading">
     <div class="filter">
       <div class="fr-item">
-        <span class="icon-btn" :title="$t('star.refresh')" @click="filterChangeEvent">
+        <span class="icon-btn" :title="$t('component.refresh')" @click="filterChangeEvent">
           <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M42 8V24" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 24L6 40" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 24C6 33.9411 14.0589 42 24 42C28.8556 42 33.2622 40.0774 36.5 36.9519" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M42.0007 24C42.0007 14.0589 33.9418 6 24.0007 6C18.9152 6 14.3223 8.10896 11.0488 11.5" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
       </div>
@@ -121,11 +121,9 @@ onMounted(() => {
 .notification{
   flex: 1;
   display: flex;
-  border-top: 1px solid #d9e3e5;
   flex-direction: column;
   .filter{
     height: 60px;
-    background-color: #f8f8f8;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -145,19 +143,10 @@ onMounted(() => {
         border-radius: 3px;
         margin-left: 0px;
         cursor: pointer;
-        &:hover{
-          background-color: #f8f8f8;
-          border: 1px solid #d9e3e5;
-        }
-        &.active{
-          background-color: #f8f8f8;
-          border: 1px solid #d9e3e5;
-        }
       }
     }
   }
   .content{
-    border-top: 1px solid #d9e3e5;
     flex: 1;
     position: relative;
     overflow-y: auto;
@@ -166,7 +155,6 @@ onMounted(() => {
       padding: 0 20px;
       width: 100%;
       .item{
-        border-bottom: 1px solid #cdcdcd;
         padding: 20px 0;
         &::last-child{
           border: none;
@@ -194,9 +182,6 @@ onMounted(() => {
           .title-left{
             display: flex;
             cursor: pointer;
-            &:hover{
-              color: #409eff;
-            }
           }
           .title-icon{
             margin-right: 8px;
@@ -208,7 +193,6 @@ onMounted(() => {
         }
         .describe{
           font-size: 14px;
-          color: #666;
         }
         .info{
           display: flex;
@@ -216,7 +200,6 @@ onMounted(() => {
           align-items: center;
           font-size: 14px;
           margin-top: 10px;
-          color: #666;
           .info-left{
             display: flex;
             .info-language, .info-star, .info-fork{

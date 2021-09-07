@@ -96,13 +96,10 @@ onMounted(() => {
 .gist{
   flex: 1;
   display: flex;
-  border-top: 1px solid #d9e3e5;
   .list{
     height: 100%;
     width: 280px;
     position: relative;
-    background-color: #f8f8f8;
-    border-right: 1px solid #d9e3e5;
     .list-body{
       position: absolute;
       height: 100%;
@@ -114,7 +111,6 @@ onMounted(() => {
       position: absolute;
     }
     .item{
-      border-bottom: 1px solid #d9e3e5;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -123,7 +119,6 @@ onMounted(() => {
       cursor: pointer;
       .item-name{
         font-size: 16px;
-        font-size: #333;
       }
       .item-description{
         margin: 6px 0 4px;
@@ -133,7 +128,6 @@ onMounted(() => {
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
         overflow: hidden;
-        color: #666;
       }
       .item-info{
         display: flex;

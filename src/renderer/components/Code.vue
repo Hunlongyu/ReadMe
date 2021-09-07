@@ -199,8 +199,6 @@ defineExpose({
     .code-header{
       margin-top: 30px;
       height: 50px;
-      border-bottom: 1px solid #d9e3e5;
-      border-top: 1px solid #d9e3e5;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -226,14 +224,6 @@ defineExpose({
         border-radius: 3px;
         margin-left: 12px;
         cursor: pointer;
-        &:hover{
-          background-color: #f8f8f8;
-          border: 1px solid #d9e3e5;
-        }
-        &.active{
-          background-color: #f8f8f8;
-          border: 1px solid #d9e3e5;
-        }
       }
     }
     .code-content{

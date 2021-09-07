@@ -61,7 +61,7 @@
     </div>
     <div class="md-body scroll" v-loading="loading">
       <div class="markdown-wrapper">
-        <div class="markdown-body" v-html="source"></div>
+        <div class="markdown-body " :data-color-mode="theme" :data-dark-theme="theme" v-html="source"></div>
       </div>
     </div>
     <div class="chart-body" v-if="chartShow">
@@ -71,7 +71,7 @@
 </template>
 <script lang="ts" setup>
 import type { Repository } from '@/types'
-import { defineExpose, ref, nextTick, onBeforeUnmount } from 'vue'
+import { defineExpose, ref, nextTick, onBeforeUnmount, onMounted } from 'vue'
 import { getReadMeMd, renderMarkdwon } from '../utils/markdown'
 import { checkStarRepository, unStarRepository, starRepository } from '../utils/star'
 import 'highlight.js/styles/github.css'
@@ -83,6 +83,7 @@ import StartChart from './StartChart.vue'
 import { sendIssues_MdNotFound } from '../utils/issues'
 import bus from '@/renderer/plugins/mitt'
 import { useI18n } from 'vue-i18n'
+import { settings } from '@/renderer/plugins/database'
 
 const { t } = useI18n()
 const repo = ref<Repository>()
@@ -90,6 +91,7 @@ const source = ref<string>()
 const loading = ref(false)
 const starred = ref(false)
 const chartShow = ref(false)
+const theme = ref('light')
 
 // 刷新加载 markdown
 async function refresh () {
@@ -274,12 +276,20 @@ function fixImgUrl () {
   }
 }
 
+async function getSettingsTheme () {
+  const res = await settings.get()
+  if (res && res.theme) {
+    theme.value = res.theme
+  }
+}
+
 // 初始化
 async function init (e: Repository) {
   loading.value = true
   repo.value = e
   chartShow.value = false
   source.value = ''
+  await getSettingsTheme()
   await checkStarred()
   const res = await getReadMeMd(e)
   if (res.name && res.content) {
@@ -303,8 +313,13 @@ async function init (e: Repository) {
   loading.value = false
 }
 
+onMounted(() => {
+  bus.on('bus.settings.theme', refresh)
+})
+
 onBeforeUnmount(() => {
   source.value = ''
+  bus.off('bus.settings.theme', refresh)
 })
 
 export interface mdApi {
@@ -327,8 +342,6 @@ defineExpose({
   position: absolute;
   height: 50px;
   width: 100%;
-  background-color: #fff;
-  border-bottom: 1px solid #d9e3e5;
   z-index: 2;
   display: flex;
   justify-content: space-between;
@@ -355,21 +368,6 @@ defineExpose({
     border-radius: 3px;
     margin-left: 12px;
     cursor: pointer;
-    &:hover{
-      background-color: #f8f8f8;
-      border: 1px solid #d9e3e5;
-    }
-    &.active{
-      background-color: #f8f8f8;
-      border: 1px solid #d9e3e5;
-    }
-  }
-  .starred{
-    svg{
-      path{
-        fill: #ffbd2a;
-      }
-    }
   }
 }
 .md-body{

@@ -326,11 +326,8 @@ async function starRepositoryEvent (repo: SearchRepository) {
 .search{
   flex: 1;
   display: flex;
-  border-top: 1px solid #d9e3e5;
   .filter{
     width: 300px;
-    background-color: #f8f8f8;
-    border-right: 1px solid #d9e3e5;
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -356,14 +353,6 @@ async function starRepositoryEvent (repo: SearchRepository) {
           padding-left: 12px;
           padding-right: 12px;
         }
-        &:hover{
-          background-color: #ffffff;
-          border: 1px solid #d9e3e5;
-        }
-      }
-      .active{
-        background-color: #ffffff;
-        border: 1px solid #d9e3e5;
       }
     }
   }
@@ -373,14 +362,12 @@ async function starRepositoryEvent (repo: SearchRepository) {
     flex-direction: column;
     .search-header{
       height: 60px;
-      background-color: #f8f8f8;
       display: flex;
       justify-content: flex-start;
       align-items: center;
       padding: 0 20px;
     }
     .content{
-      border-top: 1px solid #d9e3e5;
       flex: 1;
       position: relative;
       overflow-y: auto;
@@ -389,7 +376,6 @@ async function starRepositoryEvent (repo: SearchRepository) {
         padding: 0 20px;
         width: 100%;
         .item{
-          border-bottom: 1px solid #cdcdcd;
           padding: 20px 0;
           &::last-child{
             border: none;
@@ -419,9 +405,6 @@ async function starRepositoryEvent (repo: SearchRepository) {
               justify-content: center;
               align-items: center;
               cursor: pointer;
-              &:hover{
-                color: #409eff;
-              }
             }
             .title-icon{
               margin-right: 8px;
@@ -433,7 +416,6 @@ async function starRepositoryEvent (repo: SearchRepository) {
           }
           .describe{
             font-size: 14px;
-            color: #666;
             display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 3;
@@ -445,7 +427,6 @@ async function starRepositoryEvent (repo: SearchRepository) {
             align-items: center;
             font-size: 14px;
             margin-top: 10px;
-            color: #666;
             .info-left{
               display: flex;
               .info-language, .info-star, .info-fork{

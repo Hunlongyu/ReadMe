@@ -4,6 +4,7 @@ $black-2: #262626;
 $black-3: #3f3f3f;
 $black-4: #3b3b3b;
 $font-color-1: #001f3f;
+$green: #067c5a;
 
 .theme-dark{
   .nt-bg{
@@ -22,10 +23,8 @@ $font-color-1: #001f3f;
     background-color: $black-3;
     box-shadow: 10px 10px 12px $black-2, -10px -10px 12px $black-1;
     border: 1px solid $black;
-    svg{
-      path{
-        stroke: #ddd;
-      }
+    svg path{
+      stroke: #ddd;
     }
     &:hover{
       box-shadow: -6px 6px 12px $black-2, 6px -6px 12px $black-1;
@@ -33,10 +32,8 @@ $font-color-1: #001f3f;
     &.active{
       box-shadow: 10px 10px 12px $black-2, -10px -10px 12px $black-1;
       background-color: $black-4;
-      svg{
-        path{
-          stroke: #067c5a;
-        }
+      svg path{
+        stroke: $green;
       }
     }
   }
@@ -51,6 +48,350 @@ $font-color-1: #001f3f;
     border-right: 1px solid $black-1;
     .avatar{
       background-color: $black;
+    }
+  }
+  .frame{
+    background-color: $black;
+    .win{
+      span{
+        background-color: $black;
+        svg path {
+          stroke: #878787;
+        }
+        &:hover{
+          background-color: #000;
+          svg path {
+            stroke: #fff;
+          }
+        }
+      }
+      .close{
+        &:hover{
+          background-color: #c42b1c;
+          svg path {
+            stroke: #fff;
+          }
+        }
+      }
+    }
+  }
+  .md{
+    background-color: #0d1117;
+    .md-header{
+      background-color: #0d1117;
+      border-bottom: 1px solid $black-1;
+      .icon-btn{
+        &:hover, &.active{
+          background-color: #1c1c1c;
+          border: 1px solid $black-4;
+        }
+        svg path{
+          stroke: #ddd;
+        }
+      }
+      .starred{
+        svg path {
+          fill: #ffbd2a;
+        }
+      }
+    }
+  }
+  .chart{
+    background-color: $black;
+  }
+  .code{
+    background-color: #262626;
+    .code-body{
+      .code-header{
+        border-bottom: 1px solid $black;
+        border-top: 1px solid $black;
+        .icon-btn{
+          svg path {
+            stroke: #ddd;
+          }
+        }
+        .icon-btn{
+          &:hover{
+            background-color: $black;
+            border: 1px solid $black-4;
+          }
+          &.active{
+            background-color: $black;
+            border: 1px solid $black-4;
+          }
+        }
+      }
+    }
+  }
+  .user{
+    background-color: #262626;
+    .user-body{
+      .user-header{
+        border-bottom: 1px solid $black;
+        border-top: 1px solid $black;
+        .icon-btn{
+          svg path {
+            stroke: #ddd;
+          }
+        }
+        .icon-btn{
+          &:hover{
+            background-color: $black;
+            border: 1px solid $black-4;
+          }
+          &.active{
+            background-color: $black;
+            border: 1px solid $black-4;
+          }
+        }
+      }
+    }
+  }
+  .home-wrapper{
+    background-color: $black-2;
+  }
+  .star{
+    border-top: $black;
+    .cat-header{
+      background-color: #262626;
+      border-bottom: 1px solid $black-1;
+      .icon-btn{
+        svg path {
+          stroke: #ddd;
+        }
+      }
+      .icon-btn:hover{
+        background-color: $black;
+        border: 1px solid $black-4;
+      }
+    }
+    .list{
+      background-color: $black;
+      border-left: 1px solid $black-1;
+      border-right: 1px solid $black-1;
+      .list-search{
+        border-bottom: 1px solid $black-1;
+      }
+      .item{
+        color: #888;
+        border-bottom: 1px solid $black-1;
+        .item-name{
+          color: #aaa;
+        }
+        .item-description{
+          color: #888;
+        }
+        svg path {
+          stroke: #aaa;
+        }
+      }
+    }
+  }
+  .search{
+    border-top: 1px solid $black-1;
+    .filter{
+      background-color: #262626;
+      border-right: 1px solid $black-1;
+      color: #888;
+      .type, .language{
+        .item{
+          &:hover{
+            background-color: $black;
+            border: 1px solid $black-1;
+          }
+        }
+        .active{
+          background-color: $black;
+          border: 1px solid $black-1;
+        }
+      }
+    }
+    .search-box{
+      .search-header{
+        background-color: $black;
+      }
+      .content{
+        border-top: 1px solid $black-1;
+        color: #888;
+        svg path{
+          stroke: #aaa;
+        }
+        .content-wrapper{
+          .item{
+            border-bottom: 1px solid $black;
+            .title{
+              .title-left{
+                &:hover{
+                  color: #409eff;
+                }
+              }
+            }
+            .describe{
+              color: #666;
+            }
+            .info{
+              color: #666;
+            }
+          }
+        }
+      }
+    }
+  }
+  .trending{
+    color: #888;
+    svg path{
+      stroke: #aaa;
+    }
+    border-top: 1px solid $black-1;
+    .filter{
+      background-color: #1c1c1c;
+      .content{
+        border-top: 1px solid #1c1c1c;
+        .content-wrapper{
+          .item{
+            border-bottom: 1px solid #aaa;
+            .title{
+              .title-left{
+                &:hover{
+                  color: #409eff;
+                }
+              }
+            }
+            .describe{
+              color: #666;
+            }
+            .info{
+              color: #666;
+            }
+          }
+        }
+      }
+    }
+  }
+  .gist{
+    color: #888;
+    border-top: 1px solid $black;
+    .list{
+      background-color: #1c1c1c;
+      border-right: 1px solid $black;
+      .item{
+        border-bottom: 1px solid $black;
+        .item-name{
+          font-size: #333;
+        }
+        .item-description{
+          color: #666;
+        }
+      }
+    }
+  }
+  .notification{
+    color: #888;
+    svg path{
+      stroke: #aaa;
+    }
+    border-top: 1px solid $black-1;
+    .filter{
+      background-color: #1c1c1c;
+      .fr-item{
+        .icon-btn{
+          &:hover{
+            background-color: #1c1c1c;
+            border: 1px solid $black-1;
+          }
+          &.active{
+            background-color: #1c1c1c;
+            border: 1px solid $black-1;
+          }
+        }
+      }
+    }
+    .content{
+      border-top: 1px solid $black-1;
+      .content-wrapper{
+        .item{
+          border-bottom: 1px solid #666;
+          .title{
+            .title-left{
+              &:hover{
+                color: #409eff;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .el-tree{
+    background-color: $black-2;
+    .el-tree-node{
+      background-color: $black-2;
+      .el-tree-node__content:hover{
+        background-color: $black-4;
+      }
+      .el-tree-node:focus>.el-tree-node__content{
+        background-color: $black-4;
+      }
+    }
+  }
+  .el-input{
+    .el-input__inner{
+      background-color: #363636;
+      border-color: #1e1e1e;
+    }
+    .el-input__inner:hover{
+      border-color: #000;
+    }
+  }
+  .el-select .el-input.is-focus .el-input__inner{
+    border-color: #000;
+  }
+  .el-select .el-input__inner:focus{
+    border-color: #000;
+  }
+  .el-input-group__append, .el-input-group__prepend{
+    background-color: #1c1c1c;
+    border: 1px solid #3b3b3b;
+  }
+  .el-button {
+    background-color: #1c1c1c;
+    border: 1px solid #3b3b3b;
+  }
+  .el-divider{
+    background-color: $black;
+  }
+  .el-loading-mask{
+    background-color: #07111bb3;
+  }
+  .el-drawer{
+    background-color: #0d1117;
+  }
+  .el-collapse{
+    border-color: #000;
+    .el-collapse-item{
+      .el-collapse-item__header{
+        color: #888;
+        background-color: #262626;
+        border-bottom: 1px solid #000;
+      }
+    }
+    .el-collapse-item__wrap{
+      border-bottom: 1px solid #0d1117;
+    }
+    .el-collapse-item__content{
+      background-color: #363636;
+      color: #888;
+    }
+  }
+  .el-select-dropdown__wrap{
+    background-color: #363636 !important;
+  }
+  .scroll{
+    &::-webkit-scrollbar{
+      background-color: #333;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #666;
     }
   }
 }

@@ -160,11 +160,9 @@ onMounted(() => {
 .trending{
   flex: 1;
   display: flex;
-  border-top: 1px solid #d9e3e5;
   flex-direction: column;
   .filter{
     height: 60px;
-    background-color: #f8f8f8;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -178,7 +176,6 @@ onMounted(() => {
     }
   }
   .content{
-    border-top: 1px solid #d9e3e5;
     flex: 1;
     position: relative;
     overflow-y: auto;
@@ -187,7 +184,6 @@ onMounted(() => {
       padding: 0 20px;
       width: 100%;
       .item{
-        border-bottom: 1px solid #cdcdcd;
         padding: 20px 0;
         &::last-child{
           border: none;
@@ -215,9 +211,6 @@ onMounted(() => {
           .title-left{
             display: flex;
             cursor: pointer;
-            &:hover{
-              color: #409eff;
-            }
           }
           .title-icon{
             margin-right: 8px;
@@ -229,7 +222,6 @@ onMounted(() => {
         }
         .describe{
           font-size: 14px;
-          color: #666;
         }
         .info{
           display: flex;
@@ -237,7 +229,6 @@ onMounted(() => {
           align-items: center;
           font-size: 14px;
           margin-top: 10px;
-          color: #666;
           .info-left{
             display: flex;
             .info-language, .info-star, .info-fork{

@@ -173,7 +173,6 @@ onBeforeUnmount(() => {
 .star{
   flex: 1;
   display: flex;
-  border-top: 1px solid #d9e3e5;
   .tags{
     height: 100%;
     overflow-y: auto;
@@ -185,8 +184,6 @@ onBeforeUnmount(() => {
       .cat-header{
         height: 40px;
         width: 100%;
-        background-color: #fff;
-        border-bottom: 1px solid #d9e3e5;
         z-index: 2;
         display: flex;
         justify-content: space-between;
@@ -200,10 +197,6 @@ onBeforeUnmount(() => {
           border-radius: 3px;
           margin-left: 12px;
           cursor: pointer;
-          &:hover{
-            background-color: #f8f8f8;
-            border: 1px solid #d9e3e5;
-          }
         }
       }
     }
@@ -212,9 +205,6 @@ onBeforeUnmount(() => {
     height: 100%;
     width: 280px;
     position: relative;
-    background-color: #f8f8f8;
-    border-left: 1px solid #d9e3e5;
-    border-right: 1px solid #d9e3e5;
     .list-search{
       width: 100%;
       position: absolute;
@@ -225,7 +215,6 @@ onBeforeUnmount(() => {
       justify-content: center;
       align-items: center;
       padding: 0 6px;
-      border-bottom: 1px solid #d9e3e5;
     }
     .list-body{
       top: 40px;
@@ -239,7 +228,6 @@ onBeforeUnmount(() => {
       position: absolute;
     }
     .item{
-      border-bottom: 1px solid #d9e3e5;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -248,7 +236,6 @@ onBeforeUnmount(() => {
       cursor: pointer;
       .item-name{
         font-size: 16px;
-        font-size: #333;
       }
       .item-description{
         margin: 6px 0 4px;
@@ -258,7 +245,6 @@ onBeforeUnmount(() => {
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
         overflow: hidden;
-        color: #666;
       }
       .item-info{
         display: flex;

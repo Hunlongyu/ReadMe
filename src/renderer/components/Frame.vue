@@ -58,9 +58,8 @@ onMounted(() => {
   align-items: center;
   -webkit-app-region: drag;
   position: relative;
-  background-color: #f0f0f0;
   .win{
-    height: 100%;
+    height: 30px;
     position: absolute;
     right: 0;
     display: flex;
@@ -70,21 +69,10 @@ onMounted(() => {
       display: flex;
       width: 60px;
       height: 30px;
-      color: #191a1a;
       justify-content: center;
       align-items: center;
       transition: 0.3s;
       -webkit-app-region: no-drag;
-      &:hover{
-        color: #000000;
-        background-color: #e2ecef;
-      }
-    }
-    .close{
-      &:hover{
-        background-color: #c42b1c;
-        color: #fdfafa;
-      }
     }
   }
   .mac{

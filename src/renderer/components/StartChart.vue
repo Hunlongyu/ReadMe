@@ -30,7 +30,6 @@ onBeforeUnmount(() => {
 </script>
 <style lang="scss" scoped>
 .chart{
-  background-color: #fff;
   height: 100%;
   .chart-wrapper{
     height: 100%;

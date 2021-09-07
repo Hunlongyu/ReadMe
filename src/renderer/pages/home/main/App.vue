@@ -24,7 +24,6 @@ import NavMenu from '../../../components/NavMenu.vue'
   .home-wrapper{
     height: 100%;
     display: flex;
-    background-color: #fff;
   }
 }
 </style>
