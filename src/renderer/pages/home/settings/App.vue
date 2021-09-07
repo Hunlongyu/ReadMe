@@ -7,11 +7,11 @@
       </div>
       <div class="theme item">
         <div class="dark" @click="changeTheme('dark')">
-          <img src="" alt="">
+          <img src="../../../assets/img/dark.png" alt="">
           <span>{{ $t('settings.dark') }}</span>
         </div>
         <div class="light" @click="changeTheme('light')">
-          <img src="" alt="">
+          <img src="../../../assets/img/light.png" alt="">
           <span>{{ $t('settings.light') }}</span>
         </div>
       </div>
@@ -122,6 +122,7 @@ onMounted(() => {
         img{
           width: 100px;
           height: 60px;
+          border: 1px solid #ddd;
         }
       }
     }
