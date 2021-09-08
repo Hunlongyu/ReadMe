@@ -42,8 +42,10 @@
 
 ### 🌴 下载
 
-- 🎃 [官网](https://github.com/Hunlongyu/ReadMe/releases)
-- 🎭 [阿里网盘]()
+软件未正式发布。
+
+<!-- - 🎃 [官网](https://github.com/Hunlongyu/ReadMe/releases)
+- 🎭 [阿里网盘]() -->
 
 ### 🎨 截图
 
