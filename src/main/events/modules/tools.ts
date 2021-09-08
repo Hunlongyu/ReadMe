@@ -9,6 +9,5 @@ ipcMain.handle('event.tools.base64', (e, args) => {
 
 ipcMain.handle('event.tools.language', (e, args) => {
   const lang = app.getLocale()
-  console.log('=== lang ===', lang)
   e.sender.send('event.tools.language_replay', lang)
 })
