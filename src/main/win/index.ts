@@ -13,6 +13,7 @@ class Router {
   constructor () {
     this.windows = {}
   }
+
   // 【窗口】 最小化
   mini (name: string) {
     if (name && this.windows[name]) {
@@ -64,8 +65,7 @@ class Router {
       return false
     }
 
-    let win: BrowserWindow
-    win = this.windows[name] = await createWindow(name, config)
+    const win = this.windows[name] = await createWindow(name, config)
     win.on('close', () => {
       win && win.hide()
       delete this.windows[name]
@@ -94,7 +94,7 @@ async function createWindow (name: string, config?: BrowserWindowConstructorOpti
   const _config = assign(WinConfig.default, WinConfig[name], config)
   const devPath = name === 'index' ? '' : name
 
-  let win = new BrowserWindow(_config)
+  const win = new BrowserWindow(_config)
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL + devPath)

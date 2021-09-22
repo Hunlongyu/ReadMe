@@ -7,7 +7,7 @@ ipcMain.handle('event.tools.base64', (e, args) => {
   e.sender.send('event.tools.base64_replay', str)
 })
 
-ipcMain.handle('event.tools.language', (e, args) => {
+ipcMain.handle('event.tools.language', (e) => {
   const lang = app.getLocale()
   e.sender.send('event.tools.language_replay', lang)
 })

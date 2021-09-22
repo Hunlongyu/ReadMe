@@ -7,7 +7,6 @@ interface BWConfig {
   [type: string]: BrowserWindowConstructorOptions
 }
 
-
 const config: BWConfig = {
   default: {
     webPreferences: {
