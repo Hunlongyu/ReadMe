@@ -1,5 +1,5 @@
 <p align="center">
-	<img width="128" src="/build/icons/64x64.png" >
+	<img width="128" src="/build/icons/128x28.png" >
 </p>
 <p align="center">
 	<a href="https://hunlongyu.github.io/readme_home/" target="_blank">官网</a>
@@ -42,10 +42,8 @@
 
 ### 🌴 下载
 
-软件未正式发布。
-
-<!-- - 🎃 [官网](https://github.com/Hunlongyu/ReadMe/releases)
-- 🎭 [阿里网盘]() -->
+- 🎃 [官网](https://github.com/Hunlongyu/ReadMe/releases)
+<!-- - 🎭 [阿里网盘]() -->
 
 ### 🎨 截图
 
