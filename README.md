@@ -1,5 +1,5 @@
 <p align="center">
-	<img width="128" src="/build/icons/128x28.png" >
+	<img width="128" src="/build/icons/128x128.png" >
 </p>
 <p align="center">
 	<a href="https://hunlongyu.github.io/readme_home/" target="_blank">官网</a>
