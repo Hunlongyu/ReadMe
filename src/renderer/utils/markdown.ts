@@ -16,17 +16,33 @@ async function getReadMeMd (repo: Repository): Promise<mdType> {
   const full_name = repo.full_name
   const md = ['README.md', 'readme.md', 'README.MD', 'Readme.md', 'readme.MD', 'ReadMe.md', 'ReadMe.Md', 'ReadMe.MD', 'README.markdown', 'readme.markdown', 'README', 'readme', 'readMe.md', 'README.textile', 'README.rst', 'readme.txt']
   let idx = 0
+  let urlIdx = 0
   async function getMd (): Promise<mdType> {
-    const url = `https://raw.githubusercontent.com/${full_name}/${default_branch}/${md[idx]}`
+    const urls = [
+      `https://cdn.jsdelivr.net/gh/${full_name}@${default_branch}/${md[idx]}`,
+      `https://raw.fastgit.org/${full_name}/${default_branch}/${md[idx]}`,
+      `https://raw.githubusercontent.com/${full_name}/${default_branch}/${md[idx]}`,
+      `https://cdn.staticaly.com/gh/${full_name}/${default_branch}/${md[idx]}`,
+      `https://ghproxy.com/https://raw.githubusercontent.com/${full_name}/${default_branch}/${md[idx]}`
+    ]
+    const url = urls[urlIdx]
     try {
       const res = await axios.get(url)
       return { name: md[idx], content: res.data }
     } catch (error) {
-      idx++
-      if (idx < md.length) {
-        const res = await getMd()
-        if (res) return res
-        return { name: md[idx], content: '' }
+      if (urlIdx < urls.length) {
+        idx++
+        if (idx < md.length) {
+          const res = await getMd()
+          if (res) return res
+          return { name: md[idx], content: '' }
+        } else {
+          urlIdx++
+          idx = 0
+          const res = await getMd()
+          if (res) return res
+          return { name: md[idx], content: '' }
+        }
       } else {
         return { name: md[idx], content: '' }
       }
