@@ -199,24 +199,24 @@ $white-4: #cdcdcd;
     border-top: 1px solid #d9e3e5;
     .filter{
       background-color: #f8f8f8;
-      .content{
-        border-top: 1px solid #d9e3e5;
-        .content-wrapper{
-          .item{
-            border-bottom: 1px solid #cdcdcd;
-            .title{
-              .title-left{
-                &:hover{
-                  color: #409eff;
-                }
+    }
+    .content{
+      border-top: 1px solid #d9e3e5;
+      .content-wrapper{
+        .item{
+          border-bottom: 1px solid #cdcdcd;
+          .title{
+            .title-left{
+              &:hover{
+                color: #409eff;
               }
             }
-            .describe{
-              color: #666;
-            }
-            .info{
-              color: #666;
-            }
+          }
+          .describe{
+            color: #666;
+          }
+          .info{
+            color: #666;
           }
         }
       }

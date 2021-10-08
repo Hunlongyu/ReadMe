@@ -245,24 +245,24 @@ $green: #067c5a;
     border-top: 1px solid $black-1;
     .filter{
       background-color: #1c1c1c;
-      .content{
-        border-top: 1px solid #1c1c1c;
-        .content-wrapper{
-          .item{
-            border-bottom: 1px solid #aaa;
-            .title{
-              .title-left{
-                &:hover{
-                  color: #409eff;
-                }
+    }
+    .content{
+      border-top: 1px solid #1c1c1c;
+      .content-wrapper{
+        .item{
+          border-bottom: 1px solid #aaa;
+          .title{
+            .title-left{
+              &:hover{
+                color: #409eff;
               }
             }
-            .describe{
-              color: #666;
-            }
-            .info{
-              color: #666;
-            }
+          }
+          .describe{
+            color: #666;
+          }
+          .info{
+            color: #666;
           }
         }
       }
