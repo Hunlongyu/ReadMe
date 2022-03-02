@@ -35,7 +35,7 @@
     "markdown-it-svg-code-copy": "^1.0.0",
     "mitt": "^3.0.0",
     "modern-normalize": "^1.1.0",
-    "vue": "^3.2.27",
+    "vue": "^3.2.30",
     "vue-i18n": "^9.1.9",
     "vue-router": "^4.0.12"
   },
