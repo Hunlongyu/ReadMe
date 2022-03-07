@@ -19,7 +19,7 @@
   "dependencies": {
     "@highlightjs/vue-plugin": "2.1.0",
     "@octokit/core": "^3.5.1",
-    "axios": "^0.25.0",
+    "axios": "^0.26.0",
     "cheerio": "^1.0.0-rc.10",
     "clipboard-copy": "^4.0.1",
     "electron-updater": "^4.6.4",
