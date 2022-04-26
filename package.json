@@ -37,7 +37,7 @@
     "modern-normalize": "^1.1.0",
     "vue": "^3.2.30",
     "vue-i18n": "^9.1.9",
-    "vue-router": "^4.0.12"
+    "vue-router": "^4.0.14"
   },
   "devDependencies": {
     "@octokit/openapi-types": "^11.0.0",
