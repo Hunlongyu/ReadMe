@@ -19,10 +19,10 @@
   "dependencies": {
     "@highlightjs/vue-plugin": "2.1.0",
     "@octokit/core": "^3.5.1",
-    "axios": "^0.26.1",
+    "axios": "^1.6.8",
     "cheerio": "^1.0.0-rc.10",
     "clipboard-copy": "^4.0.1",
-    "electron-updater": "^4.6.4",
+    "electron-updater": "^6.3.4",
     "core-js": "^3.20.1",
     "dexie": "^3.2.2",
     "element-plus": "^2.1.0",
@@ -35,7 +35,7 @@
     "markdown-it-svg-code-copy": "^1.0.0",
     "mitt": "^3.0.0",
     "modern-normalize": "^1.1.0",
-    "vue": "^3.2.30",
+    "vue": "^3.3.5",
     "vue-i18n": "^9.1.9",
     "vue-router": "^4.0.14"
   },
