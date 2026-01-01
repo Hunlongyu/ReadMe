@@ -1,5 +1,6 @@
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 mod auth;
+mod repo;
 
 #[tauri::command]
 fn greet(name: &str) -> String {
@@ -34,7 +35,9 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             greet, 
             auth::login_github,
-            auth::get_current_user
+            auth::get_current_user,
+            repo::get_user_stars,
+            repo::get_readme_content
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

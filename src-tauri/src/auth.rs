@@ -1,4 +1,3 @@
-use tauri::Url;
 use tauri_plugin_opener::OpenerExt;
 use tokio::net::TcpListener;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};

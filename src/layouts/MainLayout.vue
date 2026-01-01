@@ -17,6 +17,7 @@ import { cn } from '@/lib/utils'
 import { authService } from '@/services/auth'
 import { useWindow } from '@/composables/useWindow'
 import { Button } from '@/components/ui/button'
+import StarView from '@/views/StarView.vue'
 
 const activeTab = ref('star')
 const avatarUrl = ref('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y')
@@ -81,10 +82,10 @@ onMounted(async () => {
   <div 
     class="h-screen w-full flex bg-background text-foreground overflow-hidden"
   >
-    <!-- 顶部标题栏/拖拽区：悬浮时显示背景和按钮 -->
+    <!-- 顶部标题栏：固定右上角，仅三按钮宽度，悬浮显示 -->
     <div 
       data-tauri-drag-region 
-      class="absolute top-0 left-0 right-0 h-9 z-50 flex items-center justify-end px-3 transition-colors duration-200 hover:bg-black/10 group pointer-events-auto"
+      class="absolute top-0 right-0 h-9 w-[128px] z-50 flex items-center justify-end px-2 transition-colors duration-200 hover:bg-black/10 group rounded-bl-md pointer-events-auto"
     >
       <!-- 控制按钮组：仅当悬浮在标题栏区域时显示 -->
       <div 
@@ -199,6 +200,10 @@ onMounted(async () => {
                   </div>
               </div>
           </div>
+      </div>
+
+      <div v-else-if="activeTab === 'star'" class="h-full w-full animate-in fade-in zoom-in duration-300">
+        <StarView />
       </div>
 
       <div v-else class="h-full w-full flex items-center justify-center text-muted-foreground bg-background/50 backdrop-blur-sm">
