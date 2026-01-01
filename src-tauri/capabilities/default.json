@@ -1,0 +1,47 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Capability for the main window",
+  "windows": ["launcher", "main"],
+  "permissions": [
+    "core:default",
+    "opener:default",
+    "core:webview:allow-create-webview-window",
+    {
+      "identifier": "core:window:allow-set-resizable",
+      "allow": [{ "window": "launcher" }, { "window": "main" }]
+    },
+    {
+      "identifier": "core:window:allow-set-size",
+      "allow": [{ "window": "launcher" }, { "window": "main" }]
+    },
+    {
+      "identifier": "core:window:allow-set-position",
+      "allow": [{ "window": "launcher" }, { "window": "main" }]
+    },
+    {
+      "identifier": "core:window:allow-center",
+      "allow": [{ "window": "launcher" }, { "window": "main" }]
+    },
+    {
+      "identifier": "core:window:allow-outer-position",
+      "allow": [{ "window": "launcher" }, { "window": "main" }]
+    },
+    {
+      "identifier": "core:window:allow-outer-size",
+      "allow": [{ "window": "launcher" }, { "window": "main" }]
+    },
+    {
+      "identifier": "core:window:allow-close",
+      "allow": [{ "window": "launcher" }, { "window": "main" }]
+    },
+    {
+      "identifier": "core:window:allow-minimize",
+      "allow": [{ "window": "launcher" }, { "window": "main" }]
+    },
+    {
+      "identifier": "core:window:allow-toggle-maximize",
+      "allow": [{ "window": "launcher" }, { "window": "main" }]
+    }
+  ]
+}
