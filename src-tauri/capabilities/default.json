@@ -16,6 +16,10 @@
       "allow": [{ "window": "launcher" }, { "window": "main" }]
     },
     {
+      "identifier": "core:window:allow-set-min-size",
+      "allow": [{ "window": "launcher" }, { "window": "main" }]
+    },
+    {
       "identifier": "core:window:allow-set-position",
       "allow": [{ "window": "launcher" }, { "window": "main" }]
     },

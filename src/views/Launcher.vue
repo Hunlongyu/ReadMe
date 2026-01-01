@@ -1,62 +1,78 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button'
 import { ref, onMounted } from 'vue'
-import { getCurrentWindow } from '@tauri-apps/api/window';
-import { WebviewWindow } from '@tauri-apps/api/webviewWindow';
-// import { invoke } from '@tauri-apps/api/core' 
+import { authService } from '@/services/auth'
+import { useWindow } from '@/composables/useWindow'
 
 const loading = ref(false)
+const countdown = ref(0)
+const { createMainWindow, setWindowSize, centerWindow, close } = useWindow()
+
+const openMainWindow = async () => {
+  try {
+    const mainWindow = await createMainWindow();
+
+    // 监听新窗口创建成功后，关闭当前的 Launcher 窗口
+    mainWindow.once('tauri://created', async () => {
+      console.log('Main window created');
+      setTimeout(async () => {
+          await close();
+      }, 500);
+    });
+
+    mainWindow.once('tauri://error', (e) => {
+      console.error('Failed to create main window', e);
+      loading.value = false;
+    });
+  } catch (e) {
+      console.error('Failed to open main window', e);
+      loading.value = false;
+  }
+}
 
 const handleLogin = async () => {
+  if (countdown.value > 0) return;
+  
   loading.value = true
   console.log("Login clicked")
-  // TODO: Call Rust backend
-  // await invoke('login_github')
   
-  setTimeout(async () => {
-    try {
-      // 1. 创建新的主窗口
-      const mainWindow = new WebviewWindow('main', {
-        url: '/',
-        width: 1200,
-        height: 800,
-        minWidth: 1024,
-        minHeight: 700,
-        resizable: true,
-        decorations: false,
-        transparent: true,
-        center: true,
-        title: 'ReadMe'
-      });
+  try {
+      const token = await authService.login();
+      console.log('Token received:', token);
+      localStorage.setItem('github_token', token);
+      
+      await openMainWindow();
 
-      // 2. 监听新窗口创建成功后，关闭当前的 Launcher 窗口
-      mainWindow.once('tauri://created', async () => {
-        console.log('Main window created');
-        // 延迟关闭，确保新窗口有时间加载
-        setTimeout(async () => {
-            const currentWin = getCurrentWindow();
-            await currentWin.close();
-        }, 500);
-      });
-
-      mainWindow.once('tauri://error', (e) => {
-        console.error('Failed to create main window', e);
-        loading.value = false;
-      });
-
-    } catch (e) {
-      console.error('Login transition failed', e);
+  } catch (e) {
+      console.error('Login failed', e);
       loading.value = false;
-    }
-  }, 300)
+      
+      // Start cooldown
+      countdown.value = 5;
+      const timer = setInterval(() => {
+          countdown.value--;
+          if (countdown.value <= 0) {
+              clearInterval(timer);
+          }
+      }, 1000);
+  }
 }
 
 onMounted(async () => {
-    const win = getCurrentWindow()
     // 强制设置 Launcher 尺寸为 400x500
-    await win.setSize(new (await import('@tauri-apps/api/dpi')).PhysicalSize(400, 500))
+    await setWindowSize(400, 500)
     // 始终居中
-    await win.center()
+    await centerWindow()
+
+    // 检查是否有 token
+    const token = localStorage.getItem('github_token');
+    if (token) {
+        console.log('Token found, auto-login...');
+        loading.value = true;
+        setTimeout(async () => {
+           await openMainWindow();
+        }, 100);
+    }
 })
 </script>
 
@@ -79,12 +95,13 @@ onMounted(async () => {
       <Button 
         data-tauri-drag-region="false" 
         @click="handleLogin" 
-        :disabled="loading" 
+        :disabled="loading || countdown > 0" 
         size="lg" 
         class="w-full max-w-[260px] h-12 text-base font-medium shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 rounded-full"
       >
-          <svg v-if="!loading" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0 3c1.2 1.2 1.2 3.3 1.2 5.5.38 1.84.53 3.73.45 5.61-.1.29-.26.56-.47.78-1.2 1.2-2.7 1.8-4.3 1.7-.3 0-.6.04-.9.1.32 1.05.32 2.2 0 3.25V22"/></svg>
+          <svg v-if="!loading && countdown === 0" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0 3c1.2 1.2 1.2 3.3 1.2 5.5.38 1.84.53 3.73.45 5.61-.1.29-.26.56-.47.78-1.2 1.2-2.7 1.8-4.3 1.7-.3 0-.6.04-.9.1.32 1.05.32 2.2 0 3.25V22"/></svg>
           <span v-if="loading">Connecting...</span>
+          <span v-else-if="countdown > 0">Retry in {{ countdown }}s</span>
           <span v-else>Login with GitHub</span>
       </Button>
     </div>
