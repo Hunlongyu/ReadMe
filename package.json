@@ -23,7 +23,7 @@
     "cheerio": "^1.0.0-rc.10",
     "clipboard-copy": "^4.0.1",
     "electron-updater": "^4.6.4",
-    "core-js": "^3.20.1",
+    "core-js": "^3.47.0",
     "dexie": "^3.2.2",
     "element-plus": "^2.1.0",
     "file-saver": "^2.0.5",
