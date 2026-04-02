@@ -29,7 +29,7 @@
     "file-saver": "^2.0.5",
     "highlight.js": "^11.5.0",
     "html2canvas": "^1.4.1",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.18.1",
     "markdown-it": "^12.3.2",
     "markdown-it-anchor": "^8.4.1",
     "markdown-it-svg-code-copy": "^1.0.0",
